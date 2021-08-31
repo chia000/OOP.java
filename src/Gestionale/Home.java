@@ -11,6 +11,9 @@ public class Home extends JFrame implements ActionListener {
     JMenu ordine, prodotti, clienti, fornitori;
     JMenuItem aggiungiP, cercaP, aggiungiF, aggiungiC, aggiungiOF,aggiungiOC;
     JMenuItem visualizzaP;
+    JMenuItem visualizzaC;
+    JMenuItem visualizzaF;
+    JMenuItem visualizzaOF, visualizzaOC;
 
     JTextField cod, nome, prezzo, numpezzi, tcod;
     JTextField piva, nomeF, luogo;
@@ -34,7 +37,6 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloEsternoInsClinte;
     JPanel pannelloEsternoInsOrdineForn;
     JPanel pannelloEsternoInsOrdineCliente;
-    JPanel pannelloVisProd;
 
     public void HomeFrame(){
         frame= new JFrame("Home");
@@ -67,26 +69,33 @@ public class Home extends JFrame implements ActionListener {
         prodotti.addSeparator();
         prodotti.add(cercaP);
 
-        JMenuItem visualizzaC= new JMenuItem("Visualizza tutto...");
+        visualizzaC= new JMenuItem("Visualizza tutto...");
+        visualizzaC.addActionListener(this);
         aggiungiC= new JMenuItem("Nuovo cliente");
         aggiungiC.addActionListener(this);
         clienti.add(visualizzaC);
         clienti.addSeparator();
         clienti.add(aggiungiC);
 
-        JMenuItem visualizzaF= new JMenuItem("Visualizza tutto...");
+        visualizzaF= new JMenuItem("Visualizza tutto...");
+        visualizzaF.addActionListener(this);
         aggiungiF= new JMenuItem("Nuovo fornitore");
         aggiungiF.addActionListener(this);
         fornitori.add(visualizzaF);
         fornitori.addSeparator();
         fornitori.add(aggiungiF);
 
-        JMenuItem visualizzaO= new JMenuItem("Visualizza tutto...");
+        visualizzaOF= new JMenuItem("Visualizza tutti gli ordini ai fornitori...");
+        visualizzaOF.addActionListener(this);
+        visualizzaOC= new JMenuItem("Visualizza tutti gli ordini dei clienti...");
+        visualizzaOC.addActionListener(this);
         aggiungiOF= new JMenuItem("Nuovo ordine per fornitore");
         aggiungiOF.addActionListener(this);
         aggiungiOC= new JMenuItem("Nuovo ordine per cliente");
         aggiungiOC.addActionListener(this);
-        ordine.add(visualizzaO);
+        ordine.add(visualizzaOF);
+        ordine.addSeparator();
+        ordine.add(visualizzaOC);
         ordine.addSeparator();
         ordine.add(aggiungiOF);
         ordine.addSeparator();
@@ -687,22 +696,72 @@ public class Home extends JFrame implements ActionListener {
     }
 
     public void VisualizzaProdotti(){
-        pannelloVisProd =new JPanel();
-        pannelloVisProd.setPreferredSize(new Dimension(400,400));
-        pannelloVisProd.setLayout(new FlowLayout());
 
-        JPanel pannello1 =new JPanel();
-        pannello1.setLayout(new GridLayout());
-        JLabel labelProd= new JLabel("Tutti i prodotti presenti in magazzino");
+        JLabel labelProd= new JLabel("Elenco di tutti i prodotti presenti in magazzino.");
         JEditorPane editor1= new JEditorPane();
         editor1.setPreferredSize(new Dimension(25,25));
-        editor1.setText("RIUSCITO");
+        String visElencoProd=ActionsOnDB.visualizzaProdotti();
+        editor1.setText(visElencoProd);
         editor1.setEditable(false);
-        pannello1.add(labelProd);
-        pannello1.add(editor1);
-        pannelloVisProd.add(pannello1);
 
-        frame.getContentPane().add(pannelloVisProd, BorderLayout.WEST);
+        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
+        frame.getContentPane().add(editor1, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+
+    public void VisualizzaClienti(){
+
+        JLabel labelProd= new JLabel("Anagrafica di tutti i clienti registrati:");
+        JEditorPane editor1= new JEditorPane();
+        editor1.setPreferredSize(new Dimension(25,25));
+        String visElencoClienti=ActionsOnDB.visualizzaCliente();
+        editor1.setText(visElencoClienti);
+        editor1.setEditable(false);
+
+        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
+        frame.getContentPane().add(editor1, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+
+    public void VisualizzaFornitore(){
+
+        JLabel labelProd= new JLabel("Anagrafica di tutti i fornitori registrati:");
+        JEditorPane editor1= new JEditorPane();
+        editor1.setPreferredSize(new Dimension(25,25));
+        String visElencoFornitori=ActionsOnDB.visualizzaFornitore();
+        editor1.setText(visElencoFornitori);
+        editor1.setEditable(false);
+
+        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
+        frame.getContentPane().add(editor1, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+
+    public void VisualizzaOrdineFornitore(){
+
+        JLabel labelProd= new JLabel("Elenco di tutti gli ordini per i fornitori.");
+        JEditorPane editor1= new JEditorPane();
+        editor1.setPreferredSize(new Dimension(25,25));
+        String visElencoOrdFornitori=ActionsOnDB.visualizzaOrdiniFornitore();
+        editor1.setText(visElencoOrdFornitori);
+        editor1.setEditable(false);
+
+        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
+        frame.getContentPane().add(editor1, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+
+    public void VisualizzaOrdiniClienti(){
+
+        JLabel labelProd= new JLabel("Elenco di tutti gli ordini dei clienti.");
+        JEditorPane editor1= new JEditorPane();
+        editor1.setPreferredSize(new Dimension(25,25));
+        String visElencoOrdClienti=ActionsOnDB.visualizzaOrdiniClienti();
+        editor1.setText(visElencoOrdClienti);
+        editor1.setEditable(false);
+
+        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
+        frame.getContentPane().add(editor1, BorderLayout.CENTER);
         frame.setVisible(true);
     }
 
@@ -887,6 +946,22 @@ public class Home extends JFrame implements ActionListener {
         // BOTTONE VISUALIZZA TUTTI I PRODOTTI DA TENDINA
         if(e.getSource()==visualizzaP){
             VisualizzaProdotti();
+        }
+        // BOTTONE VISUALIZZA TUTTI I CLIENTI DA TENDINA
+        if(e.getSource()==visualizzaC){
+            VisualizzaClienti();
+        }
+        // BOTTONE VISUALIZZA TUTTI I FORNITORI DA TENDINA
+        if(e.getSource()==visualizzaF){
+            VisualizzaFornitore();
+        }
+        // BOTTONE VISUALIZZA TUTTI GLI ORDINI PER I FORNITORI DA TENDINA
+        if(e.getSource()==visualizzaOF){
+            VisualizzaOrdineFornitore();
+        }
+        // BOTTONE VISUALIZZA TUTTI GLI ORDINI DEI CLIENTI DA TENDINA
+        if(e.getSource()==visualizzaOC){
+            VisualizzaOrdiniClienti();
         }
 
     }

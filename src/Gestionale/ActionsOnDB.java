@@ -28,6 +28,101 @@ public class ActionsOnDB extends ConnessioneDB{
         return check;
     }
 
+    public static String visualizzaProdotti(){
+        String elenco=new String();
+        elenco="";
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String query="select * from prodotto";
+            ResultSet rs= stmt.executeQuery(query);
+            int i =1;
+            while(rs.next()){
+                elenco=elenco+i+") CODICE: "+rs.getString("Codice")+"; NOME: "+rs.getString("Nome")+ "; MARCA: "+ rs.getString("Marca")+
+                        "; PREZZO: "+ rs.getDouble("Prezzo")+ " Euro; NUMERO PEZZI: "+rs.getInt("Num_Pezzi")+"."+'\n'+'\n';
+                ++i;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return elenco;
+    }
+
+    public static String visualizzaCliente(){
+        String elenco=new String();
+        elenco="";
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String query="select * from cliente";
+            ResultSet rs= stmt.executeQuery(query);
+            int i =1;
+            while(rs.next()){
+                elenco=elenco+i+") CODICE FISCALE: "+rs.getString("cf")+"; NOME: "+rs.getString("Nome")+ "; COGNOME: "
+                        + rs.getString("Cognome")+"."+'\n'+'\n';
+                ++i;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return elenco;
+    }
+
+    public static String visualizzaFornitore(){
+        String elenco=new String();
+        elenco="";
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String query="select * from fornitore";
+            ResultSet rs= stmt.executeQuery(query);
+            int i =1;
+            while(rs.next()){
+                elenco=elenco+i+") PARTITA IVA: "+rs.getString("p_iva")+"; NOME: "+rs.getString("Nome")+ "; LUOGO: "
+                        + rs.getString("luogo")+"."+'\n'+'\n';
+                ++i;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return elenco;
+    }
+
+    public static String visualizzaOrdiniFornitore(){
+        String elenco=new String();
+        elenco="";
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String query="select * from ordine_fornitore";
+            ResultSet rs= stmt.executeQuery(query);
+            int i =1;
+            while(rs.next()){
+                elenco=elenco+i+") CODICE PRODOTTO: "+rs.getString("cod_prod")+"; PARTITA IVA: "+rs.getString("p_iva_fornitore")+ "; PREZZO: "
+                        + rs.getDouble("Prezzo")+"; NUMERO PEZZI: "+rs.getInt("Nr_pezzi")+"."+'\n'+'\n';
+                ++i;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return elenco;
+    }
+
+    public static String visualizzaOrdiniClienti(){
+        String elenco=new String();
+        elenco="";
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String query="select * from ordine_cliente";
+            ResultSet rs= stmt.executeQuery(query);
+            int i =1;
+            while(rs.next()){
+                elenco=elenco+i+") CODICE PRODOTTO: "+rs.getString("cod_prod")+"; NUMERO PEZZI: "+rs.getInt("Num_pezzi")+
+                        "; CODICE FISCALE: "+rs.getString("cf_cliente")+"."+'\n'+'\n';
+                ++i;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return elenco;
+    }
+
     public static String[] elencoFornitori(){
         String[] risultato=new String[50];
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
