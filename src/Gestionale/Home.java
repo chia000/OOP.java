@@ -135,7 +135,7 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsterno.setPreferredSize(new Dimension(400,400));
         pannelloEsterno.setLayout(new FlowLayout()); //disposizione in colonna con flowlayout
 
-        etichettaIniz=new JLabel("Form per inserimento nuovo prodotto.");
+        etichettaIniz=new JLabel("      Form per inserimento nuovo prodotto.");
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         //pannello piccolo con label e textfield del CODICE
@@ -219,6 +219,9 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsForn.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsForn.setLayout(new FlowLayout());
 
+        etichettaIniz=new JLabel("      Form per inserimento nuovo fornitore.");
+        frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
+
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lpiva= new JLabel("Partita IVA");
@@ -273,6 +276,9 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsClinte =new JPanel();
         pannelloEsternoInsClinte.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsClinte.setLayout(new FlowLayout());
+
+        etichettaIniz=new JLabel("      Form per inserimento nuovo cliente.");
+        frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
@@ -335,6 +341,9 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsOrdineForn =new JPanel();
         pannelloEsternoInsOrdineForn.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsOrdineForn.setLayout(new FlowLayout());
+
+        etichettaIniz=new JLabel("      Form per inserimento nuovo ordine per fornitore.");
+        frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         JPanel pannello0 =new JPanel();
         pannello0.setLayout(new FlowLayout());
@@ -416,6 +425,9 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsOrdineCliente =new JPanel();
         pannelloEsternoInsOrdineCliente.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsOrdineCliente.setLayout(new FlowLayout());
+
+        etichettaIniz=new JLabel("      Form per inserimento nuovo ordine per cliente.");
+        frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         JPanel pannello0 =new JPanel();
         pannello0.setLayout(new FlowLayout());
@@ -807,14 +819,17 @@ public class Home extends JFrame implements ActionListener {
 
     public void ChiudiInsProdotto(){
         Chiudi(pannelloEsterno);
+        etichettaIniz.setVisible(false);
     }
 
     public void ChiudiInsFornitore(){
         Chiudi(pannelloEsternoInsForn);
+        etichettaIniz.setVisible(false);
     }
 
     public void ChiudiInsCliente(){
         Chiudi(pannelloEsternoInsClinte);
+        etichettaIniz.setVisible(false);
     }
 
     public void ChiudiCercaProdotto(){
@@ -824,10 +839,12 @@ public class Home extends JFrame implements ActionListener {
 
     public void ChiudiOrdineFornitore(){
         Chiudi(pannelloEsternoInsOrdineForn);
+        etichettaIniz.setVisible(false);
     }
 
     public void ChiudiOrdineCliente(){
         Chiudi(pannelloEsternoInsOrdineCliente);
+        etichettaIniz.setVisible(false);
     }
 
     public void DeleteProd(){
