@@ -1,5 +1,6 @@
 package Gestionale;
 
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,9 +45,17 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloEsternoInsOrdineCliente;
     JPanel pannelloVis;
 
+
     public void HomeFrame(){
         frame= new JFrame("GestioniaMO"); //pannello principale (nome)
         frame.setLocation(300,100);
+
+        Image icona = Toolkit.getDefaultToolkit().createImage("iconaProgetto.jpg");
+        frame.setIconImage(icona);
+
+        frame.getContentPane().setBackground(new Color(173,196,255));
+        //frame.getContentPane().setBackground(Color.pink);
+
 
         frame.setPreferredSize(new Dimension(1000,500));
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,9 +64,13 @@ public class Home extends JFrame implements ActionListener {
         JMenuBar menubar =new JMenuBar(); //barra di menù
         frame.setJMenuBar(menubar);
         prodotti= new JMenu("PRODOTTI"); // nomi menù a tendina
+        prodotti.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
         clienti= new JMenu("CLIENTI");
+        clienti.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
         fornitori= new JMenu("FORNITORI");
+        fornitori.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
         ordine=new JMenu("ORDINE");
+        ordine.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
         menubar.add(prodotti);
         menubar.add(clienti);
         menubar.add(fornitori);
@@ -124,6 +137,10 @@ public class Home extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    public void CambiaColore(JPanel p){
+        p.setBackground(new Color(173,196,255));
+    }
+
     public void ProdottoInsFrame() {
         /*
          * Creo un pannello esterno che incollo al frame iniziale;
@@ -134,6 +151,7 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsterno =new JPanel(); //pannello grande
         pannelloEsterno.setPreferredSize(new Dimension(400,400));
         pannelloEsterno.setLayout(new FlowLayout()); //disposizione in colonna con flowlayout
+        CambiaColore(pannelloEsterno);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo prodotto.");
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
@@ -146,6 +164,7 @@ public class Home extends JFrame implements ActionListener {
         cod.setPreferredSize(new Dimension(250,25));
         pannello1.add(lcod);
         pannello1.add(cod);
+        CambiaColore(pannello1);
         pannelloEsterno.add(pannello1);
 
         //pannello piccolo con label e textfield del NOME
@@ -156,6 +175,7 @@ public class Home extends JFrame implements ActionListener {
         nome.setPreferredSize(new Dimension(250,25));
         pannello2.add(lnome);
         pannello2.add(nome);
+        CambiaColore(pannello2);
         pannelloEsterno.add(pannello2);
 
         //pannello piccolo con label e combobox(menù a tendina) della MARCA
@@ -167,6 +187,7 @@ public class Home extends JFrame implements ActionListener {
         cbmarca.setPreferredSize(new Dimension(250,25));
         pannello3.add(lmarca);
         pannello3.add(cbmarca);
+        CambiaColore(pannello3);
         pannelloEsterno.add(pannello3);
 
         //pannello piccolo con label e textfield del PREZZO
@@ -177,6 +198,7 @@ public class Home extends JFrame implements ActionListener {
         prezzo.setPreferredSize(new Dimension(250,25));
         pannello4.add(lprezzo);
         pannello4.add(prezzo);
+        CambiaColore(pannello4);
         pannelloEsterno.add(pannello4);
 
         //pannello piccolo con label e textfield del N PEZZI
@@ -187,6 +209,7 @@ public class Home extends JFrame implements ActionListener {
         numpezzi.setPreferredSize(new Dimension(250,25));
         pannello5.add(lpezzi);
         pannello5.add(numpezzi);
+        CambiaColore(pannello5);
         pannelloEsterno.add(pannello5);
 
         //pannello piccolo con INSERISCI
@@ -196,6 +219,7 @@ public class Home extends JFrame implements ActionListener {
         binserisci.setPreferredSize(new Dimension(100,50));
         binserisci.addActionListener(this); //evento sul tasto INSERISCI
         pannello6.add(binserisci);
+        CambiaColore(pannello6);
         pannelloEsterno.add(pannello6);
 
         //bottone direttamente su pannello grande CHIUDI (va bene perchè settato come flowlayout e non border)
@@ -218,6 +242,7 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsForn =new JPanel();
         pannelloEsternoInsForn.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsForn.setLayout(new FlowLayout());
+        CambiaColore(pannelloEsternoInsForn);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo fornitore.");
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
@@ -230,6 +255,7 @@ public class Home extends JFrame implements ActionListener {
         pannello1.add(lpiva);
         pannello1.add(piva);
         pannelloEsternoInsForn.add(pannello1);
+        CambiaColore(pannello1);
 
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
@@ -239,6 +265,7 @@ public class Home extends JFrame implements ActionListener {
         pannello2.add(lnome);
         pannello2.add(nomeF);
         pannelloEsternoInsForn.add(pannello2);
+        CambiaColore(pannello2);
 
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
@@ -248,6 +275,7 @@ public class Home extends JFrame implements ActionListener {
         pannello3.add(lluogo);
         pannello3.add(luogo);
         pannelloEsternoInsForn.add(pannello3);
+        CambiaColore(pannello3);
 
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
@@ -256,6 +284,7 @@ public class Home extends JFrame implements ActionListener {
         binserisciFor.addActionListener(this);
         pannello6.add(binserisciFor);
         pannelloEsternoInsForn.add(pannello6);
+        CambiaColore(pannello6);
 
         bchiudiInsFor=new JButton("CHIUDI");
         pannelloEsternoInsForn.add(bchiudiInsFor);
@@ -276,6 +305,7 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsClinte =new JPanel();
         pannelloEsternoInsClinte.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsClinte.setLayout(new FlowLayout());
+        CambiaColore(pannelloEsternoInsClinte);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo cliente.");
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
@@ -288,6 +318,7 @@ public class Home extends JFrame implements ActionListener {
         pannello1.add(lcf);
         pannello1.add(cf);
         pannelloEsternoInsClinte.add(pannello1);
+        CambiaColore(pannello1);
 
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
@@ -297,6 +328,7 @@ public class Home extends JFrame implements ActionListener {
         pannello2.add(lnome);
         pannello2.add(nomeC);
         pannelloEsternoInsClinte.add(pannello2);
+        CambiaColore(pannello2);
 
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
@@ -306,6 +338,7 @@ public class Home extends JFrame implements ActionListener {
         pannello3.add(lcognome);
         pannello3.add(cognome);
         pannelloEsternoInsClinte.add(pannello3);
+        CambiaColore(pannello3);
 
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
@@ -314,6 +347,7 @@ public class Home extends JFrame implements ActionListener {
         binserisciCliente.addActionListener(this);
         pannello6.add(binserisciCliente);
         pannelloEsternoInsClinte.add(pannello6);
+        CambiaColore(pannello6);
 
         bchiudiInsCliente=new JButton("CHIUDI");
         pannelloEsternoInsClinte.add(bchiudiInsCliente);
@@ -341,6 +375,7 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsOrdineForn =new JPanel();
         pannelloEsternoInsOrdineForn.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsOrdineForn.setLayout(new FlowLayout());
+        CambiaColore(pannelloEsternoInsOrdineForn);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo ordine per fornitore.");
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
@@ -353,8 +388,9 @@ public class Home extends JFrame implements ActionListener {
         pannello0.add(of_nome);
         of_nome.addActionListener(this);
         pannelloEsternoInsOrdineForn.add(pannello0);
+        CambiaColore(pannello0);
 
-        String[] codProdotto ={"Seleziona..."};
+        //String[] codProdotto ={"Seleziona..."};
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcod= new JLabel("Codice prodotto");
@@ -363,6 +399,7 @@ public class Home extends JFrame implements ActionListener {
         pannello1.add(lcod);
         pannello1.add(of_cod);
         pannelloEsternoInsOrdineForn.add(pannello1);
+        CambiaColore(pannello1);
 
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
@@ -371,6 +408,7 @@ public class Home extends JFrame implements ActionListener {
         pannello2.add(lfor);
         pannello2.add(piva_f);
         pannelloEsternoInsOrdineForn.add(pannello2);
+        CambiaColore(pannello2);
 
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
@@ -380,6 +418,7 @@ public class Home extends JFrame implements ActionListener {
         pannello3.add(lnumpezzi);
         pannello3.add(op_numpezzi);
         pannelloEsternoInsOrdineForn.add(pannello3);
+        CambiaColore(pannello3);
 
         /*double prezzi=ActionsOnDB.CalcolaPrezzo((String)op_cod.getSelectedItem(), Integer.parseInt(op_numpezzi.getText()));
         JPanel pannello4 =new JPanel();
@@ -398,6 +437,7 @@ public class Home extends JFrame implements ActionListener {
         binserisciOrdineFor.addActionListener(this);
         pannello6.add(binserisciOrdineFor);
         pannelloEsternoInsOrdineForn.add(pannello6);
+        CambiaColore(pannello6);
 
         bchiudiOrdineFor=new JButton("CHIUDI");
         pannelloEsternoInsOrdineForn.add(bchiudiOrdineFor);
@@ -425,6 +465,7 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsOrdineCliente =new JPanel();
         pannelloEsternoInsOrdineCliente.setPreferredSize(new Dimension(400,400));
         pannelloEsternoInsOrdineCliente.setLayout(new FlowLayout());
+        CambiaColore(pannelloEsternoInsOrdineCliente);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo ordine per cliente.");
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
@@ -437,8 +478,9 @@ public class Home extends JFrame implements ActionListener {
         pannello0.add(of_nome);
         of_nome.addActionListener(this);
         pannelloEsternoInsOrdineCliente.add(pannello0);
+        CambiaColore(pannello0);
 
-        String[] codProdotto ={"Seleziona..."};
+        //String[] codProdotto ={"Seleziona..."};
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcod= new JLabel("Codice prodotto");
@@ -447,6 +489,7 @@ public class Home extends JFrame implements ActionListener {
         pannello1.add(lcod);
         pannello1.add(of_cod);
         pannelloEsternoInsOrdineCliente.add(pannello1);
+        CambiaColore(pannello1);
 
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
@@ -456,6 +499,7 @@ public class Home extends JFrame implements ActionListener {
         pannello2.add(lcliet);
         pannello2.add(oc_cfClienti);
         pannelloEsternoInsOrdineCliente.add(pannello2);
+        CambiaColore(pannello2);
 
         JPanel pannello4 =new JPanel();
         pannello4.setLayout(new FlowLayout());
@@ -464,6 +508,7 @@ public class Home extends JFrame implements ActionListener {
         pannello4.add(lnclient);
         pannello4.add(oc_nomiClienti);
         pannelloEsternoInsOrdineCliente.add(pannello4);
+        CambiaColore(pannello4);
 
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
@@ -473,6 +518,7 @@ public class Home extends JFrame implements ActionListener {
         pannello3.add(lnumpezzi);
         pannello3.add(oc_numpezzi);
         pannelloEsternoInsOrdineCliente.add(pannello3);
+        CambiaColore(pannello3);
 
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
@@ -481,6 +527,7 @@ public class Home extends JFrame implements ActionListener {
         binserisciOrdineCliente.addActionListener(this);
         pannello6.add(binserisciOrdineCliente);
         pannelloEsternoInsOrdineCliente.add(pannello6);
+        CambiaColore(pannello6);
 
         bchiudiOrdineCliente=new JButton("CHIUDI");
         pannelloEsternoInsOrdineCliente.add(bchiudiOrdineCliente);
@@ -736,6 +783,7 @@ public class Home extends JFrame implements ActionListener {
         editor1.setPreferredSize(new Dimension(25,25));
         editor1.setText(elenco);
         editor1.setEditable(false); //l'area di testo non può essere modificata
+        editor1.setBackground(new Color(173,196,255));
 
         chiudiVis=new JButton("CHIUDI");
         chiudiVis.setPreferredSize(new Dimension(70,50));
