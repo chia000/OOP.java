@@ -719,28 +719,28 @@ public class Home extends JFrame implements ActionListener {
     }
 
     public void VisualizzaProdotti(){
-
-        Visualizza("Elenco di tutti i prodotti presenti in magazzino.", ActionsOnDB.visualizzaProdotti());
+        String[] colonne={"Codice", "Nome", "Marca", "Prezzo", "Num_pezzi"};
+        Visualizza("Elenco di tutti i prodotti presenti in magazzino.", ActionsOnDB.Visualizza("select * from prodotto", colonne, 5));
     }
 
     public void VisualizzaClienti(){
-
-        Visualizza("Anagrafica di tutti i clienti registrati:", ActionsOnDB.visualizzaCliente());
+        String[] colonne={"CF", "Nome", "Cognome"};
+        Visualizza("Anagrafica di tutti i clienti registrati:", ActionsOnDB.Visualizza("select * from cliente", colonne, 3));
     }
 
     public void VisualizzaFornitore(){
-
-        Visualizza("Anagrafica di tutti i fornitori registrati:", ActionsOnDB.visualizzaFornitore());
+        String[] colonne={"PIVA", "Nome", "Luogo"};
+        Visualizza("Anagrafica di tutti i fornitori registrati:", ActionsOnDB.Visualizza("select * from fornitore", colonne, 3));
     }
 
     public void VisualizzaOrdineFornitore(){
-
-        Visualizza("Elenco di tutti gli ordini per i fornitori.",ActionsOnDB.visualizzaOrdiniFornitore() );
+        String[] colonne={"Cod_Prodotto", "P_ivaF", "Prezzo", "Nr_Pezzi"};
+        Visualizza("Elenco di tutti gli ordini per i fornitori.",ActionsOnDB.Visualizza("select * from ordine_fornitore", colonne, 4));
     }
 
     public void VisualizzaOrdiniClienti(){
-
-        Visualizza("Elenco di tutti gli ordini dei clienti.", ActionsOnDB.visualizzaOrdiniClienti());
+        String[] colonne={"Cod_Prodotto", "Num_Pezzi", "Cf_Cliente"};
+        Visualizza("Elenco di tutti gli ordini dei clienti.",ActionsOnDB.Visualizza("select * from ordine_cliente", colonne, 3));
 
     }
 

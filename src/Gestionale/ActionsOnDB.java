@@ -32,115 +32,61 @@ public class ActionsOnDB extends ConnessioneDB{
         stmt.close();
     }
 
-    public static String Visualizza(String query, String stringa){
+    public static String Visualizza(String query, String[] vettore, int l){
         String elenco= new String();
         elenco="";
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
             ResultSet rs= stmt.executeQuery(query);
             int i =1;
+            int c=0;
             while(rs.next()){
-                elenco=elenco+i+stringa;
-                ++i;
-            }
-            ChiudiConnessioneDB(stmt);
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return elenco;
-    }
-
-
-    public static String visualizzaProdotti(){
-        String elenco=new String();
-        elenco="";
-        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            String query="select * from prodotto";
-            ResultSet rs= stmt.executeQuery(query);
-            int i =1;
-            while(rs.next()){
-                elenco=elenco+i+") CODICE: "+rs.getString("Codice")+"; NOME: "+rs.getString("Nome")+ "; MARCA: "+ rs.getString("Marca")+
-                        "; PREZZO: "+ rs.getDouble("Prezzo")+ " Euro; NUMERO PEZZI: "+rs.getInt("Num_Pezzi")+"."+'\n'+'\n';
-                ++i;
-            }
-            ChiudiConnessioneDB(stmt);
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return elenco;
-    }
-
-    public static String visualizzaCliente(){
-        String elenco=new String();
-        elenco="";
-        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            String query="select * from cliente";
-            ResultSet rs= stmt.executeQuery(query);
-            int i =1;
-            while(rs.next()){
-                elenco=elenco+i+") CODICE FISCALE: "+rs.getString("cf")+"; NOME: "+rs.getString("Nome")+ "; COGNOME: "
-                        + rs.getString("Cognome")+"."+'\n'+'\n';
-                ++i;
-            }
-            ChiudiConnessioneDB(stmt);
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return elenco;
-    }
-
-    public static String visualizzaFornitore(){
-        String elenco=new String();
-        elenco="";
-        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            String query="select * from fornitore";
-            ResultSet rs= stmt.executeQuery(query);
-            int i =1;
-            while(rs.next()){
-                elenco=elenco+i+") PARTITA IVA: "+rs.getString("p_iva")+"; NOME: "+rs.getString("Nome")+ "; LUOGO: "
-                        + rs.getString("luogo")+"."+'\n'+'\n';
-                ++i;
-            }
-            ChiudiConnessioneDB(stmt);
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return elenco;
-    }
-
-    public static String visualizzaOrdiniFornitore(){
-        String elenco=new String();
-        elenco="";
-        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            String query="select * from ordine_fornitore";
-            ResultSet rs= stmt.executeQuery(query);
-            int i =1;
-            while(rs.next()){
-                elenco=elenco+i+") CODICE PRODOTTO: "+rs.getString("cod_prod")+"; PARTITA IVA: "+rs.getString("p_iva_fornitore")+ "; PREZZO: "
-                        + rs.getDouble("Prezzo")+"; NUMERO PEZZI: "+rs.getInt("Nr_pezzi")+"."+'\n'+'\n';
-                ++i;
-            }
-            ChiudiConnessioneDB(stmt);
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return elenco;
-    }
-
-    public static String visualizzaOrdiniClienti(){
-        String elenco=new String();
-        elenco="";
-        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            String query="select * from ordine_cliente";
-            ResultSet rs= stmt.executeQuery(query);
-            int i =1;
-            while(rs.next()){
-                elenco=elenco+i+") CODICE PRODOTTO: "+rs.getString("cod_prod")+"; NUMERO PEZZI: "+rs.getInt("Num_pezzi")+
-                        "; CODICE FISCALE: "+rs.getString("cf_cliente")+"."+'\n'+'\n';
+                c=0;
+                while(c<l)
+                {
+                    switch (vettore[c]){
+                        case "Codice":
+                            elenco=elenco+ i+")     CODICE: "+ rs.getString("Codice");
+                            break;
+                        case "Marca":
+                            elenco=elenco+ "    MARCA: "+ rs.getString("Marca");
+                            break;
+                        case "Prezzo":
+                            elenco=elenco+ "    PREZZO: "+ rs.getDouble("Prezzo");
+                            break;
+                        case "Num_Pezzi":
+                            elenco=elenco+ "    NUMERO PEZZI: "+ rs.getInt("Num_Pezzi");
+                            break;
+                        case "CF":
+                            elenco=elenco+ i+")     CF: "+ rs.getString("CF");
+                            break;
+                        case "Nome":
+                            elenco=elenco+ "    NOME: "+ rs.getString("Nome");
+                            break;
+                        case "Cognome":
+                            elenco=elenco+ "    COGNOME: "+ rs.getString("Cognome");
+                            break;
+                        case "Cod_Prodotto":
+                            elenco=elenco+ i+")    CODICE PRODOTTO: "+ rs.getString("Cod_Prod");
+                            break;
+                        case "P_ivaF":
+                            elenco=elenco+ "    PARTITA IVA: "+ rs.getString("P_iva_Fornitore");
+                            break;
+                        case "Nr_Pezzi":
+                            elenco=elenco+ "    NUMERO PEZZI: "+ rs.getInt("Nr_Pezzi");
+                            break;
+                        case "Cf_Cliente":
+                            elenco=elenco+ "    CODICE FISCALE: "+ rs.getString("Cf_Cliente");
+                            break;
+                        case "PIVA":
+                            elenco=elenco+i+")    PARTITA IVA: "+ rs.getString("p_iva");
+                            break;
+                        case "Luogo":
+                            elenco=elenco+ "    LUOGO: "+ rs.getString("luogo");
+                            break;
+                    }
+                    ++c;
+                }
+                elenco=elenco+"."+'\n'+'\n';
                 ++i;
             }
             ChiudiConnessioneDB(stmt);
