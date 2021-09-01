@@ -8,6 +8,7 @@ import java.util.concurrent.Executor;
 public class ConnessioneDB {
     //String connectionUrl = "jdbc:sqlserver://<server>:<port>;databaseName=AdventureWorks;user=<user>;password=<password>";
     public static String connectionUrl = "jdbc:sqlserver://DESKTOP-A2PFO05\\SQLEXPRESS:0;databaseName=Gestionale;user=chiara;password=chiara2000";
+    //public static String connectionUrl = "jdbc:sqlserver://DESKTOP-A2PFO05\\SQLEXPRESS:0;databaseName=Gestionale;user=chiara;password=chiara2000";
 
     public static void main(String[] argv){
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
