@@ -484,32 +484,33 @@ public class Home extends JFrame implements ActionListener {
             // MessageType = 0 --> icona messaggio errore (fino a 5 possibilità: da 0 a 4)
         }
         else {
+            //controlli su textfield se vuote
             if (prezzo.getText().length() == 0) {
-                JFrame f7 = new JFrame("ATTENZIONE");
-                JOptionPane.showMessageDialog(f7, "ERRORE: manca il prezzo");
+                JFrame f7 = new JFrame();
+                JOptionPane.showMessageDialog(f7, "ERRORE: manca il prezzo","ATTENZIONE",0);
             }
 
             if (numpezzi.getText().length() == 0) {
-                JFrame f2 = new JFrame("ATTENZIONE");
-                JOptionPane.showMessageDialog(f2, "ERRORE: inserire il NUMERO dei PEZZI.");
+                JFrame f2 = new JFrame();
+                JOptionPane.showMessageDialog(f2, "ERRORE: inserire il NUMERO dei PEZZI.","ATTENZIONE",0);
             }
-
+            //num è risultato di inserimento nel DB, double.parsedouble è per convertire a double (x tutti a parte string)
             int num = ActionsOnDB.InserisciProdotto(cod.getText(), nome.getText(), (String) cbmarca.getSelectedItem(),
                     Double.parseDouble(prezzo.getText()), Integer.parseInt(numpezzi.getText()));
 
             switch (num) {
                 case 1:
-                    JFrame f1 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f1, "ERRORE: selezionare una MARCA.");
+                    JFrame f1 = new JFrame();
+                    JOptionPane.showMessageDialog(f1, "ERRORE: selezionare una MARCA.","ATTENZIONE",1);
                     break;
                 case 3:
-                    JFrame f3 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f3, "ERRORE: il CODICE inserito è già presente.");
+                    JFrame f3 = new JFrame();
+                    JOptionPane.showMessageDialog(f3, "ERRORE: il CODICE inserito è già presente.","ATTENZIONE",1);
                     cod.setText("");
                     break;
                 case 4:
-                    JFrame f4 = new JFrame("ACCESSO");
-                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!");
+                    JFrame f4 = new JFrame();
+                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!","ACCESSO RIUSCITO",4);
                     Prodotto pr = new Prodotto();
                     pr.setCodice(cod.getText());
                     pr.setNome(nome.getText());
@@ -524,12 +525,12 @@ public class Home extends JFrame implements ActionListener {
                     numpezzi.setText("");
                     break;
                 case 5:
-                    JFrame f5 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f5, "ERRORE: inserire il NOME del prodotto.");
+                    JFrame f5 = new JFrame();
+                    JOptionPane.showMessageDialog(f5, "ERRORE: inserire il NOME del prodotto.","ATTENZIONE",1);
                     break;
                 case 6:
-                    JFrame f6 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f6, "ERRORE: il codice non è stato inserito.");
+                    JFrame f6 = new JFrame();
+                    JOptionPane.showMessageDialog(f6, "ERRORE: il codice non è stato inserito.","ATTENZIONE",1);
                     break;
             }
         }
@@ -537,8 +538,8 @@ public class Home extends JFrame implements ActionListener {
 
     public void BinsFornitoreDB(){
         if(piva.getText().length()==0 && nomeF.getText().length()==0 && luogo.getText().length()==0){
-            JFrame f0=new JFrame("ATTENZIONE");
-            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.");
+            JFrame f0=new JFrame();
+            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",0);
         }
         else {
 
@@ -546,21 +547,21 @@ public class Home extends JFrame implements ActionListener {
 
             switch (num) {
                 case 1:
-                    JFrame f1 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f1, "ERRORE: inserimento errato della Partita Iva");
+                    JFrame f1 = new JFrame();
+                    JOptionPane.showMessageDialog(f1, "ERRORE: inserimento errato della Partita Iva","ATTENZIONE",1);
                     piva.setText("");
                     break;
                 case 2:
-                    JFrame f2 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f2, "ERRORE: inserire il nome del fornitore.");
+                    JFrame f2 = new JFrame();
+                    JOptionPane.showMessageDialog(f2, "ERRORE: inserire il nome del fornitore.","ATTENZIONE",1);
                     break;
                 case 3:
-                    JFrame f3 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f3, "ERRORE: inserire il luogo");
+                    JFrame f3 = new JFrame();
+                    JOptionPane.showMessageDialog(f3, "ERRORE: inserire il luogo","ATTENZIONE",1);
                     break;
                 case 4:
-                    JFrame f4 = new JFrame("ACCESSO");
-                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!");
+                    JFrame f4 = new JFrame();
+                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!","ACCESSO RIUSCITO",4);
                     Fornitore fr = new Fornitore();
                     fr.setP_iva(piva.getText());
                     fr.setNome(nomeF.getText());
@@ -570,8 +571,8 @@ public class Home extends JFrame implements ActionListener {
                     luogo.setText("");
                     break;
                 case 5:
-                    JFrame f5 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f5, "ERRORE: Partita Iva già presente");
+                    JFrame f5 = new JFrame();
+                    JOptionPane.showMessageDialog(f5, "ERRORE: Partita Iva già presente","ATTENZIONE",0);
                     piva.setText("");
                     break;
             }
@@ -580,8 +581,8 @@ public class Home extends JFrame implements ActionListener {
 
     public void BinsClienteDB(){
         if(cf.getText().length()==0 && nomeC.getText().length()==0 && cognome.getText().length()==0){
-            JFrame f0=new JFrame("ATTENZIONE");
-            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.");
+            JFrame f0=new JFrame();
+            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",0);
         }
         else {
 
@@ -589,21 +590,21 @@ public class Home extends JFrame implements ActionListener {
 
             switch (num) {
                 case 1:
-                    JFrame f1 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f1, "ERRORE: inserimento errato del Codice Fiscale");
+                    JFrame f1 = new JFrame();
+                    JOptionPane.showMessageDialog(f1, "ERRORE: inserimento errato del Codice Fiscale","ATTENZIONE",1);
                     cf.setText("");
                     break;
                 case 2:
-                    JFrame f2 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f2, "ERRORE: inserire il nome del cliente.");
+                    JFrame f2 = new JFrame();
+                    JOptionPane.showMessageDialog(f2, "ERRORE: inserire il nome del cliente.","ATTENZIONE",1);
                     break;
                 case 3:
-                    JFrame f3 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f3, "ERRORE: inserire il cognome");
+                    JFrame f3 = new JFrame();
+                    JOptionPane.showMessageDialog(f3, "ERRORE: inserire il cognome","ATTENZIONE",1);
                     break;
                 case 4:
-                    JFrame f4 = new JFrame("ACCESSO");
-                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!");
+                    JFrame f4 = new JFrame();
+                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!","ACCESSO RIUSCITO CON SUCCESSO",4);
                     Cliente cl = new Cliente();
                     cl.setCf(cf.getText());
                     cl.setNome(nomeC.getText());
@@ -613,8 +614,8 @@ public class Home extends JFrame implements ActionListener {
                     cognome.setText("");
                     break;
                 case 5:
-                    JFrame f5 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f5, "ERRORE: Codice Fiscale già presente");
+                    JFrame f5 = new JFrame();
+                    JOptionPane.showMessageDialog(f5, "ERRORE: Codice Fiscale già presente","ATTENZIONE",1);
                     cf.setText("");
                     break;
             }
@@ -624,8 +625,8 @@ public class Home extends JFrame implements ActionListener {
     public void BinsNuovoOrdineFornitoreDB(){
         if(of_nome.getSelectedItem()=="Seleziona..." && of_cod.getSelectedItem()=="Seleziona..." && (piva_f.getSelectedItem()=="" ||piva_f.getSelectedItem()=="Seleziona...") &&
                 op_numpezzi.getText().length()==0){
-            JFrame f0=new JFrame("ATTENZIONE");
-            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.");
+            JFrame f0=new JFrame();
+            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",0);
             of_nome.setSelectedIndex(0);
             of_cod.setSelectedIndex(0);
             piva_f.setSelectedIndex(0);
@@ -634,16 +635,16 @@ public class Home extends JFrame implements ActionListener {
         else {
 
             if(op_numpezzi.getText().length()==0){
-                JFrame f1=new JFrame("ATTENZIONE");
-                JOptionPane.showMessageDialog(f1,"ERRORE: inserire il numero dei pezzi da ordinare.");
+                JFrame f1=new JFrame();
+                JOptionPane.showMessageDialog(f1,"ERRORE: inserire il numero dei pezzi da ordinare.","ATTENZIONE",0);
             }
 
             int num = ActionsOnDB.InserisciOrdineFornitore((String) of_nome.getSelectedItem(), (String) of_cod.getSelectedItem(),
                     (String) piva_f.getSelectedItem(), Integer.parseInt(op_numpezzi.getText()));
 
             if(num==1) {
-                JFrame f4 = new JFrame("ACCESSO");
-                JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!");
+                JFrame f4 = new JFrame();
+                JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!","ACCESSO RIUSCITO",4);
                 OrdineFornitore ord_for= new OrdineFornitore();
                 ord_for.setNomeProdotto((String) of_nome.getSelectedItem());
                 ord_for.setCodice((String) of_cod.getSelectedItem());
@@ -657,8 +658,8 @@ public class Home extends JFrame implements ActionListener {
 
             }
             else{
-                JFrame f1 = new JFrame("ATTENZIONE");
-                JOptionPane.showMessageDialog(f1, "SI E' VERIFICATO UN ERRORE");
+                JFrame f1 = new JFrame();
+                JOptionPane.showMessageDialog(f1, "SI E' VERIFICATO UN ERRORE","ATTENZIONE",0);
             }
         }
     }
@@ -667,8 +668,8 @@ public class Home extends JFrame implements ActionListener {
         if(of_nome.getSelectedItem()=="Seleziona..." && of_cod.getSelectedItem()=="Seleziona..." && (oc_cfClienti.getSelectedItem()=="" ||oc_cfClienti.getSelectedItem()=="Seleziona...") &&
                 (oc_nomiClienti.getSelectedItem()=="" ||oc_nomiClienti.getSelectedItem()=="Seleziona...") &&
                 oc_numpezzi.getText().length()==0){
-            JFrame f0=new JFrame("ATTENZIONE");
-            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.");
+            JFrame f0=new JFrame();
+            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",0);
             of_nome.setSelectedIndex(0);
             of_cod.setSelectedIndex(0);
             oc_cfClienti.setSelectedIndex(0);
@@ -678,8 +679,8 @@ public class Home extends JFrame implements ActionListener {
         else {
 
             if(oc_numpezzi.getText().length()==0){
-                JFrame f1=new JFrame("ATTENZIONE");
-                JOptionPane.showMessageDialog(f1,"ERRORE: inserire il numero dei pezzi da ordinare.");
+                JFrame f1=new JFrame();
+                JOptionPane.showMessageDialog(f1,"ERRORE: inserire il numero dei pezzi da ordinare.","ATTENZIONE",1);
             }
 
             int num = ActionsOnDB.InserisciOrdineCliente((String) of_nome.getSelectedItem(), (String) of_cod.getSelectedItem(),
@@ -687,8 +688,8 @@ public class Home extends JFrame implements ActionListener {
 
             switch(num) {
                 case 1:
-                    JFrame f4 = new JFrame("ACCESSO");
-                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!");
+                    JFrame f4 = new JFrame();
+                    JOptionPane.showMessageDialog(f4, "L'inserimento dei dati è avvenuto con successo!","ACCESSO CONSENTITO",4);
                     OrdineCliente ord_client= new OrdineCliente();
                     ord_client.setNomeProdotto((String) of_nome.getSelectedItem());
                     ord_client.setCodice((String) of_cod.getSelectedItem());
@@ -703,8 +704,8 @@ public class Home extends JFrame implements ActionListener {
                     break;
 
                 case 2:
-                    JFrame f2 = new JFrame("ATTENZIONE");
-                    JOptionPane.showMessageDialog(f2, "ERRORE: non ci sono abbastanza pezzi il magazzino del prodotto desiderato");
+                    JFrame f2 = new JFrame();
+                    JOptionPane.showMessageDialog(f2, "ERRORE: non ci sono abbastanza pezzi il magazzino del prodotto desiderato","ATTENZIONE",1);
                     break;
 
             }
