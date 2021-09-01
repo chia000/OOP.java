@@ -34,9 +34,10 @@ public class ActionsOnDB extends ConnessioneDB{
 
     public static String Visualizza(String query, String[] vettore, int l){
         String elenco= new String();
-        elenco="";
+        elenco=""; //quello che poi ritorno
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            ResultSet rs= stmt.executeQuery(query);
+            ResultSet rs= stmt.executeQuery(query); //esegue la query, in questo caso ritorna tutta la tabella desiderata
+            // rs è una lista con tutte le righe della tabella, colonne = vettore -> c
             int i =1;
             int c=0;
             while(rs.next()){
@@ -97,6 +98,7 @@ public class ActionsOnDB extends ConnessioneDB{
         return elenco;
     }
 
+    //Per la Combobox elenco
     public static String[] elencoFornitori(){
         String[] risultato=new String[50];
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
@@ -143,14 +145,14 @@ public class ActionsOnDB extends ConnessioneDB{
     public static String[] elencoCodProdottoSelezionato(String nomep){
         String[] risultato=new String[50];
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            String count="select count(nome) as quanti from prodotto where nome = '"+nomep+"'";
+            String count="select count(nome) as quanti from prodotto where nome = '"+nomep+"'"; //quanti è il nome che assegno alla colonna
             ResultSet rsCount= stmt.executeQuery(count);
             int c=0;
             while(rsCount.next()){
                 c=rsCount.getInt("quanti");
             }
             risultato=new String[c+1];
-            String query="select codice from prodotto where nome = '"+nomep+"'";
+            String query="select codice from prodotto where nome = '"+nomep+"'"; // in SQL ricordare singoli apici
             ResultSet rs = stmt.executeQuery(query);
             risultato[0]="Seleziona...";
             c=1;

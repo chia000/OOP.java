@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 public class Home extends JFrame implements ActionListener {
 
+    JLabel etichettaIniz;
     JLabel labelProd;
     JEditorPane editor1;
 
@@ -133,6 +134,9 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsterno =new JPanel(); //pannello grande
         pannelloEsterno.setPreferredSize(new Dimension(400,400));
         pannelloEsterno.setLayout(new FlowLayout()); //disposizione in colonna con flowlayout
+
+        etichettaIniz=new JLabel("Form per inserimento nuovo prodotto.");
+        frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         //pannello piccolo con label e textfield del CODICE
         JPanel pannello1 =new JPanel();
@@ -712,13 +716,14 @@ public class Home extends JFrame implements ActionListener {
         }
     }
 
+    // testo è etichetta incollata a nord del frame, elenco è la stringa con tutti i dati che voglio visualizzare
     public void Visualizza(String testo, String elenco){
 
         labelProd= new JLabel(testo);
-        editor1= new JEditorPane();
+        editor1= new JEditorPane(); //area di testo grande
         editor1.setPreferredSize(new Dimension(25,25));
         editor1.setText(elenco);
-        editor1.setEditable(false);
+        editor1.setEditable(false); //l'area di testo non può essere modificata
 
         chiudiVis=new JButton("CHIUDI");
         chiudiVis.setPreferredSize(new Dimension(70,50));
@@ -730,6 +735,7 @@ public class Home extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    //richiamo la funzione per tutti i tasti di visualizza
     public void VisualizzaProdotti(){
         String[] colonne={"Codice", "Nome", "Marca", "Prezzo", "Num_pezzi"};
         Visualizza("Elenco di tutti i prodotti presenti in magazzino.", ActionsOnDB.Visualizza("select * from prodotto", colonne, 5));
@@ -794,6 +800,7 @@ public class Home extends JFrame implements ActionListener {
 
     }
 
+    //tasti chiudi usano la funzione che rende invisibile il pannello che le viene passato
     public void Chiudi(JPanel p){
         p.setVisible(false);
     }
