@@ -28,6 +28,29 @@ public class ActionsOnDB extends ConnessioneDB{
         return check;
     }
 
+    public static void ChiudiConnessioneDB(Statement stmt) throws SQLException {
+        stmt.close();
+    }
+
+    public static String Visualizza(String query, String stringa){
+        String elenco= new String();
+        elenco="";
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            ResultSet rs= stmt.executeQuery(query);
+            int i =1;
+            while(rs.next()){
+                elenco=elenco+i+stringa;
+                ++i;
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return elenco;
+    }
+
+
     public static String visualizzaProdotti(){
         String elenco=new String();
         elenco="";
@@ -40,6 +63,7 @@ public class ActionsOnDB extends ConnessioneDB{
                         "; PREZZO: "+ rs.getDouble("Prezzo")+ " Euro; NUMERO PEZZI: "+rs.getInt("Num_Pezzi")+"."+'\n'+'\n';
                 ++i;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -59,6 +83,7 @@ public class ActionsOnDB extends ConnessioneDB{
                         + rs.getString("Cognome")+"."+'\n'+'\n';
                 ++i;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -78,6 +103,7 @@ public class ActionsOnDB extends ConnessioneDB{
                         + rs.getString("luogo")+"."+'\n'+'\n';
                 ++i;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -97,6 +123,7 @@ public class ActionsOnDB extends ConnessioneDB{
                         + rs.getDouble("Prezzo")+"; NUMERO PEZZI: "+rs.getInt("Nr_pezzi")+"."+'\n'+'\n';
                 ++i;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -116,6 +143,7 @@ public class ActionsOnDB extends ConnessioneDB{
                         "; CODICE FISCALE: "+rs.getString("cf_cliente")+"."+'\n'+'\n';
                 ++i;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -142,6 +170,7 @@ public class ActionsOnDB extends ConnessioneDB{
                 //System.out.println(rs.getString("Nome"));
                 ++c;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -157,6 +186,7 @@ public class ActionsOnDB extends ConnessioneDB{
             while(rsCount.next()){
                 conta=rsCount.getInt("quanti");
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -183,6 +213,7 @@ public class ActionsOnDB extends ConnessioneDB{
                 //System.out.println(risultato[c]);
                 ++c;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -198,6 +229,7 @@ public class ActionsOnDB extends ConnessioneDB{
             while(rsCount.next()){
                 risultato=rsCount.getString("Marca");
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -224,6 +256,7 @@ public class ActionsOnDB extends ConnessioneDB{
                 //System.out.println(rs.getString("Nome"));
                 ++c;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -249,6 +282,7 @@ public class ActionsOnDB extends ConnessioneDB{
                 risultato[c]=rs.getString("cf");
                 ++c;
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -265,6 +299,7 @@ public class ActionsOnDB extends ConnessioneDB{
             while(rs.next()){
                 ris= rs.getString("Nome")+" "+ rs.getString("Cognome");
             }
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -285,6 +320,7 @@ public class ActionsOnDB extends ConnessioneDB{
                 tmp=rspezzi.getInt("Num_Pezzi");
             }
             if(numpezzi>tmp){
+                ChiudiConnessioneDB(stmt);
                 return error;
             }
 
@@ -294,6 +330,7 @@ public class ActionsOnDB extends ConnessioneDB{
                 ris=rsCount.getInt("Prezzo");
             }
             ris=ris*numpezzi;
+            ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -345,6 +382,8 @@ public class ActionsOnDB extends ConnessioneDB{
             statement.setDouble(4,prezzo);
             statement.setInt(5,num_pezzi);
             statement.executeUpdate();
+            ChiudiConnessioneDB(statement);
+            ChiudiConnessioneDB(stmt);
 
         }
         catch(SQLException e){
@@ -396,6 +435,8 @@ public class ActionsOnDB extends ConnessioneDB{
             statement.setString(2,nome);
             statement.setString(3,luogo);
             statement.executeUpdate();
+            ChiudiConnessioneDB(statement);
+            ChiudiConnessioneDB(stmt);
 
         }
         catch(SQLException e){
@@ -447,6 +488,8 @@ public class ActionsOnDB extends ConnessioneDB{
             statement.setString(2,nome);
             statement.setString(3,cognome);
             statement.executeUpdate();
+            ChiudiConnessioneDB(statement);
+            ChiudiConnessioneDB(stmt);
 
         }
         catch(SQLException e){
@@ -490,7 +533,8 @@ public class ActionsOnDB extends ConnessioneDB{
             statement.setDouble(3,prezzo);
             statement.setInt(4, pezzi);
             statement.executeUpdate();
-
+            ChiudiConnessioneDB(statement);
+            ChiudiConnessioneDB(stmt);
 
         }
         catch(SQLException e){
@@ -524,8 +568,12 @@ public class ActionsOnDB extends ConnessioneDB{
                 statement.setInt(2, pezzi);
                 statement.setString(3, cfcliente);
                 statement.executeUpdate();
+                ChiudiConnessioneDB(statement);
+                ChiudiConnessioneDB(stmt);
+
             }
             else{
+                ChiudiConnessioneDB(stmt);
                 return num2;
             }
 
@@ -570,7 +618,6 @@ public class ActionsOnDB extends ConnessioneDB{
         }
         return ris;
     }
-
 
     public static void main(String[] argv){
         //OkUser("Chiara", "0809");

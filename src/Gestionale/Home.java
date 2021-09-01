@@ -28,6 +28,7 @@ public class Home extends JFrame implements ActionListener {
     JButton binserisciCliente, bchiudiInsCliente;
     JButton bchiudiOrdineFor, binserisciOrdineFor;
     JButton binserisciOrdineCliente, bchiudiOrdineCliente;
+    JButton chiudiVis;
 
     JFrame frame;
 
@@ -695,74 +696,46 @@ public class Home extends JFrame implements ActionListener {
         }
     }
 
-    public void VisualizzaProdotti(){
-
-        JLabel labelProd= new JLabel("Elenco di tutti i prodotti presenti in magazzino.");
+    public void Visualizza(String testo, String elenco){
+        JLabel labelProd= new JLabel(testo);
         JEditorPane editor1= new JEditorPane();
         editor1.setPreferredSize(new Dimension(25,25));
-        String visElencoProd=ActionsOnDB.visualizzaProdotti();
-        editor1.setText(visElencoProd);
+        editor1.setText(elenco);
         editor1.setEditable(false);
+        chiudiVis=new JButton("CHIUDI");
+        chiudiVis.setPreferredSize(new Dimension(70,50));
+        chiudiVis.addActionListener(this);
 
         frame.getContentPane().add(labelProd, BorderLayout.NORTH);
         frame.getContentPane().add(editor1, BorderLayout.CENTER);
+        frame.getContentPane().add(chiudiVis, BorderLayout.SOUTH);
         frame.setVisible(true);
+    }
+
+    public void VisualizzaProdotti(){
+
+        Visualizza("Elenco di tutti i prodotti presenti in magazzino.", ActionsOnDB.visualizzaProdotti());
     }
 
     public void VisualizzaClienti(){
 
-        JLabel labelProd= new JLabel("Anagrafica di tutti i clienti registrati:");
-        JEditorPane editor1= new JEditorPane();
-        editor1.setPreferredSize(new Dimension(25,25));
-        String visElencoClienti=ActionsOnDB.visualizzaCliente();
-        editor1.setText(visElencoClienti);
-        editor1.setEditable(false);
-
-        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
-        frame.getContentPane().add(editor1, BorderLayout.CENTER);
-        frame.setVisible(true);
+        Visualizza("Anagrafica di tutti i clienti registrati:", ActionsOnDB.visualizzaCliente());
     }
 
     public void VisualizzaFornitore(){
 
-        JLabel labelProd= new JLabel("Anagrafica di tutti i fornitori registrati:");
-        JEditorPane editor1= new JEditorPane();
-        editor1.setPreferredSize(new Dimension(25,25));
-        String visElencoFornitori=ActionsOnDB.visualizzaFornitore();
-        editor1.setText(visElencoFornitori);
-        editor1.setEditable(false);
-
-        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
-        frame.getContentPane().add(editor1, BorderLayout.CENTER);
-        frame.setVisible(true);
+        Visualizza("Anagrafica di tutti i fornitori registrati:", ActionsOnDB.visualizzaFornitore());
     }
 
     public void VisualizzaOrdineFornitore(){
 
-        JLabel labelProd= new JLabel("Elenco di tutti gli ordini per i fornitori.");
-        JEditorPane editor1= new JEditorPane();
-        editor1.setPreferredSize(new Dimension(25,25));
-        String visElencoOrdFornitori=ActionsOnDB.visualizzaOrdiniFornitore();
-        editor1.setText(visElencoOrdFornitori);
-        editor1.setEditable(false);
-
-        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
-        frame.getContentPane().add(editor1, BorderLayout.CENTER);
-        frame.setVisible(true);
+        Visualizza("Elenco di tutti gli ordini per i fornitori.",ActionsOnDB.visualizzaOrdiniFornitore() );
     }
 
     public void VisualizzaOrdiniClienti(){
 
-        JLabel labelProd= new JLabel("Elenco di tutti gli ordini dei clienti.");
-        JEditorPane editor1= new JEditorPane();
-        editor1.setPreferredSize(new Dimension(25,25));
-        String visElencoOrdClienti=ActionsOnDB.visualizzaOrdiniClienti();
-        editor1.setText(visElencoOrdClienti);
-        editor1.setEditable(false);
+        Visualizza("Elenco di tutti gli ordini dei clienti.", ActionsOnDB.visualizzaOrdiniClienti());
 
-        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
-        frame.getContentPane().add(editor1, BorderLayout.CENTER);
-        frame.setVisible(true);
     }
 
     public void CercaProdotto(){
@@ -803,29 +776,33 @@ public class Home extends JFrame implements ActionListener {
 
     }
 
+    public void Chiudi(JPanel p){
+        p.setVisible(false);
+    }
+
     public void ChiudiInsProdotto(){
-        pannelloEsterno.setVisible(false);
+        Chiudi(pannelloEsterno);
     }
 
     public void ChiudiInsFornitore(){
-        pannelloEsternoInsForn.setVisible(false);
+        Chiudi(pannelloEsternoInsForn);
     }
 
     public void ChiudiInsCliente(){
-        pannelloEsternoInsClinte.setVisible(false);
+        Chiudi(pannelloEsternoInsClinte);
     }
 
     public void ChiudiCercaProdotto(){
-        pannelloEsternoCerca.setVisible(false);
+        Chiudi(pannelloEsternoCerca);
         delete.setVisible(false);
     }
 
     public void ChiudiOrdineFornitore(){
-        pannelloEsternoInsOrdineForn.setVisible(false);
+        Chiudi(pannelloEsternoInsOrdineForn);
     }
 
     public void ChiudiOrdineCliente(){
-        pannelloEsternoInsOrdineCliente.setVisible(false);
+        Chiudi(pannelloEsternoInsOrdineCliente);
     }
 
     public void DeleteProd(){
