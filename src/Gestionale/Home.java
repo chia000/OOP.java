@@ -44,10 +44,10 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloVis;
 
     public void HomeFrame(){
-        frame= new JFrame("Home");
-        frame.setLocation(0,0);
+        frame= new JFrame("GestioniaMO");
+        frame.setLocation(300,100);
 
-        frame.setPreferredSize(new Dimension(1500,690));
+        frame.setPreferredSize(new Dimension(1000,500));
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
 
