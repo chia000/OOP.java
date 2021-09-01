@@ -479,8 +479,9 @@ public class Home extends JFrame implements ActionListener {
 
         if(cod.getText().length()==0 && nome.getText().length()==0 && cbmarca.getSelectedItem()=="Seleziona..."
         && prezzo.getText().length()==0 && numpezzi.getText().length()==0){
-            JFrame f0=new JFrame("ATTENZIONE");
-            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",1);
+            JFrame f0=new JFrame();
+            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",0);
+            // MessageType = 0 --> icona messaggio errore (fino a 5 possibilità: da 0 a 4)
         }
         else {
             if (prezzo.getText().length() == 0) {
