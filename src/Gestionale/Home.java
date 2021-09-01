@@ -44,16 +44,16 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloVis;
 
     public void HomeFrame(){
-        frame= new JFrame("GestioniaMO");
+        frame= new JFrame("GestioniaMO"); //pannello principale (nome)
         frame.setLocation(300,100);
 
         frame.setPreferredSize(new Dimension(1000,500));
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
 
-        JMenuBar menubar =new JMenuBar();
+        JMenuBar menubar =new JMenuBar(); //barra di menù
         frame.setJMenuBar(menubar);
-        prodotti= new JMenu("PRODOTTI");
+        prodotti= new JMenu("PRODOTTI"); // nomi menù a tendina
         clienti= new JMenu("CLIENTI");
         fornitori= new JMenu("FORNITORI");
         ordine=new JMenu("ORDINE");
@@ -62,7 +62,8 @@ public class Home extends JFrame implements ActionListener {
         menubar.add(fornitori);
         menubar.add(ordine);
 
-        visualizzaP= new JMenuItem("Visualizza tutto...");
+        //Prodotti
+        visualizzaP= new JMenuItem("Visualizza tutto..."); //Nomi delle selezioni menù a tendina
         visualizzaP.addActionListener(this);
         aggiungiP= new JMenuItem("Nuovo prodotto");
         aggiungiP.addActionListener(this);
@@ -74,6 +75,7 @@ public class Home extends JFrame implements ActionListener {
         prodotti.addSeparator();
         prodotti.add(cercaP);
 
+        //Clienti
         visualizzaC= new JMenuItem("Visualizza tutto...");
         visualizzaC.addActionListener(this);
         aggiungiC= new JMenuItem("Nuovo cliente");
@@ -82,6 +84,7 @@ public class Home extends JFrame implements ActionListener {
         clienti.addSeparator();
         clienti.add(aggiungiC);
 
+        //Fornitori
         visualizzaF= new JMenuItem("Visualizza tutto...");
         visualizzaF.addActionListener(this);
         aggiungiF= new JMenuItem("Nuovo fornitore");
@@ -90,6 +93,7 @@ public class Home extends JFrame implements ActionListener {
         fornitori.addSeparator();
         fornitori.add(aggiungiF);
 
+        //Ordini fornitori e Ordini clienti
         visualizzaOF= new JMenuItem("Visualizza tutti gli ordini ai fornitori...");
         visualizzaOF.addActionListener(this);
         visualizzaOC= new JMenuItem("Visualizza tutti gli ordini dei clienti...");
@@ -126,10 +130,11 @@ public class Home extends JFrame implements ActionListener {
          * mi ricordo di rendere il frame visibile (=true).
          * */
 
-        pannelloEsterno =new JPanel();
+        pannelloEsterno =new JPanel(); //pannello grande
         pannelloEsterno.setPreferredSize(new Dimension(400,400));
-        pannelloEsterno.setLayout(new FlowLayout());
+        pannelloEsterno.setLayout(new FlowLayout()); //disposizione in colonna con flowlayout
 
+        //pannello piccolo con label e textfield del CODICE
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcod= new JLabel("Codice");
@@ -139,6 +144,7 @@ public class Home extends JFrame implements ActionListener {
         pannello1.add(cod);
         pannelloEsterno.add(pannello1);
 
+        //pannello piccolo con label e textfield del NOME
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
         JLabel lnome= new JLabel("Nome ");
@@ -148,6 +154,7 @@ public class Home extends JFrame implements ActionListener {
         pannello2.add(nome);
         pannelloEsterno.add(pannello2);
 
+        //pannello piccolo con label e combobox(menù a tendina) della MARCA
         String[] nomeFornitori=ActionsOnDB.elencoFornitori();
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
@@ -158,6 +165,7 @@ public class Home extends JFrame implements ActionListener {
         pannello3.add(cbmarca);
         pannelloEsterno.add(pannello3);
 
+        //pannello piccolo con label e textfield del PREZZO
         JPanel pannello4 =new JPanel();
         pannello4.setLayout(new FlowLayout());
         JLabel lprezzo= new JLabel("Prezzo");
@@ -167,6 +175,7 @@ public class Home extends JFrame implements ActionListener {
         pannello4.add(prezzo);
         pannelloEsterno.add(pannello4);
 
+        //pannello piccolo con label e textfield del N PEZZI
         JPanel pannello5 =new JPanel();
         pannello5.setLayout(new FlowLayout());
         JLabel lpezzi= new JLabel("Nr.° pezzi");
@@ -176,15 +185,16 @@ public class Home extends JFrame implements ActionListener {
         pannello5.add(numpezzi);
         pannelloEsterno.add(pannello5);
 
+        //pannello piccolo con INSERISCI
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
         binserisci= new JButton("INSERISCI");
         binserisci.setPreferredSize(new Dimension(100,50));
-        binserisci.addActionListener(this);
+        binserisci.addActionListener(this); //evento sul tasto INSERISCI
         pannello6.add(binserisci);
-        //frame.getContentPane().add(pannello6, BorderLayout.CENTER);
         pannelloEsterno.add(pannello6);
 
+        //bottone direttamente su pannello grande CHIUDI (va bene perchè settato come flowlayout e non border)
         bchiudiInsProd=new JButton("CHIUDI");
         pannelloEsterno.add(bchiudiInsProd);
         bchiudiInsProd.addActionListener(this);
@@ -470,7 +480,7 @@ public class Home extends JFrame implements ActionListener {
         if(cod.getText().length()==0 && nome.getText().length()==0 && cbmarca.getSelectedItem()=="Seleziona..."
         && prezzo.getText().length()==0 && numpezzi.getText().length()==0){
             JFrame f0=new JFrame("ATTENZIONE");
-            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.");
+            JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",1);
         }
         else {
             if (prezzo.getText().length() == 0) {
@@ -829,10 +839,11 @@ public class Home extends JFrame implements ActionListener {
         }*/
     }
 
+    //Creata in automatico quando aggiunto Actionlistener, creati if per ogni inserimento
     @Override
     public void actionPerformed(ActionEvent e) {
         // INTERFACCIA AGGIUNGI PRODOTTO
-        if(e.getSource()==aggiungiP){
+        if(e.getSource()==aggiungiP){ //aggiungiP è azione sul tasto "Nuovo prodotto"
             ProdottoInsFrame();
         }
         //BOTTONE BINSERISCI --> INSERISCI PRODOTTO IN DB
