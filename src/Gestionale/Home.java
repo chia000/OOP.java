@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 
 public class Home extends JFrame implements ActionListener {
 
+    JLabel labelProd;
+    JEditorPane editor1;
+
     JMenu ordine, prodotti, clienti, fornitori;
     JMenuItem aggiungiP, cercaP, aggiungiF, aggiungiC, aggiungiOF,aggiungiOC;
     JMenuItem visualizzaP;
@@ -38,6 +41,7 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloEsternoInsClinte;
     JPanel pannelloEsternoInsOrdineForn;
     JPanel pannelloEsternoInsOrdineCliente;
+    JPanel pannelloVis;
 
     public void HomeFrame(){
         frame= new JFrame("Home");
@@ -697,11 +701,13 @@ public class Home extends JFrame implements ActionListener {
     }
 
     public void Visualizza(String testo, String elenco){
-        JLabel labelProd= new JLabel(testo);
-        JEditorPane editor1= new JEditorPane();
+
+        labelProd= new JLabel(testo);
+        editor1= new JEditorPane();
         editor1.setPreferredSize(new Dimension(25,25));
         editor1.setText(elenco);
         editor1.setEditable(false);
+
         chiudiVis=new JButton("CHIUDI");
         chiudiVis.setPreferredSize(new Dimension(70,50));
         chiudiVis.addActionListener(this);
@@ -939,6 +945,12 @@ public class Home extends JFrame implements ActionListener {
         // BOTTONE VISUALIZZA TUTTI GLI ORDINI DEI CLIENTI DA TENDINA
         if(e.getSource()==visualizzaOC){
             VisualizzaOrdiniClienti();
+        }
+        // BOTTONE CHIUDI TUTTE LE VISUALIZZAZIONI DI PRODOTTI, CLIENTI, FORNITORI, ORDINI da TENDINA
+        if(e.getSource()==chiudiVis){
+            labelProd.setVisible(false);
+            editor1.setVisible(false);
+            chiudiVis.setVisible(false);
         }
 
     }
