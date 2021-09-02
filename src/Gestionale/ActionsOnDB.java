@@ -152,7 +152,7 @@ public class ActionsOnDB extends ConnessioneDB{
                 c=rsCount.getInt("quanti");
             }
             risultato=new String[c+1];
-            String query="select codice from prodotto where nome = '"+nomep+"'"; // in SQL ricordare singoli apici
+            String query="select codice from prodotto where nome like '%"+nomep+"%'"; // in SQL ricordare singoli apici
             ResultSet rs = stmt.executeQuery(query);
             risultato[0]="Seleziona...";
             c=1;

@@ -40,8 +40,11 @@ public class Home extends JFrame implements ActionListener {
     JButton chiudiVis;
     JButton okcercaProd;
     JButton newRicercaProd, elimanaProd, modificaProd, nuovoProd;
+    JButton bOKOrdineFor;
+    JButton bBack;
 
     JFrame frame;
+    JFrame f;
 
     JPanel pannelloEsterno;
     JPanel pannelloEsternoCerca;
@@ -477,27 +480,16 @@ public class Home extends JFrame implements ActionListener {
         pannello4.add(op_prezzo);
         pannelloEsternoInsOrdineForn.add(pannello4);*/
 
-        JPanel pannello7=new JPanel();
-        pannello7.setLayout(new FlowLayout());
-        JLabel lprezzoTotale= new JLabel("PREZZO TOTALE");
-        pannello7.add(lprezzoTotale);
-        JTextField tPrezzoTotale= new JTextField();
-        tPrezzoTotale.setEditable(false);
-        tPrezzoTotale.setPreferredSize(new Dimension(250,25));
-        double tmp_prezzo=ActionsOnDB.CalcolaPrezzo((String) of_cod.getSelectedItem(),Integer.parseInt(op_numpezzi.getText()));
-        tPrezzoTotale.setText(tmp_prezzo+" euro");
-        pannello7.add(tPrezzoTotale);
-        pannelloEsternoInsOrdineForn.add(pannello7);
-        CambiaColore(pannello7);
 
-        JPanel pannello6=new JPanel();
-        pannello6.setLayout(new FlowLayout());
-        binserisciOrdineFor= new JButton("INSERISCI");
-        binserisciOrdineFor.setPreferredSize(new Dimension(100,50));
-        binserisciOrdineFor.addActionListener(this);
-        pannello6.add(binserisciOrdineFor);
-        pannelloEsternoInsOrdineForn.add(pannello6);
-        CambiaColore(pannello6);
+
+        JPanel pannello8=new JPanel();
+        pannello8.setLayout(new FlowLayout());
+        bOKOrdineFor= new JButton("OK");
+        bOKOrdineFor.setPreferredSize(new Dimension(100,50));
+        bOKOrdineFor.addActionListener(this);
+        pannello8.add(bOKOrdineFor);
+        pannelloEsternoInsOrdineForn.add(pannello8);
+        CambiaColore(pannello8);
 
         bchiudiOrdineFor=new JButton("CHIUDI");
         pannelloEsternoInsOrdineForn.add(bchiudiOrdineFor);
@@ -1122,6 +1114,8 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE INSERISCI NUOVO ORDINE PER FORNITORE
         if(e.getSource()==binserisciOrdineFor){
+            f.setVisible(false);
+            frame.setVisible(true);
             BinsNuovoOrdineFornitoreDB();
         }
         // BOTTONE INSERISCI NUOVO ORDINE PER CLIENTE
@@ -1289,6 +1283,52 @@ public class Home extends JFrame implements ActionListener {
             ChiudiCercaProd();
             pannelloSud.setVisible(false);
             ModificaProdotto((String) tcod.getSelectedItem(), tnome.getText());
+        }
+        // BOTTONE OK INTERFACCIA INSERISCI NUOVO ORDINE PER FORNITORE
+        if(e.getSource()==bOKOrdineFor){
+            //if(of_cod.getSelectedItem()!="Selelziona..." && op_numpezzi.getText()!="") {
+                frame.setVisible(false);
+                f = new JFrame("PREZZO TOTALE");
+                f.setLocation(600, 200);
+                f.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                f.getContentPane().setLayout(new BorderLayout());
+
+
+                JPanel pannello7 = new JPanel();
+                pannello7.setLayout(new FlowLayout());
+                JLabel lprezzoTotale = new JLabel("PREZZO TOTALE");
+                pannello7.add(lprezzoTotale);
+                JTextField tPrezzoTotale = new JTextField();
+                tPrezzoTotale.setEditable(false);
+                tPrezzoTotale.setPreferredSize(new Dimension(250, 25));
+                double tmp_prezzo = ActionsOnDB.CalcolaPrezzo((String) of_cod.getSelectedItem(), Integer.parseInt(op_numpezzi.getText()));
+                tPrezzoTotale.setText(tmp_prezzo + " euro");
+                pannello7.add(tPrezzoTotale);
+                f.getContentPane().add(pannello7, BorderLayout.NORTH);
+                CambiaColore(pannello7);
+
+                JPanel pannello6 = new JPanel();
+                pannello6.setLayout(new FlowLayout());
+                binserisciOrdineFor = new JButton("INSERISCI");
+                binserisciOrdineFor.setPreferredSize(new Dimension(100, 50));
+                binserisciOrdineFor.addActionListener(this);
+                bBack = new JButton("Torna indietro");
+                bBack.addActionListener(this);
+                pannello6.add(binserisciOrdineFor);
+                pannello6.add(bBack);
+                f.getContentPane().add(pannello6, BorderLayout.CENTER);
+
+                f.pack();
+                f.setVisible(true);
+                CambiaColore(pannello6);
+            /*}
+            else {
+                JOptionPane.showMessageDialog(new JFrame(), "Prego, inserire tutti i dati.", "ATTENZIONE", 2);
+            }*/
+        }
+        // BOTTONE TORNA INDIETRO A INTERFACCIA NUOVO ORDINE PER FORNITORE
+        if(e.getSource()==bBack){
+            frame.setVisible(true);
         }
 
     }
