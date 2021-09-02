@@ -277,28 +277,39 @@ public class ActionsOnDB extends ConnessioneDB{
         return ris;
     }
 
+    public static String[] trovaParametro(String cod){
+        String[] ris=new String[50];
+
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+
+            ris=new String[1];
+
+            String query="select * from Prodotto where codice='"+cod+"'";
+            ResultSet rs= stmt.executeQuery(query);
+            while(rs.next()){
+                ris[0]= rs.getString("Marca");
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return ris;
+    }
+
     public static double CalcolaPrezzo(String cod, int numpezzi){
-        double error=0;
+
         double ris=1;
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
 
-            String ok_pezzi="select Num_Pezzi from prodotto where codice = '"+ cod+"'";
+            String ok_pezzi="select * from prodotto where codice = '"+ cod+"'";
             ResultSet rspezzi= stmt.executeQuery(ok_pezzi);
-            int tmp=0;
+            double tmp=0;
             while (rspezzi.next()){
-                tmp=rspezzi.getInt("Num_Pezzi");
+                tmp=rspezzi.getDouble("Prezzo");
             }
-            if(numpezzi>tmp){
-                ChiudiConnessioneDB(stmt);
-                return error;
-            }
-
-            String count="select Prezzo from prodotto where codice = '"+ cod+"'";
-            ResultSet rsCount= stmt.executeQuery(count);
-            while(rsCount.next()){
-                ris=rsCount.getInt("Prezzo");
-            }
-            ris=ris*numpezzi;
+            ris=numpezzi*tmp;
             ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
@@ -593,21 +604,47 @@ public class ActionsOnDB extends ConnessioneDB{
         // Se ritorna false --> prodotto non trovato
 
         boolean check=false;
+        String prova="";
 
         try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt =con.createStatement();){
-            String sql="Select distinct nome from prodotto";
+            String sql="Select distinct Nome from prodotto where nome='"+nome+"'";
             ResultSet rs1= stmt.executeQuery(sql);
             while(rs1.next()){
-                if(rs1.getString("Nome").equals(nome)){
-                    check=true;
-                    break;
-                }
+                prova=rs1.getString("Nome");
+            }
+            if(prova!=""){
+                check=true;
             }
         }
         catch (SQLException e){
             e.printStackTrace();
         }
         return check;
+    }
+
+    public static boolean ModificaProd(Double prezzo, Integer num_pezzi, String codice){
+        //false --> modifica NON riuscita
+        //true --> modifica RIUSCITA
+
+        boolean chk=false;
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt1=con.createStatement();Statement stmt2=con.createStatement();){
+
+            String query1 ="update Prodotto set prezzo="+prezzo+" where codice='"+codice+"'";
+            Integer rs1=stmt1.executeUpdate(query1);
+
+            String query2 ="update Prodotto set Num_Pezzi="+num_pezzi+" where codice='"+codice+"'";
+            Integer rs2=stmt2.executeUpdate(query2);
+
+            chk=true;
+
+            ChiudiConnessioneDB(stmt1);
+            ChiudiConnessioneDB(stmt2);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return chk;
     }
 
     public static Boolean EliminaProdotto(String codice){

@@ -52,6 +52,7 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloVis;
     JPanel pannello1;
     JPanel pannelloSud, pannelloCentro;
+    JPanel pannelloModificaProd;
 
 
     public void HomeFrame(){
@@ -475,6 +476,19 @@ public class Home extends JFrame implements ActionListener {
         pannello4.add(lprezzo);
         pannello4.add(op_prezzo);
         pannelloEsternoInsOrdineForn.add(pannello4);*/
+
+        JPanel pannello7=new JPanel();
+        pannello7.setLayout(new FlowLayout());
+        JLabel lprezzoTotale= new JLabel("PREZZO TOTALE");
+        pannello7.add(lprezzoTotale);
+        JTextField tPrezzoTotale= new JTextField();
+        tPrezzoTotale.setEditable(false);
+        tPrezzoTotale.setPreferredSize(new Dimension(250,25));
+        double tmp_prezzo=ActionsOnDB.CalcolaPrezzo((String) of_cod.getSelectedItem(),Integer.parseInt(op_numpezzi.getText()));
+        tPrezzoTotale.setText(tmp_prezzo+" euro");
+        pannello7.add(tPrezzoTotale);
+        pannelloEsternoInsOrdineForn.add(pannello7);
+        CambiaColore(pannello7);
 
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
@@ -984,6 +998,32 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoCerca.setVisible(false);
     }
 
+    public void ModificaProdotto(String tmp_codice, String tmp_nome){
+
+        ProdottoInsFrame();
+        cod.setEditable(false);
+        cod.setText(tmp_codice);
+        nome.setEditable(false);
+        nome.setText(tmp_nome);
+        cbmarca.removeAllItems();
+        String[] e=ActionsOnDB.trovaParametro(tmp_codice);
+        cbmarca.addItem(e[0]);
+
+        binserisci.setVisible(false);
+
+        pannelloModificaProd=new JPanel();
+        pannelloModificaProd.setLayout(new FlowLayout());
+        pannelloModificaProd.setPreferredSize(new Dimension(100,100));
+        JButton bmodificaProd=new JButton("MODIFICA");
+        bmodificaProd.addActionListener(this);
+        pannelloModificaProd.add(bmodificaProd);
+        CambiaColore(pannelloModificaProd);
+
+        frame.getContentPane().add(pannelloModificaProd, BorderLayout.SOUTH);
+        frame.setVisible(true);
+
+    }
+
     public void DeleteProd(){
         /*System.out.println("ok");
         if(tcod.getText().length()==0){
@@ -1243,6 +1283,12 @@ public class Home extends JFrame implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(new JFrame(), "ERRORE RIPROVA", "ATTENZIONE",0);
             }
+        }
+        // BOTTONE MODIFICA QUANTITA' (NUMERO PEZZI) e PREZZO PRODOTTO
+        if(e.getSource()==modificaProd){
+            ChiudiCercaProd();
+            pannelloSud.setVisible(false);
+            ModificaProdotto((String) tcod.getSelectedItem(), tnome.getText());
         }
 
     }
