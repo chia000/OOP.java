@@ -39,7 +39,7 @@ public class Home extends JFrame implements ActionListener {
     JButton binserisciOrdineCliente, bchiudiOrdineCliente;
     JButton chiudiVis;
     JButton okcercaProd;
-    JButton newRicercaProd;
+    JButton newRicercaProd, elimanaProd, modificaProd;
 
     JFrame frame;
 
@@ -1126,8 +1126,7 @@ public class Home extends JFrame implements ActionListener {
                     pannello1.add(lcod);
                     pannello1.add(tcod);
                     pannello1.add(newRicercaProd);
-                    pannelloEsternoCerca.add(pannello1, BorderLayout.CENTER);
-                    //frame.getContentPane().add(pannelloEsternoCerca, BorderLayout.CENTER);
+                    pannelloEsternoCerca.add(pannello1, BorderLayout.CENTER);;
                     frame.setVisible(true);
                     okcercaProd.removeActionListener(this);
                     CambiaColore(pannello1);
