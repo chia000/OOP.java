@@ -39,7 +39,7 @@ public class Home extends JFrame implements ActionListener {
     JButton binserisciOrdineCliente, bchiudiOrdineCliente;
     JButton chiudiVis;
     JButton okcercaProd;
-    JButton newRicercaProd, elimanaProd, modificaProd;
+    JButton newRicercaProd, elimanaProd, modificaProd, nuovoProd;
 
     JFrame frame;
 
@@ -51,6 +51,7 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloEsternoInsOrdineCliente;
     JPanel pannelloVis;
     JPanel pannello1;
+    JPanel pannelloSud, pannelloCentro;
 
 
     public void HomeFrame(){
@@ -65,7 +66,7 @@ public class Home extends JFrame implements ActionListener {
         //frame.getContentPane().setBackground(Color.pink);
 
 
-        frame.setPreferredSize(new Dimension(1000,500));
+        frame.setPreferredSize(new Dimension(1000,700));
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
 
@@ -895,6 +896,29 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoCerca.add(pannello2,BorderLayout.NORTH);
         CambiaColore(pannello2);
 
+        pannelloSud= new JPanel();
+        pannelloSud.setLayout(new FlowLayout());
+        pannelloSud.setPreferredSize(new Dimension(100, 100));
+
+        elimanaProd=new JButton("ELIMINA PRODOTTO");
+        elimanaProd.addActionListener(this);
+        modificaProd=new JButton("MODIFICA PRODOTTO");
+        modificaProd.addActionListener(this);
+        nuovoProd=new JButton("NUOVO PRODOTTO");
+        nuovoProd.addActionListener(this);
+        bchiudiCercaProd=new JButton("CHIUDI");
+        bchiudiCercaProd.addActionListener(this);
+
+        pannelloSud.add(elimanaProd);
+        pannelloSud.add(modificaProd);
+        pannelloSud.add(nuovoProd);
+        pannelloSud.add(bchiudiCercaProd);
+        CambiaColore(pannelloSud);
+
+        frame.getContentPane().add(pannelloSud, BorderLayout.SOUTH);
+        modificaProd.setVisible(false);
+        nuovoProd.setVisible(false);
+        elimanaProd.setVisible(false);
 
         /*JPanel pannello1=new JPanel();
         pannello1.setLayout(new FlowLayout());
@@ -956,6 +980,10 @@ public class Home extends JFrame implements ActionListener {
         etichettaIniz.setVisible(false);
     }
 
+    public void ChiudiCercaProd(){
+        pannelloEsternoCerca.setVisible(false);
+    }
+
     public void DeleteProd(){
         /*System.out.println("ok");
         if(tcod.getText().length()==0){
@@ -1001,6 +1029,7 @@ public class Home extends JFrame implements ActionListener {
         // BOTTONE CHIUDI CERCA PRODOTTO
         if(e.getSource()==bchiudiCercaProd){
             ChiudiCercaProdotto();
+            pannelloSud.setVisible(false);
         }
         // AGGIUNGI FORNITORI JMENUITEM
         if(e.getSource()==aggiungiF){
@@ -1106,53 +1135,72 @@ public class Home extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(new JFrame(), "Inserisci un testo valido.", "ATTENZIONE", 2);
             }
             else {
-                String[] elencoCodiciProd = ActionsOnDB.elencoCodProdottoSelezionato(tnome.getText());
-                // lo 0 di elencoCodiciProd è "Seleziona..."
-                if(elencoCodiciProd.length==1){
-                    JOptionPane.showMessageDialog(new JFrame(), "Il codice inserito non è stato trovato.", "ERRORE", 0);
-                    tnome.setText("");
-                }
-                else {
-                    pannello1 = new JPanel();
-                    pannello1.setLayout(new FlowLayout());
-                    pannello1.setPreferredSize(new Dimension(400,100));
-                    //pannello1.setPreferredSize(new Dimension(25,25));
-                    JLabel lcod = new JLabel("Codice");
-                    tcod = new JComboBox(codProdotti);
-                    tcod.setPreferredSize(new Dimension(250, 25));
-                    tcod.addActionListener(this);
-                    newRicercaProd = new JButton("NUOVA RICERCA");
-                    newRicercaProd.addActionListener(this);
-                    pannello1.add(lcod);
-                    pannello1.add(tcod);
-                    pannello1.add(newRicercaProd);
-                    pannelloEsternoCerca.add(pannello1, BorderLayout.CENTER);;
-                    frame.setVisible(true);
-                    okcercaProd.removeActionListener(this);
-                    CambiaColore(pannello1);
+                boolean chk=ActionsOnDB.CercaNomeProdottodb(tnome.getText());
+                if(chk==true) {
+                    String[] elencoCodiciProd = ActionsOnDB.elencoCodProdottoSelezionato(tnome.getText());
+                    // lo 0 di elencoCodiciProd è "Seleziona..."
+                    if (elencoCodiciProd.length == 1) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Il codice inserito non è stato trovato.", "ERRORE", 0);
+                        tnome.setText("");
+                    } else {
+                        pannello1 = new JPanel();
+                        pannello1.setLayout(new FlowLayout());
+                        pannello1.setPreferredSize(new Dimension(400, 100));
+                        //pannello1.setPreferredSize(new Dimension(25,25));
+                        JLabel lcod = new JLabel("Codice");
+                        tcod = new JComboBox(codProdotti);
+                        tcod.setPreferredSize(new Dimension(250, 25));
+                        tcod.addActionListener(this);
+                        newRicercaProd = new JButton("NUOVA RICERCA");
+                        newRicercaProd.addActionListener(this);
+                        pannello1.add(lcod);
+                        pannello1.add(tcod);
+                        pannello1.add(newRicercaProd);
+                        pannelloEsternoCerca.add(pannello1, BorderLayout.CENTER);
 
-                    tcod.removeAllItems();
-                    int i = ActionsOnDB.Conta(tnome.getText());
-                    int c = 0;
-                    while (c <= i) {
-                        tcod.addItem(elencoCodiciProd[c]);
-                        ++c;
+                        pannelloCentro = new JPanel();
+                        pannelloCentro.setLayout(new FlowLayout());
+                        pannelloCentro.setPreferredSize(new Dimension(900, 250));
+                        editorProd = new JEditorPane();
+                        editorProd.setPreferredSize(new Dimension(250, 200));
+                        pannelloCentro.add(editorProd);
+                        //FlowLayout ciao=(FlowLayout) pannello1.getLayout();
+                        //ciao.setAlignmentX(FlowLayout.TRAILING);
+                        //editorProd.setPreferredSize(new Dimension(400,100));
+                        editorProd.setBackground(new Color(173, 196, 255));
+                        pannelloEsternoCerca.add(pannelloCentro, BorderLayout.SOUTH);
+                        CambiaColore(pannelloCentro);
+                        editorProd.setVisible(false);
+
+                        nuovoProd.setVisible(true);
+                        modificaProd.setVisible(true);
+                        elimanaProd.setVisible(true);
+
+                        frame.setVisible(true);
+                        okcercaProd.removeActionListener(this);
+                        CambiaColore(pannello1);
+
+                        tcod.removeAllItems();
+                        int i = ActionsOnDB.Conta(tnome.getText());
+                        int c = 0;
+                        while (c <= i) {
+                            tcod.addItem(elencoCodiciProd[c]);
+                            ++c;
+                        }
                     }
+                }
+                else{
+                    JOptionPane.showMessageDialog(new JFrame(), "Questo articolo non esiste.", "ATTENZIONE", 2);
+                    tnome.setText("");
                 }
             }
         }
         // TROVA DESCRIZIONE PRODOTTO DATO CODICE E NOME PRODOTTO (CERCA PRODOTTO)
         if(e.getSource()==tcod){
-
-            editorProd=new JEditorPane();
-            //FlowLayout ciao=(FlowLayout) pannello1.getLayout();
-            //ciao.setAlignmentX(FlowLayout.TRAILING);
-            //editorProd.setPreferredSize(new Dimension(400,100));
+            editorProd.setVisible(true);
             editorProd.setText(ActionsOnDB.elencoProdottoSelezionato((String) tcod.getSelectedItem()));
-            editorProd.setBackground(Color.MAGENTA);
+            //editorProd.setBackground(Color.MAGENTA);
             editorProd.setEditable(false);//l'area di testo non può essere modificata
-            //editorProd.setBackground(new Color(173,196,255));
-            pannelloEsternoCerca.add(editorProd, BorderLayout.SOUTH);
             frame.setVisible(true);
         }
         // BOTTONE NUOVA RICERCA PRODOTTO
@@ -1160,7 +1208,41 @@ public class Home extends JFrame implements ActionListener {
             tnome.setText("");
             tcod.removeAllItems();
             pannello1.setVisible(false);
+            pannelloCentro.setVisible(false);
             okcercaProd.addActionListener(this);
+        }
+        // BOTTONE NUOVO PRODOTTO DA CERCA PRODOTTO
+        if(e.getSource()==nuovoProd){
+            ChiudiCercaProd();
+            pannelloSud.setVisible(false);
+            ProdottoInsFrame();
+        }
+        // BOTTONE ELIMINA PRODOTTO DA CERCA PRODOTTO
+        if(e.getSource()==elimanaProd){
+            if(tcod.getSelectedItem()!="Seleziona..." || tcod.getSelectedItem()!="") {
+                boolean val= ActionsOnDB.EliminaProdotto((String) tcod.getSelectedItem());
+                if(val==true){
+                    JOptionPane.showMessageDialog(new JFrame(), "Il prodotto selezionato è stato eliminato correttamente.", "ELIMINAZIONE",1);
+                    pannelloCentro.setVisible(false);
+                    nuovoProd.setVisible(false);
+                    modificaProd.setVisible(false);
+                    elimanaProd.setVisible(false);
+                    pannello1.setVisible(false);
+                    tnome.setText("");
+                }
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il prodotto non è stato eliminato correttamente poiché probabilmente è presente in un altro percorso.", "ATTENZIONE",0);
+                    pannelloCentro.setVisible(false);
+                    nuovoProd.setVisible(false);
+                    modificaProd.setVisible(false);
+                    elimanaProd.setVisible(false);
+                    pannello1.setVisible(false);
+                    tnome.setText("");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "ERRORE RIPROVA", "ATTENZIONE",0);
+            }
         }
 
     }

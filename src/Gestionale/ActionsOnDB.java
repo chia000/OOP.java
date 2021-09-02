@@ -176,10 +176,10 @@ public class ActionsOnDB extends ConnessioneDB{
             String query="select * from prodotto where codice = '"+codice+"'"; //selezione di un prodotto dato il codice
             ResultSet rs= stmt.executeQuery(query);
             while(rs.next()){
-                risultato="     CODICE: "+rs.getString("Codice")+'\n'+
-                        "     NOME: "+rs.getString("Nome")+'\n'+
-                        "     MARCA: "+rs.getString("Marca")+'\n'+
-                        "     PREZZO: "+rs.getDouble("Prezzo")+'\n'+
+                risultato="     CODICE: "+rs.getString("Codice")+'\n'+'\n'+
+                        "     NOME: "+rs.getString("Nome")+'\n'+'\n'+
+                        "     MARCA: "+rs.getString("Marca")+'\n'+'\n'+
+                        "     PREZZO: "+rs.getDouble("Prezzo")+'\n'+'\n'+
                         "     NUMERO PEZZI: "+rs.getInt("Num_Pezzi");
             }
             ChiudiConnessioneDB(stmt);
@@ -586,6 +586,68 @@ public class ActionsOnDB extends ConnessioneDB{
             e.printStackTrace();
         }
         return ris;
+    }
+
+    public static boolean CercaNomeProdottodb (String nome){
+        // Se ritorna true --> prodotto trovato
+        // Se ritorna false --> prodotto non trovato
+
+        boolean check=false;
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt =con.createStatement();){
+            String sql="Select distinct nome from prodotto";
+            ResultSet rs1= stmt.executeQuery(sql);
+            while(rs1.next()){
+                if(rs1.getString("Nome").equals(nome)){
+                    check=true;
+                    break;
+                }
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return check;
+    }
+
+    public static Boolean EliminaProdotto(String codice){
+        // true --> dato cancellato
+        // false --> dato NON cancellato
+
+        boolean valore=false;
+        String codProvaFornitore="", codProvaCliente="";
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt =con.createStatement();){
+
+            String query0="select * from Ordine_Fornitore where Cod_Prod='"+codice+"'";
+            ResultSet rs0=stmt.executeQuery(query0);
+            while (rs0.next()){
+                codProvaFornitore=rs0.getString("Cod_Prod");
+            }
+
+            String query1="select * from Ordine_Cliente where Cod_Prod='"+codice+"'";
+            ResultSet rs1=stmt.executeQuery(query1);
+            while (rs1.next()){
+                codProvaCliente=rs0.getString("Cod_Prod");
+            }
+
+            if(codProvaFornitore=="" && codProvaCliente=="") {
+
+                String query = "delete from prodotto where codice ='" + codice + "'";
+                Integer rs = stmt.executeUpdate(query);
+                valore=true;
+            }
+            else {
+                valore=false;
+            }
+
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return valore;
     }
 
     public static void main(String[] argv){
