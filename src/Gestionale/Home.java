@@ -21,12 +21,14 @@ public class Home extends JFrame implements ActionListener {
     JMenuItem visualizzaC;
     JMenuItem visualizzaF;
     JMenuItem visualizzaOF, visualizzaOC;
+    JMenuItem cercaC;
 
     JTextField cod, nome, prezzo, numpezzi;
     JTextField piva, nomeF, luogo;
     JTextField cf, nomeC, cognome;
     JTextField op_numpezzi;  // ORDINE PRODOTTO A FORNITORE
     JTextField tnome;
+    JTextField tcognome, tnomeC;
 
     JComboBox cbmarca;
     JComboBox tcod;
@@ -42,6 +44,7 @@ public class Home extends JFrame implements ActionListener {
     JButton newRicercaProd, elimanaProd, modificaProd, nuovoProd;
     JButton bOKOrdineFor;
     JButton bBack;
+    JButton okcercaClient, elimanaClient,modificaClient, nuovoClient, bchiudiCercaClient;
 
     JFrame frame;
     JFrame f;
@@ -56,6 +59,7 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannello1;
     JPanel pannelloSud, pannelloCentro;
     JPanel pannelloModificaProd;
+    JPanel pannelloEsternoCercaC, pannelloSudc;
 
 
     public void HomeFrame(){
@@ -107,9 +111,13 @@ public class Home extends JFrame implements ActionListener {
         visualizzaC.addActionListener(this);
         aggiungiC= new JMenuItem("Nuovo cliente");
         aggiungiC.addActionListener(this);
+        cercaC=new JMenuItem("Cerca cliente");
+        cercaC.addActionListener(this);
         clienti.add(visualizzaC);
         clienti.addSeparator();
         clienti.add(aggiungiC);
+        clienti.addSeparator();
+        clienti.add(cercaC);
 
         //Fornitori
         visualizzaF= new JMenuItem("Visualizza tutto...");
@@ -926,26 +934,64 @@ public class Home extends JFrame implements ActionListener {
         nuovoProd.setVisible(false);
         elimanaProd.setVisible(false);
 
-        /*JPanel pannello1=new JPanel();
-        pannello1.setLayout(new FlowLayout());
-        JLabel lcod=new JLabel("Codice");
-        tcod=new JComboBox(codProdotti);
-
-        bcercap=new JButton("CERCA");
-        bcercap.addActionListener(this);
-        tcod.setPreferredSize(new Dimension(250,25));
-        pannello1.add(lcod);
-        pannello1.add(tcod);
-        pannello1.add(bcercap);
-        pannelloEsternoCerca.add(pannello1);
-        CambiaColore(pannello1);
-
-        bchiudiCercaProd=new JButton("CHIUDI");
-        pannelloEsternoCerca.add(bchiudiCercaProd);
-        bchiudiCercaProd.addActionListener(this);
-        delete.setVisible(true);*/
-
         frame.getContentPane().add(pannelloEsternoCerca, BorderLayout.NORTH);
+        frame.setVisible(true);
+
+
+    }
+
+    public void CercaCliente(){
+
+        pannelloEsternoCercaC=new JPanel();
+        pannelloEsternoCercaC.setPreferredSize(new Dimension(400,400));
+        pannelloEsternoCercaC.setLayout(new BorderLayout());
+        CambiaColore(pannelloEsternoCercaC);
+
+        JPanel pannello2=new JPanel();
+        pannello2.setLayout(new FlowLayout());
+        pannello2.setPreferredSize(new Dimension(400,70));
+        pannello2.setAlignmentX(FlowLayout.TRAILING);
+        JLabel lnome=new JLabel("Nome");
+        tnomeC=new JTextField();
+        tnomeC.setPreferredSize(new Dimension(350,25));
+        JLabel lcognome=new JLabel("Cognome");
+        tcognome=new JTextField();
+        tcognome.setPreferredSize(new Dimension(350,25));
+        okcercaClient=new JButton("OK");
+        okcercaClient.addActionListener(this);
+        pannello2.add(lnome);
+        pannello2.add(tnomeC);
+        pannello2.add(lcognome);
+        pannello2.add(tcognome);
+        pannello2.add(okcercaClient);
+        pannelloEsternoCercaC.add(pannello2,BorderLayout.NORTH);
+        CambiaColore(pannello2);
+
+        pannelloSudc= new JPanel();
+        pannelloSudc.setLayout(new FlowLayout());
+        pannelloSudc.setPreferredSize(new Dimension(100, 100));
+
+        elimanaClient=new JButton("ELIMINA PRODOTTO");
+        elimanaClient.addActionListener(this);
+        modificaClient=new JButton("MODIFICA PRODOTTO");
+        modificaClient.addActionListener(this);
+        nuovoClient=new JButton("NUOVO PRODOTTO");
+        nuovoClient.addActionListener(this);
+        bchiudiCercaClient=new JButton("CHIUDI");
+        bchiudiCercaClient.addActionListener(this);
+
+        pannelloSudc.add(elimanaClient);
+        pannelloSudc.add(modificaClient);
+        pannelloSudc.add(nuovoClient);
+        pannelloSudc.add(bchiudiCercaClient);
+        CambiaColore(pannelloSudc);
+
+        frame.getContentPane().add(pannelloSudc, BorderLayout.SOUTH);
+        modificaClient.setVisible(false);
+        nuovoClient.setVisible(false);
+        elimanaClient.setVisible(false);
+
+        frame.getContentPane().add(pannelloEsternoCercaC, BorderLayout.NORTH);
         frame.setVisible(true);
 
 
@@ -990,6 +1036,10 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoCerca.setVisible(false);
     }
 
+    public void ChiudiCercaClient(){
+        pannelloEsternoCercaC.setVisible(false);
+    }
+
     public void ModificaProdotto(String tmp_codice, String tmp_nome){
 
         ProdottoInsFrame();
@@ -1016,23 +1066,6 @@ public class Home extends JFrame implements ActionListener {
 
     }
 
-    public void DeleteProd(){
-        /*System.out.println("ok");
-        if(tcod.getText().length()==0){
-            JOptionPane.showMessageDialog(new JFrame(),"ERRORE: non è stato inserito nessun dato nella barra di ricerca. RIPROVA.");
-        }
-
-        boolean val=ActionsOnDB.CancellaProdotto(tcod.getText());
-        if(val==true){
-            JOptionPane.showMessageDialog(new JFrame(),"La cancellazione del prodotto con codice: "+ tcod.getText()+
-                    " è avvenuta con SUCCESSO.");
-            tcod.setText("");
-        }
-        else{
-            JOptionPane.showMessageDialog(new JFrame(),"Non è stato trovato nessun articolo con il seguente codice: "+ tcod.getText());
-            tcod.setText("");
-        }*/
-    }
 
     //Creata in automatico quando aggiunto Actionlistener, creati if per ogni inserimento
     @Override
@@ -1048,10 +1081,6 @@ public class Home extends JFrame implements ActionListener {
         // BOTTONE CERCA PRODOTTO
         if(e.getSource()==cercaP){
             CercaProdotto();
-        }
-        // BOTTONE CANCELLA PRODOTTO
-        if(e.getSource()==delete){
-            DeleteProd();
         }
         // BOTTONE CHIUDI IN INSERIMENTO PRODOTTO (per ora)
         if(e.getSource()==bchiudiInsProd){
@@ -1286,49 +1315,83 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE OK INTERFACCIA INSERISCI NUOVO ORDINE PER FORNITORE
         if(e.getSource()==bOKOrdineFor){
-            //if(of_cod.getSelectedItem()!="Selelziona..." && op_numpezzi.getText()!="") {
-                frame.setVisible(false);
-                f = new JFrame("PREZZO TOTALE");
-                f.setLocation(600, 200);
-                f.setDefaultCloseOperation(HIDE_ON_CLOSE);
-                f.getContentPane().setLayout(new BorderLayout());
-
-
-                JPanel pannello7 = new JPanel();
-                pannello7.setLayout(new FlowLayout());
-                JLabel lprezzoTotale = new JLabel("PREZZO TOTALE");
-                pannello7.add(lprezzoTotale);
-                JTextField tPrezzoTotale = new JTextField();
-                tPrezzoTotale.setEditable(false);
-                tPrezzoTotale.setPreferredSize(new Dimension(250, 25));
-                double tmp_prezzo = ActionsOnDB.CalcolaPrezzo((String) of_cod.getSelectedItem(), Integer.parseInt(op_numpezzi.getText()));
-                tPrezzoTotale.setText(tmp_prezzo + " euro");
-                pannello7.add(tPrezzoTotale);
-                f.getContentPane().add(pannello7, BorderLayout.NORTH);
-                CambiaColore(pannello7);
-
-                JPanel pannello6 = new JPanel();
-                pannello6.setLayout(new FlowLayout());
-                binserisciOrdineFor = new JButton("INSERISCI");
-                binserisciOrdineFor.setPreferredSize(new Dimension(100, 50));
-                binserisciOrdineFor.addActionListener(this);
-                bBack = new JButton("Torna indietro");
-                bBack.addActionListener(this);
-                pannello6.add(binserisciOrdineFor);
-                pannello6.add(bBack);
-                f.getContentPane().add(pannello6, BorderLayout.CENTER);
-
-                f.pack();
-                f.setVisible(true);
-                CambiaColore(pannello6);
-            /*}
+            if(of_nome.getSelectedItem()=="Seleziona..." && of_cod.getSelectedItem()=="Seleziona..." && (piva_f.getSelectedItem()=="" ||piva_f.getSelectedItem()=="Seleziona...") &&
+                    op_numpezzi.getText().length()==0) {
+                JFrame f0 = new JFrame();
+                JOptionPane.showMessageDialog(f0, "ERRORE: inserire i dati.", "ATTENZIONE", 0);
+            }
             else {
-                JOptionPane.showMessageDialog(new JFrame(), "Prego, inserire tutti i dati.", "ATTENZIONE", 2);
-            }*/
+                if(of_nome.getSelectedItem()!="Seleziona..." && of_cod.getSelectedItem()!="Seleziona..."
+                        && op_numpezzi.getText().length()!=0)
+                {
+                    frame.setVisible(false);
+                    f = new JFrame("PREZZO TOTALE");
+                    f.setLocation(600, 200);
+                    f.setDefaultCloseOperation(HIDE_ON_CLOSE);
+                    f.getContentPane().setLayout(new BorderLayout());
+
+
+                    JPanel pannello7 = new JPanel();
+                    pannello7.setLayout(new FlowLayout());
+                    JLabel lprezzoTotale = new JLabel("PREZZO TOTALE");
+                    pannello7.add(lprezzoTotale);
+                    JTextField tPrezzoTotale = new JTextField();
+                    tPrezzoTotale.setEditable(false);
+                    tPrezzoTotale.setPreferredSize(new Dimension(250, 25));
+                    double tmp_prezzo = ActionsOnDB.CalcolaPrezzo((String) of_cod.getSelectedItem(), Integer.parseInt(op_numpezzi.getText()));
+                    tPrezzoTotale.setText(tmp_prezzo + " euro");
+                    pannello7.add(tPrezzoTotale);
+                    f.getContentPane().add(pannello7, BorderLayout.NORTH);
+                    CambiaColore(pannello7);
+
+                    JPanel pannello6 = new JPanel();
+                    pannello6.setLayout(new FlowLayout());
+                    binserisciOrdineFor = new JButton("INSERISCI");
+                    binserisciOrdineFor.setPreferredSize(new Dimension(100, 50));
+                    binserisciOrdineFor.addActionListener(this);
+                    bBack = new JButton("Torna indietro");
+                    bBack.addActionListener(this);
+                    pannello6.add(binserisciOrdineFor);
+                    pannello6.add(bBack);
+                    f.getContentPane().add(pannello6, BorderLayout.CENTER);
+
+                    f.pack();
+                    f.setVisible(true);
+                    CambiaColore(pannello6);
+                }
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE: inserire i dati.", "ATTENZIONE", 0);
+                }
+            }
         }
         // BOTTONE TORNA INDIETRO A INTERFACCIA NUOVO ORDINE PER FORNITORE
         if(e.getSource()==bBack){
             frame.setVisible(true);
+        }
+        // BOTTONE CERCA CLIENTE DA TENDINA
+        if(e.getSource()==cercaC){
+            CercaCliente();
+        }
+        // BOTTONE CHIUDI INTERFACCIA CERCA CLIENTE
+        if(e.getSource()==bchiudiCercaClient){
+            ChiudiCercaClient();
+            bchiudiCercaClient.setVisible(false);
+        }
+        // BOTTONE OK IN CERCA CLIENTE IN INTERFACCIA (NOME, COGNOME)
+        if(e.getSource()==okcercaClient){
+            if(tnomeC.getText().length()==0 && tcognome.getText().length()==0){
+                JOptionPane.showMessageDialog(new JFrame(), "Prego, inserire i dati per la ricerca.", "ATTENZIONE", 2);
+            }
+            else {
+                if(tnomeC.getText().length()==0 || tcognome.getText().length()==0){
+                    JOptionPane.showMessageDialog(new JFrame(), "Prego, inserire i dati per la ricerca.", "ATTENZIONE", 2);
+                }
+                else{
+                    /*
+                        DA QUI --- DEVI FINIRE ---
+                     */
+                }
+            }
         }
 
     }
