@@ -11,7 +11,9 @@ public class Home extends JFrame implements ActionListener {
 
     JLabel etichettaIniz;
     JLabel labelProd;
+
     JEditorPane editor1;
+    JEditorPane editorProd;
 
     JMenu ordine, prodotti, clienti, fornitori;
     JMenuItem aggiungiP, cercaP, aggiungiF, aggiungiC, aggiungiOF,aggiungiOC;
@@ -20,12 +22,14 @@ public class Home extends JFrame implements ActionListener {
     JMenuItem visualizzaF;
     JMenuItem visualizzaOF, visualizzaOC;
 
-    JTextField cod, nome, prezzo, numpezzi, tcod;
+    JTextField cod, nome, prezzo, numpezzi;
     JTextField piva, nomeF, luogo;
     JTextField cf, nomeC, cognome;
     JTextField op_numpezzi;  // ORDINE PRODOTTO A FORNITORE
+    JTextField tnome;
 
     JComboBox cbmarca;
+    JComboBox tcod;
     //JComboBox op_prezzo;   // ORDINE PRODOTTO A FORNITORE
 
     JButton delete, binserisci, bcercap, bchiudiInsProd, bchiudiCercaProd;
@@ -34,6 +38,8 @@ public class Home extends JFrame implements ActionListener {
     JButton bchiudiOrdineFor, binserisciOrdineFor;
     JButton binserisciOrdineCliente, bchiudiOrdineCliente;
     JButton chiudiVis;
+    JButton okcercaProd;
+    JButton newRicercaProd;
 
     JFrame frame;
 
@@ -44,11 +50,13 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloEsternoInsOrdineForn;
     JPanel pannelloEsternoInsOrdineCliente;
     JPanel pannelloVis;
+    JPanel pannello1;
 
 
     public void HomeFrame(){
         frame= new JFrame("GestioniaMO"); //pannello principale (nome)
         frame.setLocation(300,100);
+
 
         Image icona = Toolkit.getDefaultToolkit().createImage("iconaProgetto.jpg");
         frame.setIconImage(icona);
@@ -131,11 +139,46 @@ public class Home extends JFrame implements ActionListener {
         delete.setVisible(false);
         pannelloDelete.add(delete);
         pannelloDelete.setVisible(true);
+        CambiaColore(pannelloDelete);
         frame.getContentPane().add(pannelloDelete,BorderLayout.SOUTH);
 
         frame.pack();
         frame.setVisible(true);
     }
+
+    /*public void ChiudiTutto(){
+
+        if(pannelloEsterno.isVisible()){
+            pannelloEsterno.setVisible(false);
+        }
+        if(pannelloEsternoCerca.isVisible()){
+            pannelloEsternoCerca.setVisible(false);
+        }
+        if(pannelloEsternoInsForn.isVisible()){
+            pannelloEsternoInsForn.setVisible(false);
+        }
+        if(pannelloEsternoInsClinte.isVisible()){
+            pannelloEsternoInsClinte.setVisible(false);
+        }
+        if(pannelloEsternoInsOrdineForn.isVisible()){
+            pannelloEsternoInsOrdineForn.setVisible(false);
+        }
+        if(pannelloEsternoInsOrdineCliente.isVisible()){
+            pannelloEsternoInsOrdineCliente.setVisible(false);
+        }
+        if(pannelloVis.isVisible()){
+            pannelloVis.setVisible(false);
+        }
+        if(labelProd.isVisible()){
+            labelProd.setVisible(false);
+        }
+        if(editor1.isVisible()){
+            editor1.setVisible(false);
+        }
+        if(chiudiVis.isVisible()){
+            chiudiVis.setVisible(false);
+        }
+    }*/
 
     public void CambiaColore(JPanel p){
         p.setBackground(new Color(173,196,255));
@@ -148,7 +191,9 @@ public class Home extends JFrame implements ActionListener {
          * mi ricordo di rendere il frame visibile (=true).
          * */
 
+
         pannelloEsterno =new JPanel(); //pannello grande
+        pannelloEsterno.setVisible(true);
         pannelloEsterno.setPreferredSize(new Dimension(400,400));
         pannelloEsterno.setLayout(new FlowLayout()); //disposizione in colonna con flowlayout
         CambiaColore(pannelloEsterno);
@@ -785,6 +830,10 @@ public class Home extends JFrame implements ActionListener {
         editor1.setEditable(false); //l'area di testo non può essere modificata
         editor1.setBackground(new Color(173,196,255));
 
+        /*ChiudiTutto();
+        labelProd.setVisible(true);
+        editor1.setVisible(true);*/
+
         chiudiVis=new JButton("CHIUDI");
         chiudiVis.setPreferredSize(new Dimension(70,50));
         chiudiVis.addActionListener(this);
@@ -822,16 +871,36 @@ public class Home extends JFrame implements ActionListener {
 
     }
 
+    JPanel pannello3;
+
     public void CercaProdotto(){
-        frame.setVisible(false);
+        //frame.setVisible(false);
         pannelloEsternoCerca=new JPanel();
         pannelloEsternoCerca.setPreferredSize(new Dimension(400,400));
-        pannelloEsternoCerca.setLayout(new FlowLayout());
+        pannelloEsternoCerca.setLayout(new BorderLayout());
+        CambiaColore(pannelloEsternoCerca);
 
-        JPanel pannello1=new JPanel();
+        JPanel pannello2=new JPanel();
+        pannello2.setLayout(new FlowLayout());
+        pannello2.setPreferredSize(new Dimension(400,70));
+        pannello2.setAlignmentX(FlowLayout.TRAILING);
+        JLabel lnome=new JLabel("Nome");
+        tnome=new JTextField();
+        tnome.setPreferredSize(new Dimension(350,25));
+        okcercaProd=new JButton("OK");
+        okcercaProd.addActionListener(this);
+        pannello2.add(lnome);
+        pannello2.add(tnome);
+        pannello2.add(okcercaProd);
+        pannelloEsternoCerca.add(pannello2,BorderLayout.NORTH);
+        CambiaColore(pannello2);
+
+
+        /*JPanel pannello1=new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcod=new JLabel("Codice");
-        tcod=new JTextField();
+        tcod=new JComboBox(codProdotti);
+
         bcercap=new JButton("CERCA");
         bcercap.addActionListener(this);
         tcod.setPreferredSize(new Dimension(250,25));
@@ -839,22 +908,14 @@ public class Home extends JFrame implements ActionListener {
         pannello1.add(tcod);
         pannello1.add(bcercap);
         pannelloEsternoCerca.add(pannello1);
-
-        /*JPanel pannello2=new JPanel();
-        pannello2.setLayout(new FlowLayout());
-        JLabel lnome=new JLabel("Nome");
-        JTextField tnome=new JTextField();
-        tnome.setPreferredSize(new Dimension(250,25));
-        pannello2.add(lnome);
-        pannello2.add(tnome);
-        pannelloEsternoCerca.add(pannello2);*/
+        CambiaColore(pannello1);
 
         bchiudiCercaProd=new JButton("CHIUDI");
         pannelloEsternoCerca.add(bchiudiCercaProd);
         bchiudiCercaProd.addActionListener(this);
-        delete.setVisible(true);
+        delete.setVisible(true);*/
 
-        frame.getContentPane().add(pannelloEsternoCerca, BorderLayout.WEST);
+        frame.getContentPane().add(pannelloEsternoCerca, BorderLayout.NORTH);
         frame.setVisible(true);
 
 
@@ -1036,6 +1097,71 @@ public class Home extends JFrame implements ActionListener {
             labelProd.setVisible(false);
             editor1.setVisible(false);
             chiudiVis.setVisible(false);
+        }
+        // BOTTONE OK CERCA PRODOTTO
+        if(e.getSource()==okcercaProd){
+
+            // controllo se abbiamo inserito il prodotto cercato
+            if(tnome.getText().length()==0){
+                JOptionPane.showMessageDialog(new JFrame(), "Inserisci un testo valido.", "ATTENZIONE", 2);
+            }
+            else {
+                String[] elencoCodiciProd = ActionsOnDB.elencoCodProdottoSelezionato(tnome.getText());
+                // lo 0 di elencoCodiciProd è "Seleziona..."
+                if(elencoCodiciProd.length==1){
+                    JOptionPane.showMessageDialog(new JFrame(), "Il codice inserito non è stato trovato.", "ERRORE", 0);
+                    tnome.setText("");
+                }
+                else {
+                    pannello1 = new JPanel();
+                    pannello1.setLayout(new FlowLayout());
+                    pannello1.setPreferredSize(new Dimension(400,100));
+                    //pannello1.setPreferredSize(new Dimension(25,25));
+                    JLabel lcod = new JLabel("Codice");
+                    tcod = new JComboBox(codProdotti);
+                    tcod.setPreferredSize(new Dimension(250, 25));
+                    tcod.addActionListener(this);
+                    newRicercaProd = new JButton("NUOVA RICERCA");
+                    newRicercaProd.addActionListener(this);
+                    pannello1.add(lcod);
+                    pannello1.add(tcod);
+                    pannello1.add(newRicercaProd);
+                    pannelloEsternoCerca.add(pannello1, BorderLayout.CENTER);
+                    //frame.getContentPane().add(pannelloEsternoCerca, BorderLayout.CENTER);
+                    frame.setVisible(true);
+                    okcercaProd.removeActionListener(this);
+                    CambiaColore(pannello1);
+
+                    tcod.removeAllItems();
+                    int i = ActionsOnDB.Conta(tnome.getText());
+                    int c = 0;
+                    while (c <= i) {
+                        tcod.addItem(elencoCodiciProd[c]);
+                        ++c;
+                    }
+                }
+            }
+        }
+        // TROVA DESCRIZIONE PRODOTTO DATO CODICE E NOME PRODOTTO (CERCA PRODOTTO)
+        if(e.getSource()==tcod){
+
+            editorProd=new JEditorPane();
+            //FlowLayout ciao=(FlowLayout) pannello1.getLayout();
+            //ciao.setAlignmentX(FlowLayout.TRAILING);
+            //editorProd.setPreferredSize(new Dimension(400,100));
+            editorProd.setText(ActionsOnDB.elencoProdottoSelezionato((String) tcod.getSelectedItem()));
+            editorProd.setBackground(Color.MAGENTA);
+            editorProd.setEditable(false);//l'area di testo non può essere modificata
+            //editorProd.setBackground(new Color(173,196,255));
+            pannelloEsternoCerca.add(editorProd, BorderLayout.SOUTH);
+            frame.setVisible(true);
+        }
+        // BOTTONE NUOVA RICERCA PRODOTTO
+        if(e.getSource()==newRicercaProd){
+            tnome.setText("");
+            tcod.removeAllItems();
+            pannello1.setVisible(false);
+            okcercaProd.addActionListener(this);
         }
 
     }

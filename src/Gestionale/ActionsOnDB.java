@@ -169,6 +169,27 @@ public class ActionsOnDB extends ConnessioneDB{
         return risultato;
     }
 
+    public static String elencoProdottoSelezionato(String codice){
+        String risultato=new String();
+        risultato="";
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String query="select * from prodotto where codice = '"+codice+"'"; //selezione di un prodotto dato il codice
+            ResultSet rs= stmt.executeQuery(query);
+            while(rs.next()){
+                risultato="     CODICE: "+rs.getString("Codice")+'\n'+
+                        "     NOME: "+rs.getString("Nome")+'\n'+
+                        "     MARCA: "+rs.getString("Marca")+'\n'+
+                        "     PREZZO: "+rs.getDouble("Prezzo")+'\n'+
+                        "     NUMERO PEZZI: "+rs.getInt("Num_Pezzi");
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return risultato;
+    }
+
     public static String elencoFornitoriProdottoSelezionato(String codp){
         String risultato="";
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
