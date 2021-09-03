@@ -33,7 +33,7 @@ public class ActionsOnDB extends ConnessioneDB{
         stmt.close();
     }
 
-    public static String Visualizza(String query, String[] vettore, int l){
+    /*public static String Visualizza(String query, String[] vettore, int l){
         String elenco= new String();
         elenco=""; //quello che poi ritorno
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
@@ -100,7 +100,7 @@ public class ActionsOnDB extends ConnessioneDB{
             e.printStackTrace();
         }
         return elenco;
-    }
+    }*/
 
     //Per la Combobox elenco
     public static String[] elencoFornitori(){
@@ -908,30 +908,80 @@ public class ActionsOnDB extends ConnessioneDB{
         catch (Exception e){
             e.printStackTrace();
         }
-/*
-        int prova=0;
-        while(prova<50){
-            lista.addElement("prova");
-            ++prova;
-        }*/
+
         return lista;
     }
 
-    /*public static int ContaRighe(String chiave, String tabella){
-        int conta=0;
+    public static DefaultListModel Visualizza(String query, String[] vettore, int l){
+        DefaultListModel lista=new DefaultListModel();
+
         try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
-            String count="select count("+chiave+") as quanti from "+tabella;
-            ResultSet rsCount= stmt.executeQuery(count);
-            while(rsCount.next()){
-                conta=rsCount.getInt("quanti");
+
+            ResultSet rs= stmt.executeQuery(query); //esegue la query, in questo caso ritorna tutta la tabella desiderata
+
+            int c=0;
+            while(rs.next()){
+                String riga="";
+                c=0;
+                while(c<l)
+                {
+                    switch (vettore[c]){
+                        case "Codice":
+                            riga=riga+ "     CODICE: "+ rs.getString("Codice");
+                            break;
+                        case "Marca":
+                            riga=riga+ "    MARCA: "+ rs.getString("Marca");
+                            break;
+                        case "Prezzo":
+                            riga=riga+ "    PREZZO: "+ rs.getDouble("Prezzo");
+                            break;
+                        case "Num_Pezzi":
+                            riga=riga+ "    NUMERO PEZZI: "+ rs.getInt("Num_Pezzi");
+                            break;
+                        case "CF":
+                            riga=riga+"     CF: "+ rs.getString("CF");
+                            break;
+                        case "Nome":
+                            riga=riga+ "    NOME: "+ rs.getString("Nome");
+                            break;
+                        case "Cognome":
+                            riga=riga+ "    COGNOME: "+ rs.getString("Cognome");
+                            break;
+                        case "Cod_Prodotto":
+                            riga=riga+ "    CODICE PRODOTTO: "+ rs.getString("Cod_Prod");
+                            break;
+                        case "P_ivaF":
+                            riga=riga+ "    PARTITA IVA: "+ rs.getString("P_iva_Fornitore");
+                            break;
+                        case "Nr_Pezzi":
+                            riga=riga+ "    NUMERO PEZZI: "+ rs.getInt("Nr_Pezzi");
+                            break;
+                        case "Cf_Cliente":
+                            riga=riga+ "    CODICE FISCALE: "+ rs.getString("Cf_Cliente");
+                            break;
+                        case "PIVA":
+                            riga=riga+"    PARTITA IVA: "+ rs.getString("p_iva");
+                            break;
+                        case "Luogo":
+                            riga=riga+ "    LUOGO: "+ rs.getString("luogo");
+                            break;
+                        case "Email":
+                            riga=riga+ "    EMAIL: "+ rs.getString("Email");
+                            break;
+                    }
+                    ++c;
+                }
+                lista.addElement(riga);
+                lista.addElement("");
+                lista.addElement("");
             }
             ChiudiConnessioneDB(stmt);
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return conta;
-    }*/
+        return lista;
+    }
 
     public static void main(String[] argv){
         //OkUser("Chiara", "0809");

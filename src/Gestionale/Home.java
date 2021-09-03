@@ -61,7 +61,7 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloEsternoInsClinte;
     JPanel pannelloEsternoInsOrdineForn;
     JPanel pannelloEsternoInsOrdineCliente;
-    JPanel panelnord;
+    JPanel panelnord, panelEti;
     JPanel pannello1;
     JPanel pannelloSud, pannelloCentro;
     JPanel pannelloModificaProd;
@@ -927,11 +927,11 @@ public class Home extends JFrame implements ActionListener {
         }
     }
 
-    public void VisualizzaProd(){
+    public void Visualizza(DefaultListModel righeTabella, String tabella){
         panelnord= new JPanel();
         CambiaColore(panelnord);
 
-        JList elencoPrd=new JList(ActionsOnDB.VisProd());
+        JList elencoPrd=new JList(righeTabella);
         panelnord.add(elencoPrd);
         JScrollPane scrol=new JScrollPane(elencoPrd);
         scrol.setPreferredSize(new Dimension(700,400));
@@ -942,10 +942,11 @@ public class Home extends JFrame implements ActionListener {
         chiudiVis.setPreferredSize(new Dimension(70,50));
         chiudiVis.addActionListener(this);
 
-        JPanel panelEti=new JPanel();
+        panelEti=new JPanel();
         panelEti.setLayout(new FlowLayout());
         panelEti.setPreferredSize(new Dimension(500,100));
-        JLabel eti=new JLabel("PRODOTTI REGISTRATI NEL DATABASE");
+        CambiaColore(panelEti);
+        JLabel eti=new JLabel(tabella+" REGISTRATI NEL DATABASE");
         ImpostaFont(eti, 17);
         panelEti.add(eti);
         frame.getContentPane().add(panelEti, BorderLayout.NORTH);
@@ -955,7 +956,7 @@ public class Home extends JFrame implements ActionListener {
     }
 
     // testo è etichetta incollata a nord del frame, elenco è la stringa con tutti i dati che voglio visualizzare
-    public void Visualizza(String testo, String elenco){
+    /*public void Visualizza(String testo, String elenco){
 
         panelnord= new JPanel();
         panelnord.setLayout(new FlowLayout());
@@ -973,7 +974,7 @@ public class Home extends JFrame implements ActionListener {
 
         /*ChiudiTutto();
         labelProd.setVisible(true);
-        editor1.setVisible(true);*/
+        editor1.setVisible(true);
 
         chiudiVis=new JButton("CHIUDI");
         ImpostaFont(chiudiVis,16);
@@ -984,32 +985,36 @@ public class Home extends JFrame implements ActionListener {
         frame.getContentPane().add(editor1, BorderLayout.CENTER);
         frame.getContentPane().add(chiudiVis, BorderLayout.SOUTH);
         frame.setVisible(true);
-    }
+    }*/
 
     //richiamo la funzione per tutti i tasti di visualizza
     public void VisualizzaProdotti(){
         String[] colonne={"Codice", "Nome", "Marca", "Prezzo", "Num_pezzi"};
-        Visualizza("Elenco di tutti i prodotti presenti in magazzino.", ActionsOnDB.Visualizza("select * from prodotto", colonne, 5));
+        Visualizza(ActionsOnDB.Visualizza("select * from prodotto",colonne,5),"PRODOTTI");
     }
 
     public void VisualizzaClienti(){
         String[] colonne={"CF", "Nome", "Cognome", "Email"};
-        Visualizza("Anagrafica di tutti i clienti registrati:", ActionsOnDB.Visualizza("select * from cliente", colonne, 4));
+        Visualizza(ActionsOnDB.Visualizza("select * from cliente",colonne,4),"CLIENTI");
+        //Visualizza("Anagrafica di tutti i clienti registrati:", ActionsOnDB.Visualizza("select * from cliente", colonne, 4));
     }
 
     public void VisualizzaFornitore(){
         String[] colonne={"PIVA", "Nome", "Luogo", "Email"};
-        Visualizza("Anagrafica di tutti i fornitori registrati:", ActionsOnDB.Visualizza("select * from fornitore", colonne, 4));
+        Visualizza(ActionsOnDB.Visualizza("select * from fornitore",colonne,4),"FORNITORI");
+        //Visualizza("Anagrafica di tutti i fornitori registrati:", ActionsOnDB.Visualizza("select * from fornitore", colonne, 4));
     }
 
     public void VisualizzaOrdineFornitore(){
         String[] colonne={"Cod_Prodotto", "P_ivaF", "Prezzo", "Nr_Pezzi"};
-        Visualizza("Elenco di tutti gli ordini per i fornitori.",ActionsOnDB.Visualizza("select * from ordine_fornitore", colonne, 4));
+        Visualizza(ActionsOnDB.Visualizza("select * from ordine_fornitore",colonne,4),"ORDINI PER I FORNITORI");
+        //Visualizza("Elenco di tutti gli ordini per i fornitori.",ActionsOnDB.Visualizza("select * from ordine_fornitore", colonne, 4));
     }
 
     public void VisualizzaOrdiniClienti(){
         String[] colonne={"Cod_Prodotto", "Num_Pezzi", "Cf_Cliente"};
-        Visualizza("Elenco di tutti gli ordini dei clienti.",ActionsOnDB.Visualizza("select * from ordine_cliente", colonne, 3));
+        Visualizza(ActionsOnDB.Visualizza("select * from ordine_cliente",colonne,3),"ORDINI PER I CLIENTI");
+        //Visualizza("Elenco di tutti gli ordini dei clienti.",ActionsOnDB.Visualizza("select * from ordine_cliente", colonne, 3));
 
     }
 
@@ -1392,8 +1397,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE VISUALIZZA TUTTI I PRODOTTI DA TENDINA
         if(e.getSource()==visualizzaP){
-            VisualizzaProd();
-            //VisualizzaProdotti();
+            VisualizzaProdotti();
         }
         // BOTTONE VISUALIZZA TUTTI I CLIENTI DA TENDINA
         if(e.getSource()==visualizzaC){
@@ -1414,7 +1418,8 @@ public class Home extends JFrame implements ActionListener {
         // BOTTONE CHIUDI TUTTE LE VISUALIZZAZIONI DI PRODOTTI, CLIENTI, FORNITORI, ORDINI da TENDINA
         if(e.getSource()==chiudiVis){
             panelnord.setVisible(false);
-            editor1.setVisible(false);
+            panelEti.setVisible(false);
+            //editor1.setVisible(false);
             chiudiVis.setVisible(false);
         }
         // BOTTONE OK CERCA PRODOTTO
