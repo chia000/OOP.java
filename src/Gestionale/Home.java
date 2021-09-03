@@ -61,13 +61,16 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloEsternoInsClinte;
     JPanel pannelloEsternoInsOrdineForn;
     JPanel pannelloEsternoInsOrdineCliente;
-    JPanel pannelloVis;
+    JPanel panelnord;
     JPanel pannello1;
     JPanel pannelloSud, pannelloCentro;
     JPanel pannelloModificaProd;
     JPanel pannelloEsternoCercaC, pannelloSudc, pannelloCentroC, pannelloComboCf;
     JPanel pannelloEsternoCercaF,pannelloSudF, pannelloCentroF, pannelloComboFor;
 
+    public static void ImpostaFont(JComponent c, int i){
+        c.setFont(new Font("Trebuchet MS", Font.CENTER_BASELINE,i));
+    }
 
     public void HomeFrame(){
         frame= new JFrame("GestioniaMO"); //pannello principale (nome)
@@ -88,13 +91,13 @@ public class Home extends JFrame implements ActionListener {
         JMenuBar menubar =new JMenuBar(); //barra di menù
         frame.setJMenuBar(menubar);
         prodotti= new JMenu("PRODOTTI"); // nomi menù a tendina
-        prodotti.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
+        ImpostaFont(prodotti,15);
         clienti= new JMenu("CLIENTI");
-        clienti.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
+        ImpostaFont(clienti,15);
         fornitori= new JMenu("FORNITORI");
-        fornitori.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
+        ImpostaFont(fornitori,15);
         ordine=new JMenu("ORDINE");
-        ordine.setFont(new Font("Gabriola", Font.CENTER_BASELINE,18));
+        ImpostaFont(ordine,15);
         menubar.add(prodotti);
         menubar.add(clienti);
         menubar.add(fornitori);
@@ -102,10 +105,13 @@ public class Home extends JFrame implements ActionListener {
 
         //Prodotti
         visualizzaP= new JMenuItem("Visualizza tutto..."); //Nomi delle selezioni menù a tendina
+        ImpostaFont(visualizzaP,14);
         visualizzaP.addActionListener(this);
         aggiungiP= new JMenuItem("Nuovo prodotto");
+        ImpostaFont(aggiungiP,14);
         aggiungiP.addActionListener(this);
         cercaP=new JMenuItem("Cerca prodotto");
+        ImpostaFont(cercaP,14);
         cercaP.addActionListener(this);
         prodotti.add(visualizzaP);
         prodotti.addSeparator();
@@ -115,10 +121,13 @@ public class Home extends JFrame implements ActionListener {
 
         //Clienti
         visualizzaC= new JMenuItem("Visualizza tutto...");
+        ImpostaFont(visualizzaC,14);
         visualizzaC.addActionListener(this);
         aggiungiC= new JMenuItem("Nuovo cliente");
+        ImpostaFont(aggiungiC,14);
         aggiungiC.addActionListener(this);
         cercaC=new JMenuItem("Cerca cliente");
+        ImpostaFont(cercaC,14);
         cercaC.addActionListener(this);
         clienti.add(visualizzaC);
         clienti.addSeparator();
@@ -128,10 +137,13 @@ public class Home extends JFrame implements ActionListener {
 
         //Fornitori
         visualizzaF= new JMenuItem("Visualizza tutto...");
+        ImpostaFont(visualizzaF,14);
         visualizzaF.addActionListener(this);
         aggiungiF= new JMenuItem("Nuovo fornitore");
+        ImpostaFont(aggiungiF,14);
         aggiungiF.addActionListener(this);
         cercaF=new JMenuItem("Cerca fornitore");
+        ImpostaFont(cercaF,14);
         cercaF.addActionListener(this);
         fornitori.add(visualizzaF);
         fornitori.addSeparator();
@@ -141,12 +153,16 @@ public class Home extends JFrame implements ActionListener {
 
         //Ordini fornitori e Ordini clienti
         visualizzaOF= new JMenuItem("Visualizza tutti gli ordini ai fornitori...");
+        ImpostaFont(visualizzaOF,14);
         visualizzaOF.addActionListener(this);
         visualizzaOC= new JMenuItem("Visualizza tutti gli ordini dei clienti...");
+        ImpostaFont(visualizzaOC,14);
         visualizzaOC.addActionListener(this);
         aggiungiOF= new JMenuItem("Nuovo ordine per fornitore");
+        ImpostaFont(aggiungiOF,14);
         aggiungiOF.addActionListener(this);
         aggiungiOC= new JMenuItem("Nuovo ordine per cliente");
+        ImpostaFont(aggiungiOC,14);
         aggiungiOC.addActionListener(this);
         ordine.add(visualizzaOF);
         ordine.addSeparator();
@@ -223,12 +239,14 @@ public class Home extends JFrame implements ActionListener {
         CambiaColore(pannelloEsterno);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo prodotto.");
+        ImpostaFont(etichettaIniz,17);
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         //pannello piccolo con label e textfield del CODICE
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcod= new JLabel("Codice");
+        ImpostaFont(lcod,14);
         cod=new JTextField();
         cod.setPreferredSize(new Dimension(250,25));
         pannello1.add(lcod);
@@ -240,6 +258,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
         JLabel lnome= new JLabel("Nome ");
+        ImpostaFont(lnome,14);
         nome=new JTextField();
         nome.setPreferredSize(new Dimension(250,25));
         pannello2.add(lnome);
@@ -252,6 +271,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
         JLabel lmarca= new JLabel("Marca ");
+        ImpostaFont(lmarca,14);
         cbmarca=new JComboBox(nomeFornitori);
         cbmarca.setPreferredSize(new Dimension(250,25));
         pannello3.add(lmarca);
@@ -263,6 +283,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello4 =new JPanel();
         pannello4.setLayout(new FlowLayout());
         JLabel lprezzo= new JLabel("Prezzo");
+        ImpostaFont(lprezzo,14);
         prezzo=new JTextField();
         prezzo.setPreferredSize(new Dimension(250,25));
         pannello4.add(lprezzo);
@@ -274,6 +295,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello5 =new JPanel();
         pannello5.setLayout(new FlowLayout());
         JLabel lpezzi= new JLabel("Nr.° pezzi");
+        ImpostaFont(lpezzi,14);
         numpezzi=new JTextField();
         numpezzi.setPreferredSize(new Dimension(250,25));
         pannello5.add(lpezzi);
@@ -285,7 +307,8 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
         binserisci= new JButton("INSERISCI");
-        binserisci.setPreferredSize(new Dimension(100,50));
+        ImpostaFont(binserisci,16);
+        //binserisci.setPreferredSize(new Dimension(100,50));
         binserisci.addActionListener(this); //evento sul tasto INSERISCI
         pannello6.add(binserisci);
         CambiaColore(pannello6);
@@ -293,6 +316,7 @@ public class Home extends JFrame implements ActionListener {
 
         //bottone direttamente su pannello grande CHIUDI (va bene perchè settato come flowlayout e non border)
         bchiudiInsProd=new JButton("CHIUDI");
+        ImpostaFont(bchiudiInsProd,16);
         pannelloEsterno.add(bchiudiInsProd);
         bchiudiInsProd.addActionListener(this);
 
@@ -314,11 +338,13 @@ public class Home extends JFrame implements ActionListener {
         CambiaColore(pannelloEsternoInsForn);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo fornitore.");
+        ImpostaFont(etichettaIniz,17);
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lpiva= new JLabel("Partita IVA");
+        ImpostaFont(lpiva,14);
         piva=new JTextField();
         piva.setPreferredSize(new Dimension(250,25));
         pannello1.add(lpiva);
@@ -329,6 +355,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
         JLabel lnome= new JLabel("Nome ");
+        ImpostaFont(lnome,14);
         nomeF=new JTextField();
         nomeF.setPreferredSize(new Dimension(250,25));
         pannello2.add(lnome);
@@ -339,6 +366,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
         JLabel lluogo= new JLabel("Luogo ");
+        ImpostaFont(lluogo,14);
         luogo=new JTextField();
         luogo.setPreferredSize(new Dimension(250,25));
         pannello3.add(lluogo);
@@ -349,6 +377,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello4 =new JPanel();
         pannello4.setLayout(new FlowLayout());
         JLabel lemail= new JLabel("Email");
+        ImpostaFont(lemail,14);
         emailF=new JTextField();
         emailF.setPreferredSize(new Dimension(250,25));
         pannello4.add(lemail);
@@ -359,13 +388,14 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
         binserisciFor= new JButton("INSERISCI");
-        binserisciFor.setPreferredSize(new Dimension(100,50));
+        ImpostaFont(binserisciFor,16);
         binserisciFor.addActionListener(this);
         pannello6.add(binserisciFor);
         pannelloEsternoInsForn.add(pannello6);
         CambiaColore(pannello6);
 
         bchiudiInsFor=new JButton("CHIUDI");
+        ImpostaFont(bchiudiInsFor,16);
         pannelloEsternoInsForn.add(bchiudiInsFor);
         bchiudiInsFor.addActionListener(this);
 
@@ -387,11 +417,13 @@ public class Home extends JFrame implements ActionListener {
         CambiaColore(pannelloEsternoInsClinte);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo cliente.");
+        ImpostaFont(etichettaIniz,17);
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcf= new JLabel("Codice fiscale");
+        ImpostaFont(lcf,14);
         cf=new JTextField();
         cf.setPreferredSize(new Dimension(250,25));
         pannello1.add(lcf);
@@ -402,6 +434,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
         JLabel lnome= new JLabel("Nome ");
+        ImpostaFont(lnome,14);
         nomeC=new JTextField();
         nomeC.setPreferredSize(new Dimension(250,25));
         pannello2.add(lnome);
@@ -412,6 +445,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
         JLabel lcognome= new JLabel("Cognome");
+        ImpostaFont(lcognome,14);
         cognome=new JTextField();
         cognome.setPreferredSize(new Dimension(250,25));
         pannello3.add(lcognome);
@@ -422,6 +456,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello4 =new JPanel();
         pannello4.setLayout(new FlowLayout());
         JLabel lemail= new JLabel("Email");
+        ImpostaFont(lemail,14);
         email=new JTextField();
         email.setPreferredSize(new Dimension(250,25));
         pannello4.add(lemail);
@@ -432,13 +467,14 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
         binserisciCliente= new JButton("INSERISCI");
-        binserisciCliente.setPreferredSize(new Dimension(100,50));
+        ImpostaFont(binserisciCliente,16);
         binserisciCliente.addActionListener(this);
         pannello6.add(binserisciCliente);
         pannelloEsternoInsClinte.add(pannello6);
         CambiaColore(pannello6);
 
         bchiudiInsCliente=new JButton("CHIUDI");
+        ImpostaFont(bchiudiInsCliente,16);
         pannelloEsternoInsClinte.add(bchiudiInsCliente);
         bchiudiInsCliente.addActionListener(this);
 
@@ -467,11 +503,13 @@ public class Home extends JFrame implements ActionListener {
         CambiaColore(pannelloEsternoInsOrdineForn);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo ordine per fornitore.");
+        ImpostaFont(etichettaIniz,17);
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         JPanel pannello0 =new JPanel();
         pannello0.setLayout(new FlowLayout());
         JLabel lnome= new JLabel("Nome prodotto");
+        ImpostaFont(lnome,14);
         of_nome.setPreferredSize(new Dimension(250,25));
         pannello0.add(lnome);
         pannello0.add(of_nome);
@@ -483,6 +521,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcod= new JLabel("Codice prodotto");
+        ImpostaFont(lcod,14);
         of_cod.setPreferredSize(new Dimension(250,25));
         of_cod.addActionListener(this);
         pannello1.add(lcod);
@@ -493,6 +532,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
         JLabel lfor= new JLabel("Fornitore ");
+        ImpostaFont(lfor,14);
         piva_f.setPreferredSize(new Dimension(250,25));
         pannello2.add(lfor);
         pannello2.add(piva_f);
@@ -502,6 +542,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
         JLabel lnumpezzi= new JLabel("Numero dei pezzi ");
+        ImpostaFont(lnumpezzi,14);
         op_numpezzi=new JTextField();
         op_numpezzi.setPreferredSize(new Dimension(250,25));
         pannello3.add(lnumpezzi);
@@ -524,6 +565,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello8=new JPanel();
         pannello8.setLayout(new FlowLayout());
         bOKOrdineFor= new JButton("OK");
+        ImpostaFont(bOKOrdineFor,16);
         bOKOrdineFor.setPreferredSize(new Dimension(100,50));
         bOKOrdineFor.addActionListener(this);
         pannello8.add(bOKOrdineFor);
@@ -531,6 +573,7 @@ public class Home extends JFrame implements ActionListener {
         CambiaColore(pannello8);
 
         bchiudiOrdineFor=new JButton("CHIUDI");
+        ImpostaFont(bchiudiOrdineFor,16);
         pannelloEsternoInsOrdineForn.add(bchiudiOrdineFor);
         bchiudiOrdineFor.addActionListener(this);
 
@@ -559,11 +602,13 @@ public class Home extends JFrame implements ActionListener {
         CambiaColore(pannelloEsternoInsOrdineCliente);
 
         etichettaIniz=new JLabel("      Form per inserimento nuovo ordine per cliente.");
+        ImpostaFont(etichettaIniz,17);
         frame.getContentPane().add(etichettaIniz,BorderLayout.NORTH);
 
         JPanel pannello0 =new JPanel();
         pannello0.setLayout(new FlowLayout());
         JLabel lnome= new JLabel("Nome prodotto");
+        ImpostaFont(lnome,14);
         of_nome.setPreferredSize(new Dimension(250,25));
         pannello0.add(lnome);
         pannello0.add(of_nome);
@@ -575,6 +620,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello1 =new JPanel();
         pannello1.setLayout(new FlowLayout());
         JLabel lcod= new JLabel("Codice prodotto");
+        ImpostaFont(lcod,14);
         of_cod.setPreferredSize(new Dimension(250,25));
         of_cod.addActionListener(this);
         pannello1.add(lcod);
@@ -585,6 +631,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello2 =new JPanel();
         pannello2.setLayout(new FlowLayout());
         JLabel lcliet= new JLabel("CF cliente ");
+        ImpostaFont(lcliet,14);
         oc_cfClienti.setPreferredSize(new Dimension(250,25));
         oc_cfClienti.addActionListener(this);
         pannello2.add(lcliet);
@@ -595,6 +642,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello4 =new JPanel();
         pannello4.setLayout(new FlowLayout());
         JLabel lnclient= new JLabel("Cliente ");
+        ImpostaFont(lnclient,14);
         oc_nomiClienti.setPreferredSize(new Dimension(250,25));
         pannello4.add(lnclient);
         pannello4.add(oc_nomiClienti);
@@ -604,6 +652,7 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello3 =new JPanel();
         pannello3.setLayout(new FlowLayout());
         JLabel lnumpezzi= new JLabel("Numero dei pezzi ");
+        ImpostaFont(lnumpezzi,14);
         oc_numpezzi=new JTextField();
         oc_numpezzi.setPreferredSize(new Dimension(250,25));
         pannello3.add(lnumpezzi);
@@ -614,13 +663,15 @@ public class Home extends JFrame implements ActionListener {
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
         binserisciOrdineCliente= new JButton("INSERISCI");
-        binserisciOrdineCliente.setPreferredSize(new Dimension(100,50));
+        ImpostaFont(binserisciOrdineCliente,16);
+        //binserisciOrdineCliente.setPreferredSize(new Dimension(100,50));
         binserisciOrdineCliente.addActionListener(this);
         pannello6.add(binserisciOrdineCliente);
         pannelloEsternoInsOrdineCliente.add(pannello6);
         CambiaColore(pannello6);
 
         bchiudiOrdineCliente=new JButton("CHIUDI");
+        ImpostaFont(bchiudiOrdineCliente,16);
         pannelloEsternoInsOrdineCliente.add(bchiudiOrdineCliente);
         bchiudiOrdineCliente.addActionListener(this);
 
@@ -879,9 +930,16 @@ public class Home extends JFrame implements ActionListener {
     // testo è etichetta incollata a nord del frame, elenco è la stringa con tutti i dati che voglio visualizzare
     public void Visualizza(String testo, String elenco){
 
+        panelnord= new JPanel();
+        panelnord.setLayout(new FlowLayout());
+        panelnord.setPreferredSize(new Dimension(100, 50));
+        CambiaColore(panelnord);
         labelProd= new JLabel(testo);
+        ImpostaFont(labelProd,17);
+        panelnord.add(labelProd);
         editor1= new JEditorPane(); //area di testo grande
         editor1.setPreferredSize(new Dimension(25,25));
+        ImpostaFont(editor1,14);
         editor1.setText(elenco);
         editor1.setEditable(false); //l'area di testo non può essere modificata
         editor1.setBackground(new Color(173,196,255));
@@ -891,10 +949,11 @@ public class Home extends JFrame implements ActionListener {
         editor1.setVisible(true);*/
 
         chiudiVis=new JButton("CHIUDI");
+        ImpostaFont(chiudiVis,16);
         chiudiVis.setPreferredSize(new Dimension(70,50));
         chiudiVis.addActionListener(this);
 
-        frame.getContentPane().add(labelProd, BorderLayout.NORTH);
+        frame.getContentPane().add(panelnord, BorderLayout.NORTH);
         frame.getContentPane().add(editor1, BorderLayout.CENTER);
         frame.getContentPane().add(chiudiVis, BorderLayout.SOUTH);
         frame.setVisible(true);
@@ -941,9 +1000,11 @@ public class Home extends JFrame implements ActionListener {
         pannello2.setPreferredSize(new Dimension(400,70));
         pannello2.setAlignmentX(FlowLayout.TRAILING);
         JLabel lnome=new JLabel("Nome");
+        ImpostaFont(lnome,14);
         tnome=new JTextField();
         tnome.setPreferredSize(new Dimension(350,25));
         okcercaProd=new JButton("OK");
+        ImpostaFont(okcercaProd,16);
         okcercaProd.addActionListener(this);
         pannello2.add(lnome);
         pannello2.add(tnome);
@@ -956,12 +1017,16 @@ public class Home extends JFrame implements ActionListener {
         pannelloSud.setPreferredSize(new Dimension(100, 100));
 
         elimanaProd=new JButton("ELIMINA PRODOTTO");
+        ImpostaFont(elimanaProd,16);
         elimanaProd.addActionListener(this);
         modificaProd=new JButton("MODIFICA PRODOTTO");
+        ImpostaFont(modificaProd,16);
         modificaProd.addActionListener(this);
         nuovoProd=new JButton("NUOVO PRODOTTO");
+        ImpostaFont(nuovoProd,16);
         nuovoProd.addActionListener(this);
         bchiudiCercaProd=new JButton("CHIUDI");
+        ImpostaFont(bchiudiCercaProd,16);
         bchiudiCercaProd.addActionListener(this);
 
         pannelloSud.add(elimanaProd);
@@ -993,12 +1058,15 @@ public class Home extends JFrame implements ActionListener {
         pannello2.setPreferredSize(new Dimension(400,70));
         pannello2.setAlignmentX(FlowLayout.TRAILING);
         JLabel lnome=new JLabel("Nome");
+        ImpostaFont(lnome,14);
         tnomeC=new JTextField();
         tnomeC.setPreferredSize(new Dimension(350,25));
         JLabel lcognome=new JLabel("Cognome");
+        ImpostaFont(lcognome,14);
         tcognome=new JTextField();
         tcognome.setPreferredSize(new Dimension(350,25));
         okcercaClient=new JButton("OK");
+        ImpostaFont(okcercaClient,16);
         okcercaClient.addActionListener(this);
         pannello2.add(lnome);
         pannello2.add(tnomeC);
@@ -1012,7 +1080,8 @@ public class Home extends JFrame implements ActionListener {
         pannelloCentroC.setLayout(new FlowLayout());
         pannelloCentroC.setPreferredSize(new Dimension(900, 250));
         editorClient = new JEditorPane();
-        editorClient.setPreferredSize(new Dimension(250, 200));
+        ImpostaFont(editorClient,15);
+        editorClient.setPreferredSize(new Dimension(350, 300));
         pannelloCentroC.add(editorClient);
         editorClient.setBackground(new Color(173, 196, 255));
         pannelloEsternoCercaC.add(pannelloCentroC, BorderLayout.SOUTH);
@@ -1024,10 +1093,13 @@ public class Home extends JFrame implements ActionListener {
         pannelloSudc.setPreferredSize(new Dimension(100, 100));
 
         elimanaClient=new JButton("ELIMINA CLIENTE");
+        ImpostaFont(elimanaClient,16);
         elimanaClient.addActionListener(this);
         nuovoClient=new JButton("NUOVO CLIENTE");
+        ImpostaFont(nuovoClient,16);
         nuovoClient.addActionListener(this);
         bchiudiCercaClient=new JButton("CHIUDI");
+        ImpostaFont(bchiudiCercaClient,16);
         bchiudiCercaClient.addActionListener(this);
 
         pannelloSudc.add(elimanaClient);
@@ -1057,9 +1129,11 @@ public class Home extends JFrame implements ActionListener {
         pannello2.setPreferredSize(new Dimension(400,70));
         pannello2.setAlignmentX(FlowLayout.TRAILING);
         JLabel lnome=new JLabel("Nome fornitore");
+        ImpostaFont(lnome,14);
         tnomeF=new JTextField();
         tnomeF.setPreferredSize(new Dimension(350,25));
         okcercaFor=new JButton("OK");
+        ImpostaFont(okcercaFor,16);
         okcercaFor.addActionListener(this);
         pannello2.add(lnome);
         pannello2.add(tnomeF);
@@ -1071,7 +1145,8 @@ public class Home extends JFrame implements ActionListener {
         pannelloCentroF.setLayout(new FlowLayout());
         pannelloCentroF.setPreferredSize(new Dimension(900, 250));
         editorFor = new JEditorPane();
-        editorFor.setPreferredSize(new Dimension(250, 200));
+        ImpostaFont(editorFor,15);
+        editorFor.setPreferredSize(new Dimension(350, 300));
         pannelloCentroF.add(editorFor);
         editorFor.setBackground(new Color(173, 196, 255));
         pannelloEsternoCercaF.add(pannelloCentroF, BorderLayout.SOUTH);
@@ -1083,10 +1158,13 @@ public class Home extends JFrame implements ActionListener {
         pannelloSudF.setPreferredSize(new Dimension(100, 100));
 
         elimanaFor=new JButton("ELIMINA FORNITORE");
+        ImpostaFont(elimanaFor,16);
         elimanaFor.addActionListener(this);
         nuovoFor=new JButton("NUOVO FORNITORE");
+        ImpostaFont(nuovoFor,16);
         nuovoFor.addActionListener(this);
         bchiudiCercaFor=new JButton("CHIUDI");
+        ImpostaFont(bchiudiCercaFor,16);
         bchiudiCercaFor.addActionListener(this);
 
         pannelloSudF.add(elimanaFor);
@@ -1171,9 +1249,11 @@ public class Home extends JFrame implements ActionListener {
         pannelloModificaProd.setLayout(new FlowLayout());
         pannelloModificaProd.setPreferredSize(new Dimension(100,100));
         bmodificaProd=new JButton("MODIFICA");
+        ImpostaFont(bmodificaProd,16);
         bmodificaProd.addActionListener(this);
         pannelloModificaProd.add(bmodificaProd);
         bchiudiModifica=new JButton("CHIUDI");
+        ImpostaFont(bchiudiModifica,16);
         bchiudiModifica.addActionListener(this);
         pannelloModificaProd.add(bchiudiModifica);
         CambiaColore(pannelloModificaProd);
@@ -1305,7 +1385,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE CHIUDI TUTTE LE VISUALIZZAZIONI DI PRODOTTI, CLIENTI, FORNITORI, ORDINI da TENDINA
         if(e.getSource()==chiudiVis){
-            labelProd.setVisible(false);
+            panelnord.setVisible(false);
             editor1.setVisible(false);
             chiudiVis.setVisible(false);
         }
@@ -1330,10 +1410,12 @@ public class Home extends JFrame implements ActionListener {
                         pannello1.setPreferredSize(new Dimension(400, 100));
                         //pannello1.setPreferredSize(new Dimension(25,25));
                         JLabel lcod = new JLabel("Codice");
+                        ImpostaFont(lcod,14);
                         tcod = new JComboBox(codProdotti);
                         tcod.setPreferredSize(new Dimension(250, 25));
                         tcod.addActionListener(this);
                         newRicercaProd = new JButton("NUOVA RICERCA");
+                        ImpostaFont(newRicercaProd,16);
                         newRicercaProd.addActionListener(this);
                         pannello1.add(lcod);
                         pannello1.add(tcod);
@@ -1344,6 +1426,7 @@ public class Home extends JFrame implements ActionListener {
                         pannelloCentro.setLayout(new FlowLayout());
                         pannelloCentro.setPreferredSize(new Dimension(900, 250));
                         editorProd = new JEditorPane();
+                        ImpostaFont(editorProd,15);
                         editorProd.setPreferredSize(new Dimension(250, 200));
                         pannelloCentro.add(editorProd);
                         //FlowLayout ciao=(FlowLayout) pannello1.getLayout();
@@ -1453,6 +1536,7 @@ public class Home extends JFrame implements ActionListener {
                     JPanel pannello7 = new JPanel();
                     pannello7.setLayout(new FlowLayout());
                     JLabel lprezzoTotale = new JLabel("PREZZO TOTALE");
+                    ImpostaFont(lprezzoTotale,14);
                     pannello7.add(lprezzoTotale);
                     JTextField tPrezzoTotale = new JTextField();
                     tPrezzoTotale.setEditable(false);
@@ -1466,7 +1550,8 @@ public class Home extends JFrame implements ActionListener {
                     JPanel pannello6 = new JPanel();
                     pannello6.setLayout(new FlowLayout());
                     binserisciOrdineFor = new JButton("INSERISCI");
-                    binserisciOrdineFor.setPreferredSize(new Dimension(100, 50));
+                    ImpostaFont(binserisciOrdineFor,16);
+                    //binserisciOrdineFor.setPreferredSize(new Dimension(100, 50));
                     binserisciOrdineFor.addActionListener(this);
                     bBack = new JButton("Torna indietro");
                     bBack.addActionListener(this);
@@ -1518,10 +1603,12 @@ public class Home extends JFrame implements ActionListener {
                         pannelloComboCf.setLayout(new FlowLayout());
                         pannelloComboCf.setPreferredSize(new Dimension(400, 100));
                         JLabel lcf = new JLabel("CODICE FISCALE");
+                        ImpostaFont(lcf,14);
                         tcf = new JComboBox(elenco_cf);
                         tcf.setPreferredSize(new Dimension(250, 25));
                         tcf.addActionListener(this);
                         newRicercaClient = new JButton("NUOVA RICERCA");
+                        ImpostaFont(newRicercaClient,16);
                         newRicercaClient.addActionListener(this);
                         pannelloComboCf.add(lcf);
                         pannelloComboCf.add(tcf);
@@ -1631,10 +1718,12 @@ public class Home extends JFrame implements ActionListener {
                     pannelloComboFor.setLayout(new FlowLayout());
                     pannelloComboFor.setPreferredSize(new Dimension(400, 100));
                     JLabel liva = new JLabel("PARTITA IVA");
+                    ImpostaFont(liva,14);
                     tfor = new JComboBox(elenco_iva);
                     tfor.setPreferredSize(new Dimension(250, 25));
                     tfor.addActionListener(this);
                     newRicercaFor = new JButton("NUOVA RICERCA");
+                    ImpostaFont(newRicercaFor,16);
                     newRicercaFor.addActionListener(this);
                     pannelloComboFor.add(liva);
                     pannelloComboFor.add(tfor);
