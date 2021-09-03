@@ -15,6 +15,7 @@ public class Home extends JFrame implements ActionListener {
     JEditorPane editor1;
     JEditorPane editorProd;
     JEditorPane editorClient;
+    JEditorPane editorFor;
 
     JMenu ordine, prodotti, clienti, fornitori;
     JMenuItem aggiungiP, cercaP, aggiungiF, aggiungiC, aggiungiOF,aggiungiOC;
@@ -23,6 +24,7 @@ public class Home extends JFrame implements ActionListener {
     JMenuItem visualizzaF;
     JMenuItem visualizzaOF, visualizzaOC;
     JMenuItem cercaC;
+    JMenuItem cercaF;
 
     JTextField cod, nome, prezzo, numpezzi;
     JTextField piva, nomeF, luogo;
@@ -30,9 +32,10 @@ public class Home extends JFrame implements ActionListener {
     JTextField op_numpezzi;  // ORDINE PRODOTTO A FORNITORE
     JTextField tnome;
     JTextField tcognome, tnomeC;
+    JTextField tnomeF;
 
     JComboBox cbmarca;
-    JComboBox tcod, tcf;
+    JComboBox tcod, tcf, tfor;
     //JComboBox op_prezzo;   // ORDINE PRODOTTO A FORNITORE
 
     JButton delete, binserisci, bcercap, bchiudiInsProd, bchiudiCercaProd;
@@ -47,6 +50,7 @@ public class Home extends JFrame implements ActionListener {
     JButton bBack;
     JButton okcercaClient, elimanaClient, nuovoClient, bchiudiCercaClient;
     JButton newRicercaClient;
+    JButton okcercaFor, elimanaFor, nuovoFor, bchiudiCercaFor, newRicercaFor;
 
     JFrame frame;
     JFrame f;
@@ -62,6 +66,7 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannelloSud, pannelloCentro;
     JPanel pannelloModificaProd;
     JPanel pannelloEsternoCercaC, pannelloSudc, pannelloCentroC, pannelloComboCf;
+    JPanel pannelloEsternoCercaF,pannelloSudF, pannelloCentroF, pannelloComboFor;
 
 
     public void HomeFrame(){
@@ -126,9 +131,13 @@ public class Home extends JFrame implements ActionListener {
         visualizzaF.addActionListener(this);
         aggiungiF= new JMenuItem("Nuovo fornitore");
         aggiungiF.addActionListener(this);
+        cercaF=new JMenuItem("Cerca fornitore");
+        cercaF.addActionListener(this);
         fornitori.add(visualizzaF);
         fornitori.addSeparator();
         fornitori.add(aggiungiF);
+        fornitori.addSeparator();
+        fornitori.add(cercaF);
 
         //Ordini fornitori e Ordini clienti
         visualizzaOF= new JMenuItem("Visualizza tutti gli ordini ai fornitori...");
@@ -1006,6 +1015,67 @@ public class Home extends JFrame implements ActionListener {
 
     }
 
+    public void CercaFornitore(){
+
+        pannelloEsternoCercaF=new JPanel();
+        pannelloEsternoCercaF.setPreferredSize(new Dimension(400,400));
+        pannelloEsternoCercaF.setLayout(new BorderLayout());
+        CambiaColore(pannelloEsternoCercaF);
+
+        JPanel pannello2=new JPanel();
+        pannello2.setLayout(new FlowLayout());
+        pannello2.setPreferredSize(new Dimension(400,70));
+        pannello2.setAlignmentX(FlowLayout.TRAILING);
+        JLabel lnome=new JLabel("Nome fornitore");
+        tnomeF=new JTextField();
+        tnomeF.setPreferredSize(new Dimension(350,25));
+        okcercaFor=new JButton("OK");
+        okcercaFor.addActionListener(this);
+        pannello2.add(lnome);
+        pannello2.add(tnomeF);
+        pannello2.add(okcercaFor);
+        pannelloEsternoCercaF.add(pannello2,BorderLayout.NORTH);
+        CambiaColore(pannello2);
+
+        pannelloCentroF = new JPanel();
+        pannelloCentroF.setLayout(new FlowLayout());
+        pannelloCentroF.setPreferredSize(new Dimension(900, 250));
+        editorFor = new JEditorPane();
+        editorFor.setPreferredSize(new Dimension(250, 200));
+        pannelloCentroF.add(editorFor);
+        editorFor.setBackground(new Color(173, 196, 255));
+        pannelloEsternoCercaF.add(pannelloCentroF, BorderLayout.SOUTH);
+        CambiaColore(pannelloCentroF);
+        editorFor.setVisible(false);
+
+        pannelloSudF= new JPanel();
+        pannelloSudF.setLayout(new FlowLayout());
+        pannelloSudF.setPreferredSize(new Dimension(100, 100));
+
+        elimanaFor=new JButton("ELIMINA FORNITORE");
+        elimanaFor.addActionListener(this);
+        nuovoFor=new JButton("NUOVO FORNITORE");
+        nuovoFor.addActionListener(this);
+        bchiudiCercaFor=new JButton("CHIUDI");
+        bchiudiCercaFor.addActionListener(this);
+
+        pannelloSudF.add(elimanaFor);
+        pannelloSudF.add(nuovoFor);
+        pannelloSudF.add(bchiudiCercaFor);
+        CambiaColore(pannelloSudF);
+
+        pannelloSudF.setVisible(true);
+
+        frame.getContentPane().add(pannelloSudF, BorderLayout.SOUTH);
+        bchiudiCercaFor.setVisible(true);
+        nuovoFor.setVisible(false);
+        elimanaFor.setVisible(false);
+
+        frame.getContentPane().add(pannelloEsternoCercaF, BorderLayout.NORTH);
+        frame.setVisible(true);
+
+    }
+
     //tasti chiudi usano la funzione che rende invisibile il pannello che le viene passato
     public void Chiudi(JPanel p){
         p.setVisible(false);
@@ -1047,6 +1117,10 @@ public class Home extends JFrame implements ActionListener {
 
     public void ChiudiCercaClient(){
         pannelloEsternoCercaC.setVisible(false);
+    }
+
+    public void ChiudiCercaFor(){
+        pannelloEsternoCercaF.setVisible(false);
     }
 
     public void ModificaProdotto(String tmp_codice, String tmp_nome){
@@ -1390,9 +1464,7 @@ public class Home extends JFrame implements ActionListener {
         // BOTTONE CHIUDI INTERFACCIA CERCA CLIENTE
         if(e.getSource()==bchiudiCercaClient){
             ChiudiCercaClient();
-            bchiudiCercaClient.setVisible(false);
-            nuovoClient.setVisible(false);
-            elimanaClient.setVisible(false);
+            pannelloSudc.setVisible(false);
         }
         // BOTTONE OK IN CERCA CLIENTE IN INTERFACCIA (NOME, COGNOME)
         if(e.getSource()==okcercaClient){
@@ -1421,7 +1493,7 @@ public class Home extends JFrame implements ActionListener {
                         tcf.addActionListener(this);
                         newRicercaClient = new JButton("NUOVA RICERCA");
                         newRicercaClient.addActionListener(this);
-                        pannelloComboCf.add(tcf);
+                        pannelloComboCf.add(lcf);
                         pannelloComboCf.add(tcf);
                         pannelloComboCf.add(newRicercaClient);
                         CambiaColore(pannelloComboCf);
@@ -1486,7 +1558,7 @@ public class Home extends JFrame implements ActionListener {
         }
         //BOTTONE ELIMINA CLIENTE DA CERCA CLIENTE
         if(e.getSource()==elimanaClient){
-            if(tcf.getSelectedItem()!="Seleziona..." || tcod.getSelectedItem()!="") {
+            if(tcf.getSelectedItem()!="Seleziona..." || tcf.getSelectedItem()!="") {
                 boolean val= ActionsOnDB.EliminaClient((String) tcf.getSelectedItem());
                 if(val==true){
                     JOptionPane.showMessageDialog(new JFrame(), "Il cliente selezionato è stato eliminato correttamente.", "ELIMINAZIONE",1);
@@ -1501,6 +1573,90 @@ public class Home extends JFrame implements ActionListener {
                 tnomeC.setText("");
                 tcognome.setText("");
                 okcercaClient.addActionListener(this);
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "ERRORE RIPROVA", "ATTENZIONE",0);
+            }
+        }
+        // BOTTONE CERCA FORNITORE DA TENDINA
+        if(e.getSource()==cercaF){
+            CercaFornitore();
+        }
+        // BOTTONE CHIUDI CERCA FORNITORE
+        if(e.getSource()==bchiudiCercaFor){
+            ChiudiCercaFor();
+            pannelloSudF.setVisible(false);
+        }
+        // BOTTONE OK CERCA FORNITORE DA TENDINA
+        if(e.getSource()==okcercaFor){
+            if(tnomeF.getText().length()!=0){
+                String[] elenco_iva=ActionsOnDB.CercaFornitore(tnomeF.getText());
+                if(elenco_iva[0]=="error"){
+                    JOptionPane.showMessageDialog(new JFrame(), "I dati inseriti non sono stati trovati. RIPROVARE.", "ERRORE", 0);
+                    nuovoFor.setVisible(true);
+                    tnomeF.setText("");
+                }
+                else{
+                    pannelloComboFor = new JPanel();
+                    pannelloComboFor.setLayout(new FlowLayout());
+                    pannelloComboFor.setPreferredSize(new Dimension(400, 100));
+                    JLabel liva = new JLabel("PARTITA IVA");
+                    tfor = new JComboBox(elenco_iva);
+                    tfor.setPreferredSize(new Dimension(250, 25));
+                    tfor.addActionListener(this);
+                    newRicercaFor = new JButton("NUOVA RICERCA");
+                    newRicercaFor.addActionListener(this);
+                    pannelloComboFor.add(liva);
+                    pannelloComboFor.add(tfor);
+                    pannelloComboFor.add(newRicercaFor);
+                    CambiaColore(pannelloComboFor);
+                    pannelloEsternoCercaF.add(pannelloComboFor, BorderLayout.CENTER);
+
+                    pannelloCentroF.setVisible(true);
+                    okcercaFor.removeActionListener(this);
+
+                    nuovoFor.setVisible(true);
+                    elimanaFor.setVisible(true);
+
+                    frame.setVisible(true);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "Prego, inserire i dati per la ricerca.", "ATTENZIONE", 2);
+            }
+        }
+        // BOTTONE NUOVA RICERCA FORNITORE
+        if(e.getSource()==newRicercaFor){
+            tnomeF.setText("");
+            tfor.removeAllItems();
+            pannelloComboFor.setVisible(false);
+            pannelloCentroF.setVisible(false);
+            nuovoFor.setVisible(false);
+            elimanaFor.setVisible(false);
+            okcercaFor.addActionListener(this);
+        }
+        // BOTTONE NUOVO FORNITORE DA CERCA FORNITORE
+        if(e.getSource()==nuovoFor){
+            ChiudiCercaFor();
+            pannelloSudF.setVisible(false);
+            FornitoreInsFrame();
+        }
+        //BOTTONE ELIMINA FORNITORE DA CERCA FORNITORE
+        if(e.getSource()==elimanaFor){
+            if(tfor.getSelectedItem()!="Seleziona..." || tcod.getSelectedItem()!="") {
+                boolean val= ActionsOnDB.EliminaFor((String) tfor.getSelectedItem());
+                if(val==true){
+                    JOptionPane.showMessageDialog(new JFrame(), "Il fornitore selezionato è stato eliminato correttamente.", "ELIMINAZIONE",1);
+                }
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il fornitore selezionato non è stato eliminato correttamente poiché probabilmente è presente in un altro percorso.", "ATTENZIONE",0);
+                }
+                pannelloCentroF.setVisible(false);
+                nuovoFor.setVisible(false);
+                elimanaFor.setVisible(false);
+                pannelloComboFor.setVisible(false);
+                tnomeF.setText("");
+                okcercaFor.addActionListener(this);
             }
             else{
                 JOptionPane.showMessageDialog(new JFrame(), "ERRORE RIPROVA", "ATTENZIONE",0);

@@ -659,6 +659,42 @@ public class ActionsOnDB extends ConnessioneDB{
         return elenco_cf;
     }
 
+    public static String[] CercaFornitore (String nomeF){
+
+        String[] elenco_iva=new String[50];
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+
+            String count="select count(*) as quanti from fornitore where nome='"+nomeF+"'";
+            ResultSet rsCount= stmt.executeQuery(count);
+            int c=0;
+            while(rsCount.next()){
+                c=rsCount.getInt("quanti");
+            }
+            if(c==0){
+                elenco_iva=new String[1];
+                elenco_iva[0]="error";
+                return elenco_iva;
+            }
+
+            elenco_iva=new String[c+1];
+            String query="select * from fornitore where nome='"+nomeF+"'";
+            ResultSet rs = stmt.executeQuery(query);
+            elenco_iva[0]="Seleziona...";
+            c=1;
+            while(rs.next()){
+                elenco_iva[c]=rs.getString("P_IVA");
+                ++c;
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return elenco_iva;
+    }
+
     public static String RiepilogoCliente (String cf){
 
         String riepilogo="";
@@ -764,6 +800,40 @@ public class ActionsOnDB extends ConnessioneDB{
             if(provaOrdine=="") {
 
                 String query = "delete from cliente where cf ='" + cf + "'";
+                Integer rs = stmt.executeUpdate(query);
+                valore=true;
+            }
+            else {
+                valore=false;
+            }
+
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return valore;
+    }
+
+    public static Boolean EliminaFor(String piva){
+        // true --> dato cancellato
+        // false --> dato NON cancellato
+
+        boolean valore=false;
+        String provaOrdineF="";
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt =con.createStatement();){
+
+            String query0="select * from Ordine_Fornitore where P_Iva_Fornitore='"+piva+"'";
+            ResultSet rs0=stmt.executeQuery(query0);
+            while (rs0.next()){
+                provaOrdineF=rs0.getString("Cod_Prod");
+            }
+
+            if(provaOrdineF=="") {
+
+                String query = "delete from fornitore where p_iva ='" + piva + "'";
                 Integer rs = stmt.executeUpdate(query);
                 valore=true;
             }
