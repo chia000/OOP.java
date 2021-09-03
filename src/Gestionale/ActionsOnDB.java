@@ -1,5 +1,6 @@
 package Gestionale;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.Map;
 
@@ -888,6 +889,49 @@ public class ActionsOnDB extends ConnessioneDB{
 
         return valore;
     }
+
+    public static DefaultListModel VisProd(){
+        DefaultListModel lista=new DefaultListModel();
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String query ="select * from prodotto";
+            ResultSet rs=stmt.executeQuery(query);
+            while (rs.next()){
+                String riga="   CODICE: "+ rs.getString("Codice")+"; NOME: "+rs.getString("Nome")
+                        +";  MARCA: "+rs.getString("Marca")+";    PREZZO: "+rs.getDouble("Prezzo")+" euro;"
+                        +"  NUMERO PEZZI: "+rs.getInt("Num_pezzi");
+                lista.addElement(riga);
+                lista.addElement("");
+                lista.addElement("");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+/*
+        int prova=0;
+        while(prova<50){
+            lista.addElement("prova");
+            ++prova;
+        }*/
+        return lista;
+    }
+
+    /*public static int ContaRighe(String chiave, String tabella){
+        int conta=0;
+        try(Connection con= DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+            String count="select count("+chiave+") as quanti from "+tabella;
+            ResultSet rsCount= stmt.executeQuery(count);
+            while(rsCount.next()){
+                conta=rsCount.getInt("quanti");
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return conta;
+    }*/
 
     public static void main(String[] argv){
         //OkUser("Chiara", "0809");

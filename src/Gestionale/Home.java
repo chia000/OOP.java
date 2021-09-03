@@ -927,6 +927,33 @@ public class Home extends JFrame implements ActionListener {
         }
     }
 
+    public void VisualizzaProd(){
+        panelnord= new JPanel();
+        CambiaColore(panelnord);
+
+        JList elencoPrd=new JList(ActionsOnDB.VisProd());
+        panelnord.add(elencoPrd);
+        JScrollPane scrol=new JScrollPane(elencoPrd);
+        scrol.setPreferredSize(new Dimension(700,400));
+        panelnord.add(scrol);
+
+        chiudiVis=new JButton("CHIUDI");
+        ImpostaFont(chiudiVis,16);
+        chiudiVis.setPreferredSize(new Dimension(70,50));
+        chiudiVis.addActionListener(this);
+
+        JPanel panelEti=new JPanel();
+        panelEti.setLayout(new FlowLayout());
+        panelEti.setPreferredSize(new Dimension(500,100));
+        JLabel eti=new JLabel("PRODOTTI REGISTRATI NEL DATABASE");
+        ImpostaFont(eti, 17);
+        panelEti.add(eti);
+        frame.getContentPane().add(panelEti, BorderLayout.NORTH);
+        frame.getContentPane().add(panelnord, BorderLayout.CENTER);
+        frame.getContentPane().add(chiudiVis, BorderLayout.SOUTH);
+        frame.setVisible(true);
+    }
+
     // testo è etichetta incollata a nord del frame, elenco è la stringa con tutti i dati che voglio visualizzare
     public void Visualizza(String testo, String elenco){
 
@@ -1365,7 +1392,8 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE VISUALIZZA TUTTI I PRODOTTI DA TENDINA
         if(e.getSource()==visualizzaP){
-            VisualizzaProdotti();
+            VisualizzaProd();
+            //VisualizzaProdotti();
         }
         // BOTTONE VISUALIZZA TUTTI I CLIENTI DA TENDINA
         if(e.getSource()==visualizzaC){
@@ -1496,7 +1524,7 @@ public class Home extends JFrame implements ActionListener {
                     tnome.setText("");
                 }
                 else {
-                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il prodotto non è stato eliminato correttamente poiché probabilmente è presente in un altro percorso.", "ATTENZIONE",0);
+                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il prodotto non è stato eliminato correttamente poiché è presente in un'altra struttura.", "ATTENZIONE",0);
                     pannelloCentro.setVisible(false);
                     nuovoProd.setVisible(false);
                     modificaProd.setVisible(false);
@@ -1681,7 +1709,7 @@ public class Home extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(new JFrame(), "Il cliente selezionato è stato eliminato correttamente.", "ELIMINAZIONE",1);
                 }
                 else {
-                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il cliente selezionato non è stato eliminato correttamente poiché probabilmente è presente in un altro percorso.", "ATTENZIONE",0);
+                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il cliente selezionato non è stato eliminato correttamente poiché è presente in un'altra struttura.", "ATTENZIONE",0);
                 }
                 pannelloCentroC.setVisible(false);
                 nuovoClient.setVisible(false);
@@ -1768,7 +1796,7 @@ public class Home extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(new JFrame(), "Il fornitore selezionato è stato eliminato correttamente.", "ELIMINAZIONE",1);
                 }
                 else {
-                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il fornitore selezionato non è stato eliminato correttamente poiché probabilmente è presente in un altro percorso.", "ATTENZIONE",0);
+                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il fornitore selezionato non è stato eliminato correttamente poiché è presente in un'altra struttura.", "ATTENZIONE",0);
                 }
                 pannelloCentroF.setVisible(false);
                 nuovoFor.setVisible(false);
