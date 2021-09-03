@@ -14,6 +14,7 @@ public class Home extends JFrame implements ActionListener {
 
     JEditorPane editor1;
     JEditorPane editorProd;
+    JEditorPane editorClient;
 
     JMenu ordine, prodotti, clienti, fornitori;
     JMenuItem aggiungiP, cercaP, aggiungiF, aggiungiC, aggiungiOF,aggiungiOC;
@@ -31,7 +32,7 @@ public class Home extends JFrame implements ActionListener {
     JTextField tcognome, tnomeC;
 
     JComboBox cbmarca;
-    JComboBox tcod;
+    JComboBox tcod, tcf;
     //JComboBox op_prezzo;   // ORDINE PRODOTTO A FORNITORE
 
     JButton delete, binserisci, bcercap, bchiudiInsProd, bchiudiCercaProd;
@@ -41,10 +42,11 @@ public class Home extends JFrame implements ActionListener {
     JButton binserisciOrdineCliente, bchiudiOrdineCliente;
     JButton chiudiVis;
     JButton okcercaProd;
-    JButton newRicercaProd, elimanaProd, modificaProd, nuovoProd;
+    JButton newRicercaProd, elimanaProd, modificaProd, nuovoProd, bmodificaProd, bchiudiModifica;
     JButton bOKOrdineFor;
     JButton bBack;
-    JButton okcercaClient, elimanaClient,modificaClient, nuovoClient, bchiudiCercaClient;
+    JButton okcercaClient, elimanaClient, nuovoClient, bchiudiCercaClient;
+    JButton newRicercaClient;
 
     JFrame frame;
     JFrame f;
@@ -59,7 +61,7 @@ public class Home extends JFrame implements ActionListener {
     JPanel pannello1;
     JPanel pannelloSud, pannelloCentro;
     JPanel pannelloModificaProd;
-    JPanel pannelloEsternoCercaC, pannelloSudc;
+    JPanel pannelloEsternoCercaC, pannelloSudc, pannelloCentroC, pannelloComboCf;
 
 
     public void HomeFrame(){
@@ -967,27 +969,34 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoCercaC.add(pannello2,BorderLayout.NORTH);
         CambiaColore(pannello2);
 
+        pannelloCentroC = new JPanel();
+        pannelloCentroC.setLayout(new FlowLayout());
+        pannelloCentroC.setPreferredSize(new Dimension(900, 250));
+        editorClient = new JEditorPane();
+        editorClient.setPreferredSize(new Dimension(250, 200));
+        pannelloCentroC.add(editorClient);
+        editorClient.setBackground(new Color(173, 196, 255));
+        pannelloEsternoCercaC.add(pannelloCentroC, BorderLayout.SOUTH);
+        CambiaColore(pannelloCentroC);
+        editorClient.setVisible(false);
+
         pannelloSudc= new JPanel();
         pannelloSudc.setLayout(new FlowLayout());
         pannelloSudc.setPreferredSize(new Dimension(100, 100));
 
-        elimanaClient=new JButton("ELIMINA PRODOTTO");
+        elimanaClient=new JButton("ELIMINA CLIENTE");
         elimanaClient.addActionListener(this);
-        modificaClient=new JButton("MODIFICA PRODOTTO");
-        modificaClient.addActionListener(this);
-        nuovoClient=new JButton("NUOVO PRODOTTO");
+        nuovoClient=new JButton("NUOVO CLIENTE");
         nuovoClient.addActionListener(this);
         bchiudiCercaClient=new JButton("CHIUDI");
         bchiudiCercaClient.addActionListener(this);
 
         pannelloSudc.add(elimanaClient);
-        pannelloSudc.add(modificaClient);
         pannelloSudc.add(nuovoClient);
         pannelloSudc.add(bchiudiCercaClient);
         CambiaColore(pannelloSudc);
 
         frame.getContentPane().add(pannelloSudc, BorderLayout.SOUTH);
-        modificaClient.setVisible(false);
         nuovoClient.setVisible(false);
         elimanaClient.setVisible(false);
 
@@ -1052,16 +1061,22 @@ public class Home extends JFrame implements ActionListener {
         cbmarca.addItem(e[0]);
 
         binserisci.setVisible(false);
+        bchiudiInsProd.setVisible(false);
 
         pannelloModificaProd=new JPanel();
         pannelloModificaProd.setLayout(new FlowLayout());
         pannelloModificaProd.setPreferredSize(new Dimension(100,100));
-        JButton bmodificaProd=new JButton("MODIFICA");
+        bmodificaProd=new JButton("MODIFICA");
         bmodificaProd.addActionListener(this);
         pannelloModificaProd.add(bmodificaProd);
+        bchiudiModifica=new JButton("CHIUDI");
+        bchiudiModifica.addActionListener(this);
+        pannelloModificaProd.add(bchiudiModifica);
         CambiaColore(pannelloModificaProd);
+        pannelloModificaProd.setVisible(true);
 
         frame.getContentPane().add(pannelloModificaProd, BorderLayout.SOUTH);
+
         frame.setVisible(true);
 
     }
@@ -1376,6 +1391,8 @@ public class Home extends JFrame implements ActionListener {
         if(e.getSource()==bchiudiCercaClient){
             ChiudiCercaClient();
             bchiudiCercaClient.setVisible(false);
+            nuovoClient.setVisible(false);
+            elimanaClient.setVisible(false);
         }
         // BOTTONE OK IN CERCA CLIENTE IN INTERFACCIA (NOME, COGNOME)
         if(e.getSource()==okcercaClient){
@@ -1387,10 +1404,106 @@ public class Home extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(new JFrame(), "Prego, inserire i dati per la ricerca.", "ATTENZIONE", 2);
                 }
                 else{
-                    /*
-                        DA QUI --- DEVI FINIRE ---
-                     */
+                    String[] elenco_cf=ActionsOnDB.CercaCliente(tnomeC.getText(), tcognome.getText());
+                    if(elenco_cf[0]=="error"){
+                        JOptionPane.showMessageDialog(new JFrame(), "I dati inseriti non sono stati trovati. RIPROVARE.", "ERRORE", 0);
+                        nuovoClient.setVisible(true);
+                        tnomeC.setText("");
+                        tcognome.setText("");
+                    }
+                    else{
+                        pannelloComboCf = new JPanel();
+                        pannelloComboCf.setLayout(new FlowLayout());
+                        pannelloComboCf.setPreferredSize(new Dimension(400, 100));
+                        JLabel lcf = new JLabel("CODICE FISCALE");
+                        tcf = new JComboBox(elenco_cf);
+                        tcf.setPreferredSize(new Dimension(250, 25));
+                        tcf.addActionListener(this);
+                        newRicercaClient = new JButton("NUOVA RICERCA");
+                        newRicercaClient.addActionListener(this);
+                        pannelloComboCf.add(tcf);
+                        pannelloComboCf.add(tcf);
+                        pannelloComboCf.add(newRicercaClient);
+                        CambiaColore(pannelloComboCf);
+                        pannelloEsternoCercaC.add(pannelloComboCf, BorderLayout.CENTER);
+
+                        pannelloCentroC.setVisible(true);
+                        okcercaClient.removeActionListener(this);
+
+                        nuovoClient.setVisible(true);
+                        elimanaClient.setVisible(true);
+
+                        frame.setVisible(true);
+                    }
                 }
+            }
+        }
+        // BOTTONE CONFERMA MODIFICA PRODOTTO DA CERCA PRODOTTO
+        if(e.getSource()==bmodificaProd){
+            if(prezzo.getText().length()!=0 && numpezzi.getText().length()!=0) {
+                boolean chk = ActionsOnDB.ModificaProd(Double.parseDouble(prezzo.getText()), Integer.parseInt(numpezzi.getText()), cod.getText());
+                if(chk==true){
+                    JOptionPane.showMessageDialog(new JFrame(), "I dati sono stati modificati correttamente", "ACCESSO RIUSCITO", 1);
+                    ChiudiInsProdotto();
+                    pannelloModificaProd.setVisible(false);
+                }
+                else{
+                    JOptionPane.showMessageDialog(new JFrame(), "I dati NON sono stati modificati. RIPROVARE", "ERRORE", 0);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "Prego inserire i dati.", "ATTENZIONE", 2);
+            }
+        }
+        // BOTTONE CHIUDI MODIFICA DA MODIFICA PRODOTTO IN CERCA PRODOTTO
+        if(e.getSource()==bchiudiModifica){
+            ChiudiInsProdotto();
+            pannelloModificaProd.setVisible(false);
+        }
+        // BOTTONE NUOVA RICERCA CLIENTE
+        if(e.getSource()==newRicercaClient){
+            tnomeC.setText("");
+            tcognome.setText("");
+            tcf.removeAllItems();
+            pannelloComboCf.setVisible(false);
+            pannelloCentroC.setVisible(false);
+            nuovoClient.setVisible(false);
+            elimanaClient.setVisible(false);
+            okcercaClient.addActionListener(this);
+        }
+        // TROVA DESCRIZIONE CLIENTE DATO NOME, COGNOME, CF CLIENTE (CERCA CLIENTE)
+        if(e.getSource()==tcf){
+            editorClient.setVisible(true);
+            editorClient.setText(ActionsOnDB.RiepilogoCliente((String) tcf.getSelectedItem()));
+            editorClient.setEditable(false);
+            frame.setVisible(true);
+        }
+        // BOTTONE NUOVO CLIENTE DA CERCA CLIENTE
+        if(e.getSource()==nuovoClient){
+            ChiudiCercaClient();
+            pannelloSudc.setVisible(false);
+            ClienteInsFrame();
+        }
+        //BOTTONE ELIMINA CLIENTE DA CERCA CLIENTE
+        if(e.getSource()==elimanaClient){
+            if(tcf.getSelectedItem()!="Seleziona..." || tcod.getSelectedItem()!="") {
+                boolean val= ActionsOnDB.EliminaClient((String) tcf.getSelectedItem());
+                if(val==true){
+                    JOptionPane.showMessageDialog(new JFrame(), "Il cliente selezionato è stato eliminato correttamente.", "ELIMINAZIONE",1);
+                }
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(), "ERRORE, il cliente selezionato non è stato eliminato correttamente poiché probabilmente è presente in un altro percorso.", "ATTENZIONE",0);
+                }
+                pannelloCentroC.setVisible(false);
+                nuovoClient.setVisible(false);
+                elimanaClient.setVisible(false);
+                pannelloComboCf.setVisible(false);
+                tnomeC.setText("");
+                tcognome.setText("");
+                okcercaClient.addActionListener(this);
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "ERRORE RIPROVA", "ATTENZIONE",0);
             }
         }
 

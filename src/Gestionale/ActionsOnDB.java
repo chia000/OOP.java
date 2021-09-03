@@ -277,6 +277,7 @@ public class ActionsOnDB extends ConnessioneDB{
         return ris;
     }
 
+    // TROVA MARCA DATO IL CODICE DEL PRODOTTO
     public static String[] trovaParametro(String cod){
         String[] ris=new String[50];
 
@@ -622,6 +623,64 @@ public class ActionsOnDB extends ConnessioneDB{
         return check;
     }
 
+    public static String[] CercaCliente (String nomeC, String cognomeC){
+
+        String[] elenco_cf=new String[50];
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+
+            String count="select count(*) as quanti from cliente where nome='"+nomeC+"' and cognome='"+cognomeC+"'";
+            ResultSet rsCount= stmt.executeQuery(count);
+            int c=0;
+            while(rsCount.next()){
+                c=rsCount.getInt("quanti");
+            }
+            if(c==0){
+                elenco_cf=new String[1];
+                elenco_cf[0]="error";
+                return elenco_cf;
+            }
+
+            elenco_cf=new String[c+1];
+            String query="select * from cliente where nome='"+nomeC+"' and cognome='"+cognomeC+"'";
+            ResultSet rs = stmt.executeQuery(query);
+            elenco_cf[0]="Seleziona...";
+            c=1;
+            while(rs.next()){
+                elenco_cf[c]=rs.getString("CF");
+                ++c;
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return elenco_cf;
+    }
+
+    public static String RiepilogoCliente (String cf){
+
+        String riepilogo="";
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+
+            String query="select * from cliente where cf='"+cf+"'";
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                riepilogo="RIEPILOGO"+'\n'+'\n'+"CODICE FISCALE:     "+rs.getString("CF")+'\n'+'\n'+
+                        "NOME:     "+rs.getString("Nome")+'\n'+'\n'+
+                        "COGNOME:     "+rs.getString("Cognome");
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return riepilogo;
+    }
+
     public static boolean ModificaProd(Double prezzo, Integer num_pezzi, String codice){
         //false --> modifica NON riuscita
         //true --> modifica RIUSCITA
@@ -671,6 +730,40 @@ public class ActionsOnDB extends ConnessioneDB{
             if(codProvaFornitore=="" && codProvaCliente=="") {
 
                 String query = "delete from prodotto where codice ='" + codice + "'";
+                Integer rs = stmt.executeUpdate(query);
+                valore=true;
+            }
+            else {
+                valore=false;
+            }
+
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return valore;
+    }
+
+    public static Boolean EliminaClient(String cf){
+        // true --> dato cancellato
+        // false --> dato NON cancellato
+
+        boolean valore=false;
+        String provaOrdine="";
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt =con.createStatement();){
+
+            String query0="select * from Ordine_Cliente where Cf_Cliente='"+cf+"'";
+            ResultSet rs0=stmt.executeQuery(query0);
+            while (rs0.next()){
+                provaOrdine=rs0.getString("Cod_Prod");
+            }
+
+            if(provaOrdine=="") {
+
+                String query = "delete from cliente where cf ='" + cf + "'";
                 Integer rs = stmt.executeUpdate(query);
                 valore=true;
             }
