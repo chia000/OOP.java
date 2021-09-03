@@ -1,7 +1,7 @@
 package Gestionale;
 
 public class Cliente {
-    String cf, nome, cognome;
+    String cf, nome, cognome, email;
 
     public void setCf(String cf) {
         this.cf = cf;
@@ -25,5 +25,13 @@ public class Cliente {
 
     public String getCognome() {
         return cognome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

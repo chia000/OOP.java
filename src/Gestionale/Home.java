@@ -27,8 +27,8 @@ public class Home extends JFrame implements ActionListener {
     JMenuItem cercaF;
 
     JTextField cod, nome, prezzo, numpezzi;
-    JTextField piva, nomeF, luogo;
-    JTextField cf, nomeC, cognome;
+    JTextField piva, nomeF, luogo, emailF;
+    JTextField cf, nomeC, cognome, email;
     JTextField op_numpezzi;  // ORDINE PRODOTTO A FORNITORE
     JTextField tnome;
     JTextField tcognome, tnomeC;
@@ -346,6 +346,16 @@ public class Home extends JFrame implements ActionListener {
         pannelloEsternoInsForn.add(pannello3);
         CambiaColore(pannello3);
 
+        JPanel pannello4 =new JPanel();
+        pannello4.setLayout(new FlowLayout());
+        JLabel lemail= new JLabel("Email");
+        emailF=new JTextField();
+        emailF.setPreferredSize(new Dimension(250,25));
+        pannello4.add(lemail);
+        pannello4.add(emailF);
+        pannelloEsternoInsForn.add(pannello4);
+        CambiaColore(pannello4);
+
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
         binserisciFor= new JButton("INSERISCI");
@@ -408,6 +418,16 @@ public class Home extends JFrame implements ActionListener {
         pannello3.add(cognome);
         pannelloEsternoInsClinte.add(pannello3);
         CambiaColore(pannello3);
+
+        JPanel pannello4 =new JPanel();
+        pannello4.setLayout(new FlowLayout());
+        JLabel lemail= new JLabel("Email");
+        email=new JTextField();
+        email.setPreferredSize(new Dimension(250,25));
+        pannello4.add(lemail);
+        pannello4.add(email);
+        pannelloEsternoInsClinte.add(pannello4);
+        CambiaColore(pannello4);
 
         JPanel pannello6=new JPanel();
         pannello6.setLayout(new FlowLayout());
@@ -671,13 +691,13 @@ public class Home extends JFrame implements ActionListener {
     }
 
     public void BinsFornitoreDB(){
-        if(piva.getText().length()==0 && nomeF.getText().length()==0 && luogo.getText().length()==0){
+        if(piva.getText().length()==0 && nomeF.getText().length()==0 && luogo.getText().length()==0 && emailF.getText().length()==0){
             JFrame f0=new JFrame();
             JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",0);
         }
         else {
 
-            int num = ActionsOnDB.InserisciFornitore(piva.getText(), nomeF.getText(), luogo.getText());
+            int num = ActionsOnDB.InserisciFornitore(piva.getText(), nomeF.getText(), luogo.getText(), emailF.getText());
 
             switch (num) {
                 case 1:
@@ -700,27 +720,32 @@ public class Home extends JFrame implements ActionListener {
                     fr.setP_iva(piva.getText());
                     fr.setNome(nomeF.getText());
                     fr.setLuogo(luogo.getText());
+                    fr.setEmail(emailF.getText());
                     piva.setText("");
                     nomeF.setText("");
                     luogo.setText("");
+                    emailF.setText("");
                     break;
                 case 5:
                     JFrame f5 = new JFrame();
                     JOptionPane.showMessageDialog(f5, "ERRORE: Partita Iva già presente","ATTENZIONE",0);
                     piva.setText("");
                     break;
+                case 6:
+                    JOptionPane.showMessageDialog(new JFrame(), "Inserire l'email del fornitore.","ATTENZIONE",0);
+                    break;
             }
         }
     }
 
     public void BinsClienteDB(){
-        if(cf.getText().length()==0 && nomeC.getText().length()==0 && cognome.getText().length()==0){
+        if(cf.getText().length()==0 && nomeC.getText().length()==0 && cognome.getText().length()==0 && email.getText().length()==0){
             JFrame f0=new JFrame();
             JOptionPane.showMessageDialog(f0,"ERRORE: inserire i dati.","ATTENZIONE",0);
         }
         else {
 
-            int num = ActionsOnDB.InserisciCliente(cf.getText(), nomeC.getText(), cognome.getText());
+            int num = ActionsOnDB.InserisciCliente(cf.getText(), nomeC.getText(), cognome.getText(), email.getText());
 
             switch (num) {
                 case 1:
@@ -743,14 +768,19 @@ public class Home extends JFrame implements ActionListener {
                     cl.setCf(cf.getText());
                     cl.setNome(nomeC.getText());
                     cl.setCognome(cognome.getText());
+                    cl.setEmail(email.getText());
                     cf.setText("");
                     nomeC.setText("");
                     cognome.setText("");
+                    email.setText("");
                     break;
                 case 5:
                     JFrame f5 = new JFrame();
                     JOptionPane.showMessageDialog(f5, "ERRORE: Codice Fiscale già presente","ATTENZIONE",2);
                     cf.setText("");
+                    break;
+                case 6:
+                    JOptionPane.showMessageDialog(new JFrame(), "Inserire l'email del cliente.","ATTENZIONE",2);
                     break;
             }
         }
@@ -877,13 +907,13 @@ public class Home extends JFrame implements ActionListener {
     }
 
     public void VisualizzaClienti(){
-        String[] colonne={"CF", "Nome", "Cognome"};
-        Visualizza("Anagrafica di tutti i clienti registrati:", ActionsOnDB.Visualizza("select * from cliente", colonne, 3));
+        String[] colonne={"CF", "Nome", "Cognome", "Email"};
+        Visualizza("Anagrafica di tutti i clienti registrati:", ActionsOnDB.Visualizza("select * from cliente", colonne, 4));
     }
 
     public void VisualizzaFornitore(){
-        String[] colonne={"PIVA", "Nome", "Luogo"};
-        Visualizza("Anagrafica di tutti i fornitori registrati:", ActionsOnDB.Visualizza("select * from fornitore", colonne, 3));
+        String[] colonne={"PIVA", "Nome", "Luogo", "Email"};
+        Visualizza("Anagrafica di tutti i fornitori registrati:", ActionsOnDB.Visualizza("select * from fornitore", colonne, 4));
     }
 
     public void VisualizzaOrdineFornitore(){
@@ -1543,7 +1573,7 @@ public class Home extends JFrame implements ActionListener {
             elimanaClient.setVisible(false);
             okcercaClient.addActionListener(this);
         }
-        // TROVA DESCRIZIONE CLIENTE DATO NOME, COGNOME, CF CLIENTE (CERCA CLIENTE)
+        // TROVA DESCRIZIONE CLIENTE DATO NOME, COGNOME, CF, email CLIENTE (CERCA CLIENTE)
         if(e.getSource()==tcf){
             editorClient.setVisible(true);
             editorClient.setText(ActionsOnDB.RiepilogoCliente((String) tcf.getSelectedItem()));
@@ -1661,6 +1691,13 @@ public class Home extends JFrame implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(new JFrame(), "ERRORE RIPROVA", "ATTENZIONE",0);
             }
+        }
+        // TROVA DESCRIZIONE FONRITORE DATO NOME, PIVA FORNITORE (CERCA FORNITORE)
+        if(e.getSource()==tfor){
+            editorFor.setVisible(true);
+            editorFor.setText(ActionsOnDB.RiepilogoFornitore((String) tfor.getSelectedItem()));
+            editorFor.setEditable(false);
+            frame.setVisible(true);
         }
 
     }

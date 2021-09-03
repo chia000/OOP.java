@@ -84,6 +84,9 @@ public class ActionsOnDB extends ConnessioneDB{
                         case "Luogo":
                             elenco=elenco+ "    LUOGO: "+ rs.getString("luogo");
                             break;
+                        case "Email":
+                            elenco=elenco+ "    EMAIL: "+ rs.getString("Email");
+                            break;
                     }
                     ++c;
                 }
@@ -373,12 +376,13 @@ public class ActionsOnDB extends ConnessioneDB{
         return num4;
     }
 
-    public static int InserisciFornitore(String piva, String nome, String luogo){
+    public static int InserisciFornitore(String piva, String nome, String luogo, String email){
         int num1=1; // Messaggio errore piva
         int num2=2; // Messaggio errore nome
         int num3=3; // Messaggio errore luogo
         int num4=4; // Messaggio INSERIMENTO RIUSCITO
         int num5=5; // Messaggio errore piva già presente
+        int num6=6; // Messaggio errore email
 
 
         if(piva.length()==0 || piva.length()<=10 || piva.length()>=12){
@@ -391,6 +395,10 @@ public class ActionsOnDB extends ConnessioneDB{
 
         if(luogo.length()==0){
             return num3;
+        }
+
+        if(email.length()==0){
+            return num6;
         }
 
         try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt =con.createStatement();){
@@ -409,12 +417,13 @@ public class ActionsOnDB extends ConnessioneDB{
                 return num5;
             }
 
-            String query="insert into Fornitore (P_IVA, Nome, Luogo) values" +
-                    "(?,?,?)";
+            String query="insert into Fornitore (P_IVA, Nome, Luogo, Email) values" +
+                    "(?,?,?,?)";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1,piva);
             statement.setString(2,nome);
             statement.setString(3,luogo);
+            statement.setString(4,email);
             statement.executeUpdate();
             ChiudiConnessioneDB(statement);
             ChiudiConnessioneDB(stmt);
@@ -426,12 +435,13 @@ public class ActionsOnDB extends ConnessioneDB{
         return num4;
     }
 
-    public static int InserisciCliente(String cf, String nome, String cognome){
+    public static int InserisciCliente(String cf, String nome, String cognome, String email){
         int num1=1; // Messaggio errore cf
         int num2=2; // Messaggio errore nome
         int num3=3; // Messaggio errore cognome
         int num4=4; // Messaggio INSERIMENTO RIUSCITO
         int num5=5; // Messaggio errore cf già presente
+        int num6=6; // Messaggio errore email
 
 
         if(cf.length()==0 || cf.length()<=15 || cf.length()>=17){
@@ -444,6 +454,10 @@ public class ActionsOnDB extends ConnessioneDB{
 
         if(cognome.length()==0){
             return num3;
+        }
+
+        if(email.length()==0){
+            return num6;
         }
 
         try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt =con.createStatement();){
@@ -462,12 +476,13 @@ public class ActionsOnDB extends ConnessioneDB{
                 return num5;
             }
 
-            String query="insert into Cliente (CF, Nome, Cognome) values" +
-                    "(?,?,?)";
+            String query="insert into Cliente (CF, Nome, Cognome, Email) values" +
+                    "(?,?,?,?)";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1,cf);
             statement.setString(2,nome);
             statement.setString(3,cognome);
+            statement.setString(4,email);
             statement.executeUpdate();
             ChiudiConnessioneDB(statement);
             ChiudiConnessioneDB(stmt);
@@ -706,7 +721,31 @@ public class ActionsOnDB extends ConnessioneDB{
             while(rs.next()){
                 riepilogo="RIEPILOGO"+'\n'+'\n'+"CODICE FISCALE:     "+rs.getString("CF")+'\n'+'\n'+
                         "NOME:     "+rs.getString("Nome")+'\n'+'\n'+
-                        "COGNOME:     "+rs.getString("Cognome");
+                        "COGNOME:     "+rs.getString("Cognome")+'\n'+'\n'+
+                        "EMAIL:     "+rs.getString("Email");
+            }
+            ChiudiConnessioneDB(stmt);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return riepilogo;
+    }
+
+    public static String RiepilogoFornitore (String piva){
+
+        String riepilogo="";
+
+        try(Connection con=DriverManager.getConnection(connectionUrl); Statement stmt=con.createStatement();){
+
+            String query="select * from fornitore where p_iva='"+piva+"'";
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                riepilogo="RIEPILOGO"+'\n'+'\n'+"PARTITA IVA:     "+rs.getString("p_iva")+'\n'+'\n'+
+                        "NOME:     "+rs.getString("Nome")+'\n'+'\n'+
+                        "LUOGO:     "+rs.getString("Luogo")+'\n'+'\n'+
+                        "EMAIL:     "+rs.getString("Email");
             }
             ChiudiConnessioneDB(stmt);
         }

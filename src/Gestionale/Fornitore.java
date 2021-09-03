@@ -1,7 +1,7 @@
 package Gestionale;
 
 public class Fornitore {
-    String p_iva, nome, luogo;
+    String p_iva, nome, luogo, email;
 
     public void setP_iva(String p_iva) {
         this.p_iva = p_iva;
@@ -25,5 +25,13 @@ public class Fornitore {
 
     public String getLuogo() {
         return luogo;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
