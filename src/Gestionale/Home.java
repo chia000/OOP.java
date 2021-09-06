@@ -77,7 +77,7 @@ public class Home extends JFrame implements ActionListener {
         frame.setLocation(300,100);
 
 
-        Image icona = Toolkit.getDefaultToolkit().createImage("C:\\Users\\chiar\\Documents\\UNIVERSITA\\2° anno\\Programmazione_ad_oggetti\\Esercizi\\src\\Gestionale\\iconaProgettoBlu.jpg");
+        Image icona = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Claudio\\Desktop\\OOP.java\\src\\Gestionale\\IconaProgettoBlu.jpg");
         frame.setIconImage(icona);
 
         frame.getContentPane().setBackground(new Color(173,196,255));
@@ -1303,6 +1303,7 @@ public class Home extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // INTERFACCIA AGGIUNGI PRODOTTO
         if(e.getSource()==aggiungiP){ //aggiungiP è azione sul tasto "Nuovo prodotto"
+            frame.getContentPane().removeAll();
             ProdottoInsFrame();
         }
         //BOTTONE BINSERISCI --> INSERISCI PRODOTTO IN DB
@@ -1311,6 +1312,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE CERCA PRODOTTO
         if(e.getSource()==cercaP){
+            frame.getContentPane().removeAll();
             CercaProdotto();
         }
         // BOTTONE CHIUDI IN INSERIMENTO PRODOTTO (per ora)
@@ -1325,6 +1327,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // AGGIUNGI FORNITORI JMENUITEM
         if(e.getSource()==aggiungiF){
+            frame.getContentPane().removeAll();
             FornitoreInsFrame();
         }
         // BOTTONE INSERISCI NUOVO FORNITORE
@@ -1337,6 +1340,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // AGGIUNGI NUOVO CLIENTE JMENUITEM
         if(e.getSource()==aggiungiC){
+            frame.getContentPane().removeAll();
             ClienteInsFrame();
         }
         // BOTTONE INSERIMENTO NUOVO CLIENTE
@@ -1349,6 +1353,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // AGGIUNGI ORDINE PER FORNITORE
         if(e.getSource()==aggiungiOF){
+            frame.getContentPane().removeAll();
             OrdineForInsFrame();
         }
         // BOTTONE TROVA CODICE DATO IL PRODOTTO IN NUOVO ORDINE PER FORNITORE
@@ -1380,6 +1385,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE INSERISCI NUOVO ORDINE PER CLIENTE
         if(e.getSource()==aggiungiOC){
+            frame.getContentPane().removeAll();
             OrdineClienteInsFrame();
         }
         // BOTTONE CHIUDI INSERIMENTO NUOVO ORDINE PER CLIENTE
@@ -1397,22 +1403,27 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE VISUALIZZA TUTTI I PRODOTTI DA TENDINA
         if(e.getSource()==visualizzaP){
+            frame.getContentPane().removeAll();
             VisualizzaProdotti();
         }
         // BOTTONE VISUALIZZA TUTTI I CLIENTI DA TENDINA
         if(e.getSource()==visualizzaC){
+            frame.getContentPane().removeAll();
             VisualizzaClienti();
         }
         // BOTTONE VISUALIZZA TUTTI I FORNITORI DA TENDINA
         if(e.getSource()==visualizzaF){
+            frame.getContentPane().removeAll();
             VisualizzaFornitore();
         }
         // BOTTONE VISUALIZZA TUTTI GLI ORDINI PER I FORNITORI DA TENDINA
         if(e.getSource()==visualizzaOF){
+            frame.getContentPane().removeAll();
             VisualizzaOrdineFornitore();
         }
         // BOTTONE VISUALIZZA TUTTI GLI ORDINI DEI CLIENTI DA TENDINA
         if(e.getSource()==visualizzaOC){
+            frame.getContentPane().removeAll();
             VisualizzaOrdiniClienti();
         }
         // BOTTONE CHIUDI TUTTE LE VISUALIZZAZIONI DI PRODOTTI, CLIENTI, FORNITORI, ORDINI da TENDINA
@@ -1607,6 +1618,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE CERCA CLIENTE DA TENDINA
         if(e.getSource()==cercaC){
+            frame.getContentPane().removeAll();
             CercaCliente();
         }
         // BOTTONE CHIUDI INTERFACCIA CERCA CLIENTE
@@ -1730,6 +1742,7 @@ public class Home extends JFrame implements ActionListener {
         }
         // BOTTONE CERCA FORNITORE DA TENDINA
         if(e.getSource()==cercaF){
+            frame.getContentPane().removeAll();
             CercaFornitore();
         }
         // BOTTONE CHIUDI CERCA FORNITORE

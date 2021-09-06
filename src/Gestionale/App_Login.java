@@ -16,7 +16,7 @@ public class App_Login extends JFrame implements ActionListener {
         this.setPreferredSize(new Dimension(300,200));
         this.setLocation(500,200);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        Image icona = Toolkit.getDefaultToolkit().createImage("C:\\Users\\chiar\\Documents\\UNIVERSITA\\2° anno\\Programmazione_ad_oggetti\\Esercizi\\src\\Gestionale\\iconaProgettoBlu.jpg");
+        Image icona = Toolkit.getDefaultToolkit().createImage("C:\\Users\\Claudio\\Desktop\\OOP.java\\src\\Gestionale\\IconaProgettoBlu.jpg");
         this.setIconImage(icona);
         this.getContentPane().setLayout(new BorderLayout());
 
