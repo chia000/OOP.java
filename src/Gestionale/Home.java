@@ -77,7 +77,7 @@ public class Home extends JFrame implements ActionListener {
         frame.setLocation(300,100);
 
 
-        Image icona = Toolkit.getDefaultToolkit().createImage("iconaProgetto.jpg");
+        Image icona = Toolkit.getDefaultToolkit().createImage("C:\\Users\\chiar\\Documents\\UNIVERSITA\\2° anno\\Programmazione_ad_oggetti\\Esercizi\\src\\Gestionale\\iconaProgettoBlu.jpg");
         frame.setIconImage(icona);
 
         frame.getContentPane().setBackground(new Color(173,196,255));
@@ -220,7 +220,7 @@ public class Home extends JFrame implements ActionListener {
         }
     }*/
 
-    public void CambiaColore(JPanel p){
+    public static void CambiaColore(JPanel p){
         p.setBackground(new Color(173,196,255));
     }
 

@@ -13,33 +13,50 @@ public class App_Login extends JFrame implements ActionListener {
 
     App_Login(){
         super("Login");
-        this.setPreferredSize(new Dimension(300,150));
+        this.setPreferredSize(new Dimension(300,200));
         this.setLocation(500,200);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        Image icona = Toolkit.getDefaultToolkit().createImage("C:\\Users\\chiar\\Documents\\UNIVERSITA\\2° anno\\Programmazione_ad_oggetti\\Esercizi\\src\\Gestionale\\iconaProgettoBlu.jpg");
+        this.setIconImage(icona);
         this.getContentPane().setLayout(new BorderLayout());
 
         JLabel l1=new JLabel("Username: ");
+        Home.ImpostaFont(l1,14);
         t1=new JTextField();
         t1.setPreferredSize(new Dimension(150,20));
         JLabel l2=new JLabel("Password: ");
+        Home.ImpostaFont(l2,14);
         t2=new JPasswordField();
         t2.setPreferredSize(new Dimension(150,20));
 
         JPanel nord=new JPanel();
         nord.setLayout(new FlowLayout());
-        nord.add(l1);
-        nord.add(t1);
+        nord.setPreferredSize(new Dimension(250,50));
+        Home.CambiaColore(nord);
+        JLabel lbenvenuto= new JLabel("Benvenuto/a su GestioniaMO!");
+        JLabel lins=new JLabel("Inserisci le tue credenziali di accesso:");
+        nord.add(lbenvenuto);
+        nord.add(lins);
         this.getContentPane().add(nord,BorderLayout.NORTH);
 
         JPanel central=new JPanel();
         central.setLayout(new FlowLayout());
-        central.add(l2);
-        central.add(t2);
+        Home.CambiaColore(central);
+        central.add(l1);
+        central.add(t1);
         this.getContentPane().add(central,BorderLayout.CENTER);
 
+        JPanel sud= new JPanel();
+        sud.setLayout(new FlowLayout());
+        sud.setPreferredSize(new Dimension(250,80));
+        Home.CambiaColore(sud);
         bInsert=new JButton("OK");
         bInsert.addActionListener(this);
-        this.getContentPane().add(bInsert,BorderLayout.SOUTH);
+        sud.add(l2);
+        sud.add(t2);
+        sud.add(bInsert);
+        this.getContentPane().add(sud, BorderLayout.SOUTH);
+        //this.getContentPane().add(bInsert,BorderLayout.SOUTH);
 
         this.pack();
         this.setVisible(true);
